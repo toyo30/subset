@@ -29,20 +29,19 @@ export const BasicSelect = () => {
         </Select>
       </FormControl> */}
       <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-standard-label">Age</InputLabel>
+        <InputLabel id="demo-simple-select-standard-label">집합</InputLabel>
         <Select
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
           value={age}
           onChange={handleChange}
-          label="Age"
+          label="집합"
         >
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          <MenuItem value={10}>NEXT</MenuItem>
+          <MenuItem value={20}>17동기</MenuItem>
         </Select>
       </FormControl>
     </Box>

@@ -5,8 +5,11 @@ import {
   Routes as RouterSwitch,
 } from "react-router-dom";
 import Appbar from "../components/appbar/Appbar";
-import { Home } from "../pages/Home";
+import { SimpleBottomNavigation } from "../components/bottomNavigation/BottomNavigation";
+import { History } from "../pages/history/History";
 import { Login } from "../pages/login/Login";
+import { MyZiphap } from "../pages/myZiphap/MyZiphap";
+import { OtherZiphap } from "../pages/othersZiphap/OtherZiphap";
 import { PathUrl } from "../types/router/pathUrl";
 import { AuthenticatedRoute } from "./AuthenticatedRoute";
 export const LoginRouter = () => {
@@ -20,13 +23,15 @@ export const LoginRouter = () => {
             path={`${PathUrl.Home}`}
             element={
               <AuthenticatedRoute>
-                <Home userObject={{}} />
+                <MyZiphap userObject={{}} />
               </AuthenticatedRoute>
             }
           />
-          {/* 추가 경로를 여기에 작성 */}
+          <Route path="/others" element={<OtherZiphap userObject={{}} />} />
+          <Route path="/history" element={<History userObject={{}} />} />
           <Route path="*" element={<Navigate to="/" />} />
         </RouterSwitch>
+        <SimpleBottomNavigation />
       </BrowserRouter>
     </>
   );
