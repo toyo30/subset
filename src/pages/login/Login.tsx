@@ -10,6 +10,7 @@ import { useState } from "react";
 import { authService } from "../../firebase";
 import * as S from "./LoginStyles";
 
+
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

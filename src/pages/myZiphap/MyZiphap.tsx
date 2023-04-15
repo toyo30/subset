@@ -3,12 +3,18 @@ import { Fab } from "@mui/material";
 import { BasicSelect } from "../../components/basicSelect/BasicSelect";
 import { BasicCard } from "../../components/card/BasicCard";
 import * as S from "./MyZiphapStyles";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   userObject: any;
 }
 
 export const MyZiphap: React.FC<Props> = ({ userObject }) => {
+  const navigate = useNavigate();
+  const navigateToAddevent = () => {
+    navigate("/addevent");
+  };
+
   return (
     <>
       <S.MyZiphapContainer>
@@ -25,8 +31,7 @@ export const MyZiphap: React.FC<Props> = ({ userObject }) => {
         <S.CardContainer>
           <BasicCard />
         </S.CardContainer>
-        <div>내집합</div>
-        <Fab color="primary" aria-label="add" sx={fabStyle}>
+        <Fab onClick={navigateToAddevent} color="primary" aria-label="add" sx={fabStyle}>
           <AddIcon />
         </Fab>
       </S.MyZiphapContainer>
