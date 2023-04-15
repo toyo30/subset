@@ -1,5 +1,3 @@
-import AddIcon from "@mui/icons-material/Add";
-import { Fab } from "@mui/material";
 import { BasicSelect } from "../../components/basicSelect/BasicSelect";
 import { BasicCard } from "../../components/card/BasicCard";
 import * as S from "./HistoryStyles";
@@ -25,16 +23,7 @@ export const History: React.FC<Props> = ({ userObject }) => {
         <S.CardContainer>
           <BasicCard />
         </S.CardContainer>
-        <Fab color="primary" aria-label="add" sx={fabStyle}>
-          <AddIcon />
-        </Fab>
       </S.MyZiphapContainer>
     </>
   );
-};
-
-const fabStyle = {
-  position: "absolute",
-  bottom: 16,
-  right: 16,
 };

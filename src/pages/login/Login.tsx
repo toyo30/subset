@@ -61,7 +61,7 @@ export const Login = () => {
     <S.LoginContainer>
       <S.TypographyContainer>
         <Typography variant="h3" component="div" sx={{ flexGrow: 1 }}>
-          JIPHAP
+          ZIPHAP
         </Typography>
         <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
           모두 집합해!

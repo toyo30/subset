@@ -27,8 +27,14 @@ export const LoginRouter = () => {
               </AuthenticatedRoute>
             }
           />
-          <Route path="/others" element={<OtherZiphap userObject={{}} />} />
-          <Route path="/history" element={<History userObject={{}} />} />
+          <Route
+            path={`${PathUrl.Other}`}
+            element={<OtherZiphap userObject={{}} />}
+          />
+          <Route
+            path={`${PathUrl.History}`}
+            element={<History userObject={{}} />}
+          />
           <Route path="*" element={<Navigate to="/" />} />
         </RouterSwitch>
         <SimpleBottomNavigation />

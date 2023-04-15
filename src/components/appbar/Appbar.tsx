@@ -7,7 +7,9 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import { signOut } from "firebase/auth";
 import * as React from "react";
+import { authService } from "../../firebase";
 
 export default function MenuAppBar() {
   const [auth, setAuth] = React.useState(true);
@@ -25,20 +27,19 @@ export default function MenuAppBar() {
     setAnchorEl(null);
   };
 
+  const logout = () => {
+    signOut(authService)
+      .then(() => {
+        console.log("로그아웃 성공"); // 여기서 필요한 경우 추가 처리를 수행하세요
+      })
+      .catch((error) => {
+        console.error("로그아웃 실패: ", error);
+      });
+    setAnchorEl(null);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      {/* <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={auth}
-              onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={auth ? "Logout" : "Login"}
-        />
-      </FormGroup> */}
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -52,7 +53,7 @@ export default function MenuAppBar() {
             <NotificationsNoneIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            JIPHAP
+            ZIPHAP
           </Typography>
           {auth && (
             <div>
@@ -81,7 +82,7 @@ export default function MenuAppBar() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={logout}>Logout</MenuItem>
               </Menu>
             </div>
           )}

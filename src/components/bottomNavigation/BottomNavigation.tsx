@@ -1,37 +1,28 @@
+import AddIcon from "@mui/icons-material/Add";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import RestoreIcon from "@mui/icons-material/Restore";
+import { Fab } from "@mui/material";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import Box from "@mui/material/Box";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
+import { PathUrl } from "../../types/router/pathUrl";
 import * as S from "./BottomNavigationStyles";
-
 export const SimpleBottomNavigation = () => {
   const [value, setValue] = React.useState("myZiphap");
   const navigate = useNavigate();
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    console.log("handleChange", newValue);
     setValue(newValue);
     navigate(`/${newValue}`);
   };
 
-  //   const handleNavigateHomeClick = (e: HTMLButtonElement) => {
-  //     // 로그인 처리를 수행한 후
-  //     navigate("/");
-  //   };
-
-  //   const handleNavigateHistoryClick = (e: HTMLButtonElement) => {
-  //     // 로그인 처리를 수행한 후
-  //     navigate("/history");
-  //   };
-
-  //   const handleNavigateOthersClick = (e: HTMLButtonElement) => {
-  //     // 로그인 처리를 수행한 후
-  //     navigate("/others");
-  //   };
+  const handleClick = () => {
+    navigate(`${PathUrl.AddEvent}`);
+    console.log("----------");
+  };
 
   return (
     <S.BottomNavigationContainer>
@@ -54,6 +45,15 @@ export const SimpleBottomNavigation = () => {
           />
         </BottomNavigation>
       </Box>
+      <Fab color="primary" aria-label="add" sx={fabStyle} onClick={handleClick}>
+        <AddIcon />
+      </Fab>
     </S.BottomNavigationContainer>
   );
+};
+
+const fabStyle = {
+  position: "absolute",
+  bottom: 70,
+  right: 16,
 };

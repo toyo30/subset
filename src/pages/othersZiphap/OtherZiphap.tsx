@@ -1,5 +1,3 @@
-import AddIcon from "@mui/icons-material/Add";
-import { Fab } from "@mui/material";
 import { BasicSelect } from "../../components/basicSelect/BasicSelect";
 import { BasicCard } from "../../components/card/BasicCard";
 import * as S from "./otherZiphapStyles";
@@ -26,16 +24,7 @@ export const OtherZiphap: React.FC<Props> = ({ userObject }) => {
           <BasicCard />
         </S.CardContainer>
         <div>외집합</div>
-        <Fab color="primary" aria-label="add" sx={fabStyle}>
-          <AddIcon />
-        </Fab>
       </S.MyZiphapContainer>
     </>
   );
-};
-
-const fabStyle = {
-  position: "absolute",
-  bottom: 16,
-  right: 16,
 };
