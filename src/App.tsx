@@ -4,35 +4,27 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import * as S from "./AppStyles";
 import { authService, messaging } from "./firebase";
-import { AppRouter } from "./router/authRouter";
+import { AuthRouter } from "./router/AuthRouter";
+import { MainRouter } from "./router/MainRouter";
 import { GlobalStyle } from "./themes/globalStyle";
 
 export const App = () => {
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userObject, setUserObject] = useState(null);
-  // const a = axios
-  //   .get("https://jsonplaceholder.typicode.com/posts")
-  //   .then((response: AxiosResponse) => {
-  //     // console.log(response.data);
-  //   })
-  //   .catch((error) => {
-  //     // console.log(error);
-  //   });
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(authService, (user: any) => {
+      console.log("auth 변경 됨");
       if (user) {
         setIsLoggedIn(true);
         setUserObject(user);
       } else {
         setIsLoggedIn(false);
+        setUserObject(null);
       }
-      setInit(true);
 
-      return () => {
-        unsubscribe();
-      };
+      setInit(true);
     });
 
     // Get the FCM token and log it to the console
@@ -52,18 +44,38 @@ export const App = () => {
       console.log("Message received. ", payload);
       // ...
     });
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
+
+  if (!init) {
+    return (
+      <S.AppContainer className="App">
+        <S.LoadingContainer>Loading...!</S.LoadingContainer>
+      </S.AppContainer>
+    );
+  }
 
   return (
     <S.AppContainer className="App">
       <GlobalStyle />
       {/* <LoginRouter /> */}
-      {init ? (
-        <AppRouter isLoggedIn={isLoggedIn} userObject={userObject} />
+      {isLoggedIn ? (
+        <MainRouter isLoggedIn={isLoggedIn} userObject={userObject} />
       ) : (
-        // <LoginRouter />
-        "loding"
+        <AuthRouter />
       )}
     </S.AppContainer>
   );
 };
+
+// const a = axios
+//   .get("https://jsonplaceholder.typicode.com/posts")
+//   .then((response: AxiosResponse) => {
+//     // console.log(response.data);
+//   })
+//   .catch((error) => {
+//     // console.log(error);
+//   });

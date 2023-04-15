@@ -7,10 +7,13 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { authService } from "../../firebase";
+import { PathUrl } from "../../types/router/pathUrl";
 import * as S from "./LoginStyles";
 
 export const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authCheck, setAuthCheck] = useState("로그인");
@@ -36,14 +39,21 @@ export const Login = () => {
     } else if (type === "password") {
       setPassword(value);
     }
-
-    console.log(email, password, "email, password");
   };
   const handleAuthEvent = async (event: any) => {
     event.preventDefault();
+    console.log("로그인 중");
     try {
       if (authCheck === "로그인") {
-        await signInWithEmailAndPassword(authService, email, password);
+        const response = await signInWithEmailAndPassword(
+          authService,
+          email,
+          password
+        );
+        if (response.user) {
+          console.log("--");
+          navigate(`/${PathUrl.MyZiphap}`);
+        }
       } else if (authCheck === "회원가입") {
         await createUserWithEmailAndPassword(authService, email, password);
       }

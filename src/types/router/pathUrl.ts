@@ -1,8 +1,9 @@
 export enum PathUrl {
   Home = "/",
+  MyZiphap = "/",
   Login = "/login",
   Logout = "/logout",
-  Other = "/others",
+  Other = "/other",
   History = "/history",
   AddEvent = "/add-event",
   AddGroup = "/add-group",

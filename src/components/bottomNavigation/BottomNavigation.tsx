@@ -21,7 +21,6 @@ export const SimpleBottomNavigation = () => {
 
   const handleClick = () => {
     navigate(`${PathUrl.AddEvent}`);
-    console.log("----------");
   };
 
   return (
