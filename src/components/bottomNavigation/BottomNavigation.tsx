@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { PathUrl } from "../../types/router/pathUrl";
 import * as S from "./BottomNavigationStyles";
 export const SimpleBottomNavigation = () => {
-  const [value, setValue] = React.useState("myZiphap");
+  const [value, setValue] = React.useState("");
   const navigate = useNavigate();
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -29,17 +29,20 @@ export const SimpleBottomNavigation = () => {
         <BottomNavigation showLabels value={value} onChange={handleChange}>
           <BottomNavigationAction
             label="History"
+            // value={`${PathUrl.History.slice(1)}`}
             value="history"
             icon={<RestoreIcon />}
           />
           <BottomNavigationAction
             label="내집합"
-            value="myZiphap"
+            value=""
+            // value={`${PathUrl.MyZiphap.slice(1)}`}
             icon={<FavoriteIcon />}
           />
           <BottomNavigationAction
             label="외집합"
-            value="others"
+            // value={`${PathUrl.Other.slice(1)}`}
+            value="other"
             icon={<LocationOnIcon />}
           />
         </BottomNavigation>

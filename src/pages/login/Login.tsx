@@ -9,7 +9,6 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../../firebase";
-import { PathUrl } from "../../types/router/pathUrl";
 import * as S from "./LoginStyles";
 
 export const Login = () => {
@@ -42,7 +41,6 @@ export const Login = () => {
   };
   const handleAuthEvent = async (event: any) => {
     event.preventDefault();
-    console.log("로그인 중");
     try {
       if (authCheck === "로그인") {
         const response = await signInWithEmailAndPassword(
@@ -50,10 +48,6 @@ export const Login = () => {
           email,
           password
         );
-        if (response.user) {
-          console.log("--");
-          navigate(`/${PathUrl.MyZiphap}`);
-        }
       } else if (authCheck === "회원가입") {
         await createUserWithEmailAndPassword(authService, email, password);
       }

@@ -1,24 +1,40 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { getToken, onMessage } from "firebase/messaging";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./App.css";
 import * as S from "./AppStyles";
+import MyContext from "./contexts/MyContext";
+import MyContextProvider from "./contexts/MyContextProvider";
 import { authService, messaging } from "./firebase";
 import { AuthRouter } from "./router/AuthRouter";
 import { MainRouter } from "./router/MainRouter";
 import { GlobalStyle } from "./themes/globalStyle";
 
 export const App = () => {
+  return (
+    <MyContextProvider>
+      <AppContent />
+    </MyContextProvider>
+  );
+};
+
+const AppContent = () => {
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userObject, setUserObject] = useState(null);
+  const { userInstance, setUserInstance, value, setValue } =
+    useContext(MyContext);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(authService, (user: any) => {
-      console.log("auth 변경 됨");
       if (user) {
         setIsLoggedIn(true);
         setUserObject(user);
+        setUserInstance((prevState) => ({
+          ...prevState,
+          uid: user.uid,
+          email: user.email,
+        }));
       } else {
         setIsLoggedIn(false);
         setUserObject(null);
@@ -34,6 +50,11 @@ export const App = () => {
     })
       .then((token) => {
         console.log("FCM Token:", token);
+        //여기서도 fcm 토큰 관련, db 생성해서 추가해주기
+        setUserInstance({
+          ...userInstance,
+          fcmToken: token,
+        });
       })
       .catch((err) => {
         console.error("Failed to get FCM token:", err);
@@ -61,21 +82,8 @@ export const App = () => {
   return (
     <S.AppContainer className="App">
       <GlobalStyle />
-      {/* <LoginRouter /> */}
-      {isLoggedIn ? (
-        <MainRouter isLoggedIn={isLoggedIn} userObject={userObject} />
-      ) : (
-        <AuthRouter />
-      )}
+
+      {isLoggedIn ? <MainRouter /> : <AuthRouter />}
     </S.AppContainer>
   );
 };
-
-// const a = axios
-//   .get("https://jsonplaceholder.typicode.com/posts")
-//   .then((response: AxiosResponse) => {
-//     // console.log(response.data);
-//   })
-//   .catch((error) => {
-//     // console.log(error);
-//   });

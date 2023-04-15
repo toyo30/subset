@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { BasicSelect } from "../../components/basicSelect/BasicSelect";
 import { BasicCard } from "../../components/card/BasicCard";
+import MyContext from "../../contexts/MyContext";
 import * as S from "./MyZiphapStyles";
 
 interface Props {
@@ -8,11 +9,22 @@ interface Props {
 }
 
 export const MyZiphap: React.FC<Props> = ({ userObject }) => {
+  const { userInstance, setUserInstance, value, setValue } =
+    useContext(MyContext);
   useEffect(() => {}, []);
 
+  const handleChangeValue = () => {
+    setValue("New value!");
+  };
   return (
     <>
       <S.MyZiphapContainer>
+        <button onClick={handleChangeValue}>Change value</button>
+        <div>
+          {"asdgasdg"}
+          {userInstance.uid}
+        </div>
+        <div>{value}</div>
         <BasicSelect />
         <S.CardContainer>
           <BasicCard />
