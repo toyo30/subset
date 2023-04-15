@@ -23,6 +23,7 @@ class FirebaseApi {
         payload
       );
       console.log("Document written with ID: ", docRef.id);
+      return docRef;
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -30,9 +31,7 @@ class FirebaseApi {
 
   async readData(collectionName: string) {
     const querySnapshot = await getDocs(collection(this._db, collectionName));
-    querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data()}`);
-    });
+    return querySnapshot;
   }
 
   async updateData(docId: string, collectionName: string, payload: any) {

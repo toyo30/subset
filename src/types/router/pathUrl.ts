@@ -7,4 +7,5 @@ export enum PathUrl {
   History = "/history",
   AddEvent = "/add-event",
   AddGroup = "/add-group",
+  AddName = "/add-name",
 }

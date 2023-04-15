@@ -4,11 +4,7 @@ import { BasicCard } from "../../components/card/BasicCard";
 import MyContext from "../../contexts/MyContext";
 import * as S from "./MyZiphapStyles";
 
-interface Props {
-  userObject: any;
-}
-
-export const MyZiphap: React.FC<Props> = ({ userObject }) => {
+export const MyZiphap = () => {
   const { userInstance, setUserInstance, value, setValue } =
     useContext(MyContext);
   useEffect(() => {}, []);

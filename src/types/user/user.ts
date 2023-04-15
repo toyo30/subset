@@ -8,7 +8,7 @@ export interface UserInstance {
   uid: string;
   name?: string;
   email: string;
-  groups?: string[];
+  groups: string[];
   // profile: file;
   fcmToken?: string;
 }

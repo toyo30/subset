@@ -22,26 +22,11 @@ export const SetUserRouter = () => {
       <BrowserRouter>
         <Appbar />
         <RouterSwitch>
-          <Route
-            path={`${PathUrl.MyZiphap}`}
-            element={<MyZiphap userObject={{}} />}
-          />
-          <Route
-            path={`${PathUrl.Other}`}
-            element={<OtherZiphap userObject={{}} />}
-          />
-          <Route
-            path={`${PathUrl.History}`}
-            element={<History userObject={{}} />}
-          />
-          <Route
-            path={`${PathUrl.AddGroup}`}
-            element={<AddGroup userObject={{}} />}
-          />
-          <Route
-            path={`${PathUrl.AddEvent}`}
-            element={<AddEvent userObject={{}} />}
-          />
+          <Route path={`${PathUrl.MyZiphap}`} element={<MyZiphap />} />
+          <Route path={`${PathUrl.Other}`} element={<OtherZiphap />} />
+          <Route path={`${PathUrl.History}`} element={<History />} />
+          <Route path={`${PathUrl.AddGroup}`} element={<AddGroup />} />
+          <Route path={`${PathUrl.AddEvent}`} element={<AddEvent />} />
           <Route path="*" element={<Navigate to={`${PathUrl.MyZiphap}`} />} />
         </RouterSwitch>
         <SimpleBottomNavigation />

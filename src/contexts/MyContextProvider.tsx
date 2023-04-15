@@ -15,12 +15,18 @@ const MyContextProvider: React.FC<MyContextProviderProps> = ({ children }) => {
     groups: [],
     fcmToken: "",
   });
+  const [groups, setGroups] = useState<string[]>([]);
+  const [hasUser, setHasUser] = useState<boolean>(true);
 
   const contextValue = {
     value,
     setValue,
     userInstance,
     setUserInstance,
+    groups,
+    setGroups,
+    hasUser,
+    setHasUser,
   };
 
   return (

@@ -1,59 +1,53 @@
 import { Button, TextField, Typography } from "@mui/material";
-import { addDoc, collection } from "firebase/firestore";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { db } from "../../firebase";
+import MyContext from "../../contexts/MyContext";
+import { PathUrl } from "../../types/router/pathUrl";
 import * as S from "./AddNameStyles";
 
-interface Props {
-  userObject: any;
-}
-
-export const AddGroup: React.FC<Props> = ({ userObject }) => {
+export const AddName = () => {
   const navigate = useNavigate();
-  const [groupName, setGroupName] = useState("");
-  const [groupDescription, setGroupDescription] = useState("");
+  const [userName, setUserName] = useState("");
+  const { userInstance, setUserInstance, hasUser } = useContext(MyContext);
 
-  const createGroup = async () => {
-    const groupData = {
-      name: groupName,
-      description: groupDescription,
-    };
-    try {
-      await addDoc(collection(db, "groups"), groupData);
-      alert("그룹이 성공적으로 생성되었습니다.");
-      setGroupName("");
-      setGroupDescription("");
-      navigate("/");
-    } catch (error) {
-      alert("그룹 생성에 실패했습니다. 다시 시도해주세요.");
-      console.error(error);
-    }
+  const backNavigation = () => {
+    navigate(-1);
   };
+
+  const nextNavigation = () => {
+    navigate(`${PathUrl.AddGroup}`);
+  };
+
+  if (hasUser) {
+    navigate(`${PathUrl.MyZiphap}`);
+  }
 
   return (
     <S.AddGroupContainer>
       <S.TypographyContainer>
         <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
-          ZipHap 그룹 생성
+          ZipHap 이름
+        </Typography>
+        <Typography variant="subtitle2" component="div" sx={{ flexGrow: 1 }}>
+          이름을 적어주세요
         </Typography>
       </S.TypographyContainer>
       <S.TextFieldContainer>
         <TextField
           type="text"
-          placeholder="그룹 이름"
-          value={groupName}
-          onChange={(e) => setGroupName(e.target.value)}
-        />
-        <TextField
-          type="text"
-          placeholder="한줄소개"
-          value={groupDescription}
-          onChange={(e) => setGroupDescription(e.target.value)}
+          placeholder="사용자 이름"
+          value={userInstance.name}
+          onChange={(e) =>
+            setUserInstance({
+              ...userInstance,
+              name: e.target.value,
+            })
+          }
         />
       </S.TextFieldContainer>
       <S.ButtonContainer>
-        <Button onClick={createGroup}>그룹 생성</Button>
+        <Button onClick={backNavigation}>뒤로</Button>
+        <Button onClick={nextNavigation}>다음으로</Button>
       </S.ButtonContainer>
     </S.AddGroupContainer>
   );

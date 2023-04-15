@@ -1,11 +1,8 @@
 import { BasicSelect } from "../../components/basicSelect/BasicSelect";
 import { BasicCard } from "../../components/card/BasicCard";
 import * as S from "./HistoryStyles";
-interface Props {
-  userObject: any;
-}
 
-export const History: React.FC<Props> = ({ userObject }) => {
+export const History = () => {
   return (
     <>
       <S.MyZiphapContainer>

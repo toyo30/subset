@@ -8,6 +8,10 @@ interface MyContextType {
   setValue: Dispatch<SetStateAction<string>>;
   userInstance: UserInstance;
   setUserInstance: Dispatch<SetStateAction<UserInstance>>;
+  groups: string[];
+  setGroups: Dispatch<SetStateAction<string[]>>;
+  hasUser: boolean;
+  setHasUser: Dispatch<SetStateAction<boolean>>;
 }
 
 const MyContext = createContext<MyContextType>({
@@ -21,6 +25,10 @@ const MyContext = createContext<MyContextType>({
     fcmToken: "",
   },
   setUserInstance: () => {},
+  groups: [],
+  setGroups: () => {},
+  hasUser: true,
+  setHasUser: () => {},
 });
 
 export default MyContext;

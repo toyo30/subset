@@ -1,11 +1,8 @@
 import { BasicSelect } from "../../components/basicSelect/BasicSelect";
 import { BasicCard } from "../../components/card/BasicCard";
 import * as S from "./otherZiphapStyles";
-interface Props {
-  userObject: any;
-}
 
-export const OtherZiphap: React.FC<Props> = ({ userObject }) => {
+export const OtherZiphap = () => {
   return (
     <>
       <S.MyZiphapContainer>

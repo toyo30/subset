@@ -5,11 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { dbRT } from "../../firebase";
 import * as S from "./AddEventStyles";
 
-interface Props {
-  userObject: any;
-}
-
-export const AddEvent: React.FC<Props> = ({ userObject }) => {
+export const AddEvent = () => {
   const navigate = useNavigate();
   const [eventName, setEventName] = useState("");
   const [eventPlace, setEventPlace] = useState("");
