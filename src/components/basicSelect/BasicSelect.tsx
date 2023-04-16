@@ -33,6 +33,7 @@ export const BasicSelect: React.FC<Props> = ({
           value={selectValue}
           onChange={handleChange}
           label={label}
+          defaultValue={selectOptions && selectOptions[0]}
         >
           {selectOptions && selectOptions.length > 0 ? (
             selectOptions.map((item, idx) => (

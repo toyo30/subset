@@ -18,15 +18,6 @@ export const MainRouter = () => {
   const { userInstance, setUserInstance, setGroups, hasUser, setHasUser } =
     useContext(MyContext);
 
-  const readUserData = async () => {
-    const querySnapshot = await getDocs(collection(db, "Users"));
-    querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data()}`);
-      console.log(`${doc.id} => ${doc.data().name}`);
-    });
-    console.log(querySnapshot, "querySnapshot 1");
-  };
-
   const readDataWithCondition = async () => {
     const q = query(
       collection(db, "Users"),
@@ -61,7 +52,6 @@ export const MainRouter = () => {
   };
 
   useEffect(() => {
-    readUserData();
     readDataWithCondition();
     readGroupData();
   }, []);
