@@ -11,6 +11,7 @@ export const AddEvent = () => {
   const [eventPlace, setEventPlace] = useState("");
   const [eventTime1, setEventTime1] = useState("");
   const [eventTime2, setEventTime2] = useState("");
+  const [group, setGroup] = useState("");
 
   const createEvent = async () => {
     const eventData = {

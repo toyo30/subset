@@ -35,6 +35,7 @@ export const AddGroup = () => {
     const groupData = {
       name: groupName,
       description: groupDescription,
+      members: [userInstance.name],
     };
     try {
       await addDoc(collection(db, "groups"), groupData);
@@ -49,6 +50,20 @@ export const AddGroup = () => {
     }
   };
 
+  const updateGroup = async () => {
+    const groupPayload = await firebaseApi.getDocIdByName("groups", groupName);
+
+    if (groupPayload) {
+      const groupId = groupPayload.docs[0].id;
+      const groupData = groupPayload.docs[0].data();
+      console.log(groupData, "groupData");
+      const groupResponse = await firebaseApi.updateData(groupId, "groups", {
+        ...groupData,
+        members: [...groupData.members, userInstance.name],
+      });
+    }
+  };
+
   const handleCreateUserInfo = async () => {
     if (!userInstance || !groupName) {
       alert("정보를 다시 입력해주세요");
@@ -60,10 +75,10 @@ export const AddGroup = () => {
       groups: [...userInstance.groups, groupName],
     });
 
-    console.log(response, "response");
-
     if (!select) {
       createGroup();
+    } else {
+      updateGroup();
     }
 
     setUserInstance({
@@ -73,23 +88,18 @@ export const AddGroup = () => {
 
     if (response) {
       setHasUser(true);
-      navigate(`${PathUrl.MyZiphap}`);
     }
-
-    // window.location.reload();
   };
-
-  useEffect(() => {
-    console.log(groupName, "groupName");
-  }, [groupName]);
 
   if (!userInstance.name) {
     navigate(`${PathUrl.AddName}`);
   }
 
-  if (hasUser) {
-    navigate(`${PathUrl.MyZiphap}`);
-  }
+  useEffect(() => {
+    if (hasUser) {
+      navigate(`${PathUrl.MyZiphap}`);
+    }
+  }, [hasUser]);
 
   return (
     <S.AddGroupContainer>

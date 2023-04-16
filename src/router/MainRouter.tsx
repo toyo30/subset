@@ -18,7 +18,7 @@ export const MainRouter = () => {
   const { userInstance, setUserInstance, setGroups, hasUser, setHasUser } =
     useContext(MyContext);
 
-  const readDataWithCondition = async () => {
+  const readUserDataWithCondition = async () => {
     const q = query(
       collection(db, "Users"),
       where("uid", "==", userInstance.uid)
@@ -30,7 +30,6 @@ export const MainRouter = () => {
       setHasUser(false);
     } else {
       querySnapshot.forEach((doc) => {
-        console.log(`${doc.id} => ${doc.data()}`);
         setUserInstance({
           ...userInstance,
           name: doc.data().name,
@@ -44,7 +43,6 @@ export const MainRouter = () => {
   const readGroupData = async () => {
     const response = await firebaseApi.readData("groups");
     const resonseArray: string[] = [];
-    // const response = await getDocs(collection(db, "groups"));
     response.forEach((doc) => {
       resonseArray.push(doc.data().name);
     });
@@ -52,15 +50,9 @@ export const MainRouter = () => {
   };
 
   useEffect(() => {
-    readDataWithCondition();
+    readUserDataWithCondition();
     readGroupData();
   }, []);
-
-  //여기서 db를 불러오고, db가 있을 때, context provider를 세팅해준다.
-  //일단 db 불러오기를 해보자.
-
-  //db가 있으면 아래의 코드를 실행하고, 없으면 user 이름과 데이터를 생성하는 페이지로 이동시킨다.
-  // useEffect(() => {}, [userInstance.groups]);
 
   return (
     <>

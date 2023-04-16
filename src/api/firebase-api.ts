@@ -5,7 +5,9 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  query,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import { db } from "../firebase";
 
@@ -32,6 +34,21 @@ class FirebaseApi {
   async readData(collectionName: string) {
     const querySnapshot = await getDocs(collection(this._db, collectionName));
     return querySnapshot;
+  }
+
+  async getDocIdByName(collectionName: string, name: string) {
+    const q = query(
+      collection(this._db, collectionName),
+      where("name", "==", name)
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      return null;
+    } else {
+      return querySnapshot;
+    }
   }
 
   async updateData(docId: string, collectionName: string, payload: any) {

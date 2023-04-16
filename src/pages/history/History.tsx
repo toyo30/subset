@@ -1,4 +1,3 @@
-import { BasicSelect } from "../../components/basicSelect/BasicSelect";
 import { BasicCard } from "../../components/card/BasicCard";
 import * as S from "./HistoryStyles";
 
@@ -7,7 +6,7 @@ export const History = () => {
     <>
       <S.MyZiphapContainer>
         <div>history</div>
-        <BasicSelect />
+        {/* <BasicSelect /> */}
         <S.CardContainer>
           <BasicCard />
         </S.CardContainer>

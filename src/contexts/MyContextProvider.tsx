@@ -17,6 +17,7 @@ const MyContextProvider: React.FC<MyContextProviderProps> = ({ children }) => {
   });
   const [groups, setGroups] = useState<string[]>([]);
   const [hasUser, setHasUser] = useState<boolean>(true);
+  const [selectGroup, setSelectGroup] = useState<string>("");
 
   const contextValue = {
     value,
@@ -27,6 +28,8 @@ const MyContextProvider: React.FC<MyContextProviderProps> = ({ children }) => {
     setGroups,
     hasUser,
     setHasUser,
+    selectGroup,
+    setSelectGroup,
   };
 
   return (

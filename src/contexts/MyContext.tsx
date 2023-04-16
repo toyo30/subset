@@ -12,6 +12,8 @@ interface MyContextType {
   setGroups: Dispatch<SetStateAction<string[]>>;
   hasUser: boolean;
   setHasUser: Dispatch<SetStateAction<boolean>>;
+  selectGroup: string;
+  setSelectGroup: Dispatch<SetStateAction<string>>;
 }
 
 const MyContext = createContext<MyContextType>({
@@ -29,6 +31,8 @@ const MyContext = createContext<MyContextType>({
   setGroups: () => {},
   hasUser: true,
   setHasUser: () => {},
+  selectGroup: "",
+  setSelectGroup: () => {},
 });
 
 export default MyContext;
