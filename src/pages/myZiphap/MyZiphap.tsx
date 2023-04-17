@@ -12,7 +12,15 @@ import {
   Typography,
 } from "@mui/material";
 import { db } from "../../firebase";
-import { convertTimestampToDate } from "../../utils/time/timeFormat";
+import {
+  backgroundColors,
+  getRandomColor,
+  shuffleArray,
+} from "../../utils/color/randomColor";
+import {
+  convertTimestampToDate,
+  formatConvertTimestampToDate,
+} from "../../utils/time/timeFormat";
 
 export const MyZiphap = () => {
   // const [documents, setDocuments] = useState<
@@ -64,41 +72,115 @@ export const MyZiphap = () => {
           setSelectGroup={onChange}
         />
         {eventDocuments && eventDocuments.length > 0 ? (
-          eventDocuments.map((eventDocument: any, idx) => (
-            <S.CardContainer>
-              <Card
-                sx={{ minWidth: 275 }}
-                variant="outlined"
-                key={`${idx} ${eventDocument.title}`}
-              >
-                <CardContent>
-                  <Typography
-                    sx={{ fontSize: 14 }}
-                    color="text.secondary"
-                    gutterBottom
-                  >
-                    {eventDocument.title} | {eventDocument.location}
-                  </Typography>
-                  <Typography variant="h5" component="div">
-                    참여자
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    {eventDocument.attendance.join(" | ")}
-                  </Typography>
-                  <Typography variant="body2">
-                    {"시작: "}
-                    {convertTimestampToDate(eventDocument.timeToStart)}
-                    <br />
-                    {"종료: "}
-                    {convertTimestampToDate(eventDocument.timeToEnd)}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small">참가하기</Button>
-                </CardActions>
-              </Card>
-            </S.CardContainer>
-          ))
+          eventDocuments.map((eventDocument: any, idx) => {
+            const randomArray = shuffleArray(backgroundColors);
+            console.log(randomArray, "randomArray");
+            return (
+              <S.CardContainer>
+                <Card
+                  sx={{ minWidth: 275 }}
+                  variant="outlined"
+                  key={`${idx} ${eventDocument.title}`}
+                >
+                  <CardContent>
+                    <Typography
+                      sx={{ fontSize: 14 }}
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      {eventDocument.title} | {eventDocument.location}
+                    </Typography>
+                    <Typography variant="h5" component="div">
+                      참여자
+                    </Typography>
+                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                      {eventDocument.attendance
+                        .flatMap((attendance: any) => attendance.name)
+                        .join(" | ")}
+                    </Typography>
+
+                    <div>
+                      {eventDocument.attendance.map(
+                        (attendance: any, idx: number) => {
+                          const randomColor = getRandomColor();
+
+                          return (
+                            <div
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                maxWidth: "280px",
+                                margin: "0 auto",
+                              }}
+                            >
+                              <div
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  borderRadius: "50%",
+                                  width: "30px",
+                                  height: "30px",
+                                  background:
+                                    randomArray[(idx + 1) % randomArray.length],
+                                  color: "white",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                {attendance.name.slice(
+                                  attendance.name.length - 2
+                                )}
+                              </div>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                }}
+                              >
+                                <div
+                                  style={{
+                                    borderRadius: "50%",
+                                    width: "10px",
+                                    height: "10px",
+                                    background:
+                                      randomArray[
+                                        (idx + 1) % randomArray.length
+                                      ],
+                                  }}
+                                ></div>
+                                <div>
+                                  {formatConvertTimestampToDate(
+                                    attendance.timeToStart
+                                  )}{" "}
+                                  {" ~ "}{" "}
+                                  {formatConvertTimestampToDate(
+                                    attendance.timeToEnd
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        }
+                      )}
+                    </div>
+
+                    <Typography variant="body2">
+                      {"시작: "}
+                      {convertTimestampToDate(eventDocument.timeToStart)}
+                      <br />
+                      {"종료: "}
+                      {convertTimestampToDate(eventDocument.timeToEnd)}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small">참가하기</Button>
+                  </CardActions>
+                </Card>
+              </S.CardContainer>
+            );
+          })
         ) : (
           <>없음</>
         )}

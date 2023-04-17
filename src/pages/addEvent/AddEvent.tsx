@@ -1,27 +1,35 @@
 import { Button, TextField, Typography } from "@mui/material";
-import { push, ref } from "firebase/database";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { dbRT } from "../../firebase";
+import { firebaseApi } from "../../api/firebase-api";
+import MyContext from "../../contexts/MyContext";
 import * as S from "./AddEventStyles";
 
 export const AddEvent = () => {
+  const { selectGroup, userInstance } = useContext(MyContext);
+
   const navigate = useNavigate();
   const [eventName, setEventName] = useState("");
   const [eventPlace, setEventPlace] = useState("");
   const [eventTime1, setEventTime1] = useState("");
   const [eventTime2, setEventTime2] = useState("");
-  const [group, setGroup] = useState("");
+
+  //  시간 바꿔주기
+  // group name 선택된 이벤트로 바꿔주기
 
   const createEvent = async () => {
     const eventData = {
-      name: eventName,
-      place: eventPlace,
-      time1: eventTime1,
-      time2: eventTime2,
+      title: eventName,
+      location: eventPlace,
+      timeToStart: eventTime1,
+      timeToEnd: eventTime2,
+      group: selectGroup,
+      attendance: [userInstance.name],
+      like: [],
     };
     try {
-      await push(ref(dbRT, "events"), eventData);
+      // await push(ref(dbRT, "events"), eventData);
+      await firebaseApi.createData("Groups", eventData);
       alert("이벤트가 성공적으로 생성되었습니다.");
       setEventName("");
       setEventPlace("");

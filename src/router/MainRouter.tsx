@@ -56,29 +56,37 @@ export const MainRouter = () => {
 
   return (
     <>
-      {hasUser ? (
-        <BrowserRouter>
-          <Appbar />
-          <Routes>
-            <Route path={`${PathUrl.MyZiphap}`} element={<MyZiphap />} />
-            <Route path={`${PathUrl.Other}`} element={<OtherZiphap />} />
-            <Route path={`${PathUrl.History}`} element={<History />} />
-            <Route path={`${PathUrl.AddGroup}`} element={<AddGroup />} />
-            <Route path={`${PathUrl.AddEvent}`} element={<AddEvent />} />
-            <Route path="*" element={<Navigate to={`${PathUrl.MyZiphap}`} />} />
-          </Routes>
-          <SimpleBottomNavigation />
-        </BrowserRouter>
-      ) : (
-        <BrowserRouter>
-          <Appbar />
-          <Routes>
-            <Route path={`${PathUrl.AddName}`} element={<AddName />} />
-            <Route path={`${PathUrl.AddGroup}`} element={<AddGroup />} />
-            <Route path="*" element={<Navigate to={`${PathUrl.AddName}`} />} />
-          </Routes>
-        </BrowserRouter>
-      )}
+      <BrowserRouter>
+        {hasUser ? (
+          <>
+            <Appbar />
+            <Routes>
+              <Route path={`${PathUrl.MyZiphap}`} element={<MyZiphap />} />
+              <Route path={`${PathUrl.Other}`} element={<OtherZiphap />} />
+              <Route path={`${PathUrl.History}`} element={<History />} />
+              <Route path={`${PathUrl.AddGroup}`} element={<AddGroup />} />
+              <Route path={`${PathUrl.AddEvent}`} element={<AddEvent />} />
+              <Route
+                path="*"
+                element={<Navigate to={`${PathUrl.MyZiphap}`} />}
+              />
+            </Routes>
+            <SimpleBottomNavigation />
+          </>
+        ) : (
+          <>
+            <Appbar />
+            <Routes>
+              <Route path={`${PathUrl.AddName}`} element={<AddName />} />
+              <Route path={`${PathUrl.AddGroup}`} element={<AddGroup />} />
+              <Route
+                path="*"
+                element={<Navigate to={`${PathUrl.AddName}`} />}
+              />
+            </Routes>
+          </>
+        )}
+      </BrowserRouter>
     </>
   );
 };

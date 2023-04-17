@@ -3,10 +3,19 @@ import styled from "styled-components";
 export const AppContainer = styled.div`
   position: relative;
   max-width: 430px;
-  overflow: hidden;
+  overflow-y: auto;
   margin: 0 auto;
-  height: calc(100vh - env(safe-area-inset-bottom));
-  border: 1px solid black;
+  height: var(--app-height);
+
+  /* border: 1px solid black; */
+`;
+
+export const ScrollContainer = styled.div`
+  /* position: absolute;
+  top: 0;
+  left: 0;
+  width: 1;
+  height: calc(100vh - env(safe-area-inset-bottom) + 1px); */
 `;
 
 export const LoadingContainer = styled.div`
@@ -20,5 +29,5 @@ export const LoadingContainer = styled.div`
   -ms-flex-pack: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  height: var(--app-height);
 `;

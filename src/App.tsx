@@ -71,10 +71,24 @@ const AppContent = () => {
     };
   }, []);
 
+  const appHeight = () => {
+    const doc = document.documentElement;
+    doc.style.setProperty("--app-height", `${window.innerHeight}px`);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", appHeight);
+
+    return () => {
+      window.removeEventListener("resize", appHeight);
+    };
+  }, []);
+
   if (!init) {
     return (
       <S.AppContainer className="App">
         <S.LoadingContainer>Loading...!</S.LoadingContainer>
+        <S.ScrollContainer />
       </S.AppContainer>
     );
   }
@@ -84,6 +98,7 @@ const AppContent = () => {
       <GlobalStyle />
 
       {isLoggedIn ? <MainRouter /> : <AuthRouter />}
+      <S.ScrollContainer />
     </S.AppContainer>
   );
 };
