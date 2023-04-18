@@ -26,13 +26,10 @@ yarn-error.log*
 # Edit at https://www.toptal.com/developers/gitignore?templates=firebase,react,macos
 
 ### Firebase ###
-.idea
-**/node_modules/*
-**/.firebaserc
+
 
 ### Firebase Patch ###
-.runtimeconfig.json
-.firebase/
+
 
 ### macOS ###
 # General

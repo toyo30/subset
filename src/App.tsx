@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import * as S from "./AppStyles";
 import { authService, messaging } from "./firebase";
-import { AppRouter } from "./router/authRouter";
+import { LoginRouter } from "./router/LoginRouter";
 import { GlobalStyle } from "./themes/globalStyle";
 
 export const App = () => {
@@ -57,13 +57,13 @@ export const App = () => {
   return (
     <S.AppContainer className="App">
       <GlobalStyle />
-      {/* <LoginRouter /> */}
-      {init ? (
+      <LoginRouter />
+      {/* {init ? (
         <AppRouter isLoggedIn={isLoggedIn} userObject={userObject} />
       ) : (
         // <LoginRouter />
         "loding"
-      )}
+      )} */}
     </S.AppContainer>
   );
 };

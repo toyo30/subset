@@ -1,24 +1,17 @@
 import AddIcon from "@mui/icons-material/Add";
 import { Fab } from "@mui/material";
-import { useEffect } from "react";
 import { BasicSelect } from "../../components/basicSelect/BasicSelect";
 import { BasicCard } from "../../components/card/BasicCard";
-import * as S from "./MyZiphapStyles";
-import { useNavigate } from "react-router-dom";
-
+import * as S from "./HistoryStyles";
 interface Props {
   userObject: any;
 }
 
-export const MyZiphap: React.FC<Props> = ({ userObject }) => {
-  const navigate = useNavigate();
-  const navigateToAddevent = () => {
-    navigate("/addevent");
-  };
-
+export const History: React.FC<Props> = ({ userObject }) => {
   return (
     <>
       <S.MyZiphapContainer>
+        <div>history</div>
         <BasicSelect />
         <S.CardContainer>
           <BasicCard />
@@ -32,7 +25,7 @@ export const MyZiphap: React.FC<Props> = ({ userObject }) => {
         <S.CardContainer>
           <BasicCard />
         </S.CardContainer>
-        <Fab onClick={navigateToAddevent} color="primary" aria-label="add" sx={fabStyle}>
+        <Fab color="primary" aria-label="add" sx={fabStyle}>
           <AddIcon />
         </Fab>
       </S.MyZiphapContainer>
