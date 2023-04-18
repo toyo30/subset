@@ -11,6 +11,8 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
+import { firebaseApi } from "../../api/firebase-api";
+import { CustomizedDialogs } from "../../components/dialog/dialog";
 import { db } from "../../firebase";
 import {
   backgroundColors,
@@ -51,9 +53,11 @@ export const MyZiphap = () => {
       const unsubscribe = onSnapshot(filteredQuery, (querySnapshot) => {
         const newEventDocuments: any = [];
         querySnapshot.forEach((doc) => {
-          newEventDocuments.push(doc.data());
+          newEventDocuments.push({
+            ...doc.data(),
+            id: doc.id,
+          });
         });
-        console.log(newEventDocuments, "newEventDocuments");
         setEventDocuments(newEventDocuments);
       });
 
@@ -120,17 +124,15 @@ export const MyZiphap = () => {
                                   alignItems: "center",
                                   justifyContent: "center",
                                   borderRadius: "50%",
-                                  width: "30px",
-                                  height: "30px",
+                                  width: "40px",
+                                  height: "40px",
                                   background:
                                     randomArray[(idx + 1) % randomArray.length],
                                   color: "white",
                                   fontWeight: "bold",
                                 }}
                               >
-                                {attendance.name.slice(
-                                  attendance.name.length - 2
-                                )}
+                                {attendance.name}
                               </div>
                               <div
                                 style={{
@@ -175,7 +177,47 @@ export const MyZiphap = () => {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">참가하기</Button>
+                    {eventDocument.attendance.filter(
+                      (attendance: any) => attendance.name === userInstance.name
+                    ).length === 0 ? (
+                      <CustomizedDialogs eventDocument={eventDocument} />
+                    ) : (
+                      <Button
+                        size="small"
+                        onClick={async () => {
+                          const response = await firebaseApi.updateData(
+                            eventDocument.id,
+                            "Events",
+                            {
+                              attendance: eventDocument.attendance.filter(
+                                (attendance: any) =>
+                                  attendance.name !== userInstance.name
+                              ),
+                            }
+                          );
+                          alert("이벤트에서 나왔습니다.");
+                        }}
+                      >
+                        나오기
+                      </Button>
+                    )}
+                    <Button
+                      onClick={async () => {
+                        const currentURL = window.location.href;
+                        const text = `[${selectGroup}] 집합에서 만든 초대되었습니다. ${currentURL}  이 링크를 통해 회원가입 후 이벤트에 참여해보세요  집합소개: https://minhazinayoung.notion.site/_0418-e2448767efa94b1a973c300b98331ced`;
+                        try {
+                          // navigator.clipboard API를 사용하여 클립보드에 텍스트 복사
+                          await navigator.clipboard.writeText(text);
+                          console.log("URL copied to clipboard:", text);
+                        } catch (err) {
+                          // 에러 발생 시
+                          console.error("Error copying URL to clipboard:", err);
+                        }
+                        alert("초대 링크가 복사되었습니다.");
+                      }}
+                    >
+                      공유하기
+                    </Button>
                   </CardActions>
                 </Card>
               </S.CardContainer>

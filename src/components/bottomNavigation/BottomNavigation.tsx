@@ -56,6 +56,6 @@ export const SimpleBottomNavigation = () => {
 
 const fabStyle = {
   position: "absolute",
-  bottom: 70,
+  bottom: "calc(70px + env(safe-area-inset-bottom))",
   right: 16,
 };

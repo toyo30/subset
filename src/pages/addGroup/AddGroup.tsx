@@ -72,7 +72,7 @@ export const AddGroup = () => {
 
     const response = await firebaseApi.createData("Users", {
       ...userInstance,
-      groups: [...userInstance.groups, groupName],
+      groups: [groupName],
     });
 
     if (!select) {

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const AddGroupContainer = styled.div`
-  padding-top: 72px;
+  padding-top: 10px;
 `;
 
 export const TypographyContainer = styled.div`
@@ -21,7 +21,6 @@ export const TextFieldContainer = styled.div`
   max-width: 400px;
   margin: 0 auto;
   padding: 0 48px;
-  height: 150px;
   margin-bottom: 30px;
 `;
 
