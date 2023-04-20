@@ -29,5 +29,5 @@ export const LoadingContainer = styled.div`
   -ms-flex-pack: center;
   justify-content: center;
   width: 100%;
-  height: var(--app-height);
+  height: calc(100vh - env(safe-area-inset-bottom));
 `;

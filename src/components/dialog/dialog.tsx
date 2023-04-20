@@ -77,6 +77,11 @@ export const CustomizedDialogs: React.FC<Props> = ({ eventDocument }) => {
     "convertTimeTostampToDayjs"
   );
   const updateEvnet = async () => {
+    if (eventTimeStart?.isAfter(eventTimeEnd)) {
+      alert("시작 시간이 종료 시간보다 늦습니다. 다시 시간을 설정해주세요");
+      return;
+    }
+
     const newAttendance = [
       ...eventDocument.attendance,
       {

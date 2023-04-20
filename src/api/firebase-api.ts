@@ -51,13 +51,28 @@ class FirebaseApi {
     }
   }
 
+  async getDocIdByUid(collectionName: string, uid: string) {
+    const q = query(
+      collection(this._db, collectionName),
+      where("uid", "==", uid)
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      return null;
+    } else {
+      return querySnapshot;
+    }
+  }
+
   async updateData(docId: string, collectionName: string, payload: any) {
     const docRef = doc(this._db, collectionName, docId);
     await updateDoc(docRef, payload);
   }
 
   async deleteData(docId: string, collectionName: string) {
-    await deleteDoc(doc(this._db, "your_collection_name", docId));
+    await deleteDoc(doc(this._db, collectionName, docId));
   }
 }
 

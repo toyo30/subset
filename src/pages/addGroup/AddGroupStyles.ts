@@ -26,8 +26,11 @@ export const TextFieldContainer = styled.div`
 `;
 
 export const ButtonContainer = styled.div`
-  max-width: 400px;
+  display: flex;
+  justify-content: space-between;
+  min-width: 250px;
   margin: 0 auto;
+  margin-top: 30px;
   padding: 10px;
 `;
 

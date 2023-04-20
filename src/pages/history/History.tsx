@@ -1,9 +1,17 @@
+import CloseIcon from "@mui/icons-material/Close";
 import { collection, onSnapshot } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import MyContext from "../../contexts/MyContext";
 import * as S from "./HistoryStyles";
 
-import { Card, CardContent, Typography } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  IconButton,
+  Typography,
+} from "@mui/material";
+import { firebaseApi } from "../../api/firebase-api";
 import { db } from "../../firebase";
 import {
   backgroundColors,
@@ -64,7 +72,7 @@ export const History = () => {
   return (
     <>
       <S.MyZiphapContainer>
-        {eventDocuments.length > 0 && (
+        {/* {eventDocuments.length > 0 && (
           <>
             <Typography>
               지금까지 총 {eventDocuments.length}번의 이벤트에 참여했어요
@@ -74,7 +82,7 @@ export const History = () => {
               모임을 도모할 수 있습니다
             </Typography>
           </>
-        )}
+        )} */}
         {eventDocuments && eventDocuments.length > 0 ? (
           eventDocuments.map((eventDocument: any, idx) => {
             const randomArray = shuffleArray(backgroundColors);
@@ -86,18 +94,57 @@ export const History = () => {
                   variant="outlined"
                   key={`${idx} ${eventDocument.title}`}
                 >
+                  <CardHeader
+                    style={{
+                      textAlign: "left",
+                    }}
+                    action={
+                      <IconButton
+                        aria-label="settings"
+                        onClick={async () => {
+                          await firebaseApi.deleteData(
+                            eventDocument.id,
+                            "Events"
+                          );
+                        }}
+                      >
+                        {eventDocument.author === userInstance.name && (
+                          <CloseIcon />
+                        )}
+                      </IconButton>
+                    }
+                    title={eventDocument.title}
+                    subheader={eventDocument.location}
+                  />
                   <CardContent>
+                    {eventDocument.attendance.map(
+                      (attendance: any, idx: number) => (
+                        <Typography variant="body2">
+                          {"시작: "}
+                          {convertTimestampToDate(eventDocument.timeToStart)}
+                          <br />
+                          {"종료: "}
+                          {convertTimestampToDate(eventDocument.timeToEnd)}
+                        </Typography>
+                      )
+                    )}
+
                     <Typography
-                      sx={{ fontSize: 14 }}
-                      color="text.secondary"
-                      gutterBottom
+                      variant="body1"
+                      component="div"
+                      style={{
+                        textAlign: "left",
+                      }}
                     >
-                      {eventDocument.title} | {eventDocument.location}
-                    </Typography>
-                    <Typography variant="h5" component="div">
                       참여자
                     </Typography>
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    <Typography
+                      sx={{ mb: 1.5 }}
+                      color="text.secondary"
+                      style={{
+                        textAlign: "left",
+                      }}
+                    >
                       {eventDocument.attendance
                         .flatMap((attendance: any) => attendance.name)
                         .join(" | ")}
@@ -114,7 +161,6 @@ export const History = () => {
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "space-between",
-                                maxWidth: "280px",
                                 margin: "0 auto",
                               }}
                             >
@@ -159,21 +205,22 @@ export const History = () => {
                         }
                       )}
                     </div>
-
-                    <Typography variant="body2">
-                      {"시작: "}
-                      {convertTimestampToDate(eventDocument.timeToStart)}
-                      <br />
-                      {"종료: "}
-                      {convertTimestampToDate(eventDocument.timeToEnd)}
-                    </Typography>
                   </CardContent>
                 </Card>
               </S.CardContainer>
             );
           })
         ) : (
-          <>없음</>
+          <S.LoadingContainer>
+            <img
+              src={process.env.PUBLIC_URL + "/background.png"}
+              alt="loading"
+              style={{
+                width: "220px",
+                height: "220px",
+              }}
+            />
+          </S.LoadingContainer>
         )}
       </S.MyZiphapContainer>
     </>

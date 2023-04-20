@@ -1,13 +1,14 @@
 import styled from "styled-components";
 
 export const MyZiphapContainer = styled.div`
-  height: calc(100vh - env(safe-area-inset-bottom) - 120px);
+  height: calc(100vh - env(safe-area-inset-bottom) - 110px);
   overflow-y: auto;
   padding-bottom: 56px;
 `;
 
 export const CardContainer = styled.div`
   margin-bottom: 4px;
+  padding: 0 32px;
 `;
 
 export const NameCircle = styled.div`
@@ -26,4 +27,18 @@ export const NameCircle = styled.div`
     display: block;
     padding-bottom: 100%;
   }
+`;
+
+export const LoadingContainer = styled.div`
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 100%;
+  height: calc(100vh - env(safe-area-inset-bottom) - 200px);
 `;

@@ -66,12 +66,13 @@ export const Login = () => {
   return (
     <S.LoginContainer>
       <S.TypographyContainer>
-        <Typography variant="h3" component="div" sx={{ flexGrow: 1 }}>
-          ZIPHAP
-        </Typography>
-        <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
-          모두 집합해!
-        </Typography>
+        <img
+          src={process.env.PUBLIC_URL + "/signup.png"}
+          style={{
+            maxWidth: "300px",
+            width: "100%",
+          }}
+        />
       </S.TypographyContainer>
 
       <S.TextFieldContainer>

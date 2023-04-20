@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@mui/material/styles";
 import { onAuthStateChanged } from "firebase/auth";
 import { getToken, onMessage } from "firebase/messaging";
 import { useContext, useEffect, useState } from "react";
@@ -9,6 +10,7 @@ import { authService, messaging } from "./firebase";
 import { AuthRouter } from "./router/AuthRouter";
 import { MainRouter } from "./router/MainRouter";
 import { GlobalStyle } from "./themes/globalStyle";
+import theme from "./themes/theme";
 
 export const App = () => {
   return (
@@ -87,18 +89,31 @@ const AppContent = () => {
   if (!init) {
     return (
       <S.AppContainer className="App">
-        <S.LoadingContainer>Loading...!</S.LoadingContainer>
-        <S.ScrollContainer />
+        <ThemeProvider theme={theme}>
+          <S.LoadingContainer>
+            <img
+              src={process.env.PUBLIC_URL + "/background.png"}
+              alt="loading"
+              style={{
+                width: "220px",
+                height: "220px",
+              }}
+            />
+          </S.LoadingContainer>
+          <S.ScrollContainer />
+        </ThemeProvider>
       </S.AppContainer>
     );
   }
 
   return (
     <S.AppContainer className="App">
-      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
 
-      {isLoggedIn ? <MainRouter /> : <AuthRouter />}
-      <S.ScrollContainer />
+        {isLoggedIn ? <MainRouter /> : <AuthRouter />}
+        <S.ScrollContainer />
+      </ThemeProvider>
     </S.AppContainer>
   );
 };

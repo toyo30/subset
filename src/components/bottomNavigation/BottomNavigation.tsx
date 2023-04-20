@@ -2,7 +2,7 @@ import AddIcon from "@mui/icons-material/Add";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import RestoreIcon from "@mui/icons-material/Restore";
-import { Fab } from "@mui/material";
+import { Fab, Typography } from "@mui/material";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import Box from "@mui/material/Box";
@@ -47,8 +47,11 @@ export const SimpleBottomNavigation = () => {
           />
         </BottomNavigation>
       </Box>
+
       <Fab color="primary" aria-label="add" sx={fabStyle} onClick={handleClick}>
-        <AddIcon />
+        <Typography sx={textStyle}>
+          이벤트 <AddIcon />
+        </Typography>
       </Fab>
     </S.BottomNavigationContainer>
   );
@@ -58,4 +61,21 @@ const fabStyle = {
   position: "absolute",
   bottom: "calc(70px + env(safe-area-inset-bottom))",
   right: 16,
+  fontSize: "16px",
+  width: "70px",
+  height: "70px",
+};
+
+const textStyle = {
+  // position: "absolute",
+  // bottom: "calc(110px + env(safe-area-inset-bottom))",
+  // right: 16,
+  // background: `${theme.palette.primary.main}`,
+  // color: "white",
+  // padding: "10px",
+  // borderRadius: "10px",
+  fontSize: "13px",
+  display: "flex",
+  alignItems: "center",
+  fontWeight: "600",
 };

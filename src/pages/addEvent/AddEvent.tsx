@@ -38,12 +38,17 @@ export const AddEvent = () => {
         },
       ],
       like: [],
+      author: userInstance.name,
     };
 
     try {
-      // await push(ref(dbRT, "events"), eventData);
+      if (eventTimeStart?.isAfter(eventTimeEnd)) {
+        alert("시작 시간이 종료 시간보다 늦습니다. 다시 시간을 설정해주세요");
+        return;
+      }
+
       await firebaseApi.createData("Events", eventData);
-      alert("이벤트가 성공적으로 생성되었습니다.");
+      alert("이벤트가 성공적으로 되었습니다.");
       setEventTitle("");
       setEventLocation("");
       setEventTimeStart(today);

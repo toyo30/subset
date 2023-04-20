@@ -1,4 +1,5 @@
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -44,15 +45,29 @@ export default function MenuAppBar() {
           <IconButton
             size="large"
             edge="start"
-            color="inherit"
+            color="primary"
             aria-label="menu"
             sx={{ mr: 2 }}
           >
             {/* <MenuIcon /> */}
-            {/* <NotificationsNoneIcon /> */}
+            <NotificationsNoneIcon fill="transparent" />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            ZIPHAP
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1 }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <img
+              src={process.env.PUBLIC_URL + "/app-bar.png"}
+              style={{
+                width: "120px",
+              }}
+            />
           </Typography>
           {auth && (
             <div>

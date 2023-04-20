@@ -1,6 +1,6 @@
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { Card } from "@mui/material";
+import { Box, Card } from "@mui/material";
 import { collection, onSnapshot } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import MyContext from "../../contexts/MyContext";
@@ -40,10 +40,16 @@ export const OtherZiphap = () => {
       const unsubscribe = onSnapshot(collectionRef, (querySnapshot) => {
         const newEventDocuments: any = [];
         querySnapshot.forEach((doc) => {
-          newEventDocuments.push({
-            ...doc.data(),
-            id: doc.id,
-          });
+          // newEventDocuments.push({
+          //   ...doc.data(),
+          //   id: doc.id,
+          // });
+          if (doc.data().name !== userInstance.name) {
+            newEventDocuments.push({
+              ...doc.data(),
+              id: doc.id,
+            });
+          }
         });
         console.log(newEventDocuments, "newEventDocuments");
         setEventDocuments(newEventDocuments);
@@ -58,8 +64,24 @@ export const OtherZiphap = () => {
   return (
     <>
       <S.MyZiphapContainer>
-        <div>다른 집합 엿보기</div>
         {/* <BasicSelect /> */}
+        <Box
+          style={{
+            minWidth: "275px",
+            textAlign: "left",
+            padding: "0px 32px",
+
+            marginBottom: "16px",
+            fontFamily: "Pretandard",
+          }}
+        >
+          <Typography variant="h4" component="div" gutterBottom>
+            외집단
+          </Typography>
+          <Typography variant="caption" component="div" gutterBottom>
+            궁금한 집합이 있다면 "좋아요"를 눌러서 관심을 표현해보세요.
+          </Typography>
+        </Box>
         {eventDocuments && eventDocuments.length > 0 ? (
           eventDocuments.map((eventDocument: any, idx) => {
             const randomArray = shuffleArray(backgroundColors);
@@ -72,11 +94,17 @@ export const OtherZiphap = () => {
                   key={`${idx} ${eventDocument.title}`}
                 >
                   <CardContent>
-                    <Typography variant="h5" component="div">
+                    <Typography
+                      variant="h5"
+                      component="div"
+                      style={{
+                        textAlign: "left",
+                      }}
+                    >
                       {eventDocument.group}
                     </Typography>
                     <Typography
-                      sx={{ fontSize: 14 }}
+                      sx={{ fontSize: 14, textAlign: "left" }}
                       color="text.secondary"
                       gutterBottom
                     >
@@ -245,7 +273,16 @@ export const OtherZiphap = () => {
             );
           })
         ) : (
-          <>없음</>
+          <S.LoadingContainer>
+            <img
+              src={process.env.PUBLIC_URL + "/background.png"}
+              alt="loading"
+              style={{
+                width: "220px",
+                height: "220px",
+              }}
+            />
+          </S.LoadingContainer>
         )}
       </S.MyZiphapContainer>
     </>

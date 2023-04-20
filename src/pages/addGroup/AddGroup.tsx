@@ -1,5 +1,5 @@
 import { Button, TextField, Typography } from "@mui/material";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { firebaseApi } from "../../api/firebase-api";
@@ -74,10 +74,25 @@ export const AddGroup = () => {
       window.location.reload();
     }
 
-    const response = await firebaseApi.createData("Users", {
-      ...userInstance,
-      groups: [groupName],
-    });
+    // const getId = await firebaseApi.getDocIdByUid("Users", userInstance.uid);
+
+    const q = query(
+      collection(db, "Users"),
+      where("uid", "==", userInstance.uid)
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    const response =
+      userInstance.groups.length === 0
+        ? await firebaseApi.createData("Users", {
+            ...userInstance,
+            groups: [groupName],
+          })
+        : await firebaseApi.updateData(querySnapshot.docs[0].id, "Users", {
+            ...userInstance,
+            groups: [...userInstance.groups, groupName],
+          });
 
     if (userInstance.groups.includes(groupName)) {
       return alert("이미 가입된 그룹입니다.");
@@ -111,10 +126,6 @@ export const AddGroup = () => {
   return (
     <S.AddGroupContainer>
       <S.TypographyContainer>
-        <Button onClick={toggleSelect}>
-          {select ? "그룹 생성" : "그룹 선택"}
-        </Button>
-
         <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
           {select ? "집합할 그룹 선택하기" : "집합할 그룹 생성하기"}
         </Typography>
@@ -147,10 +158,17 @@ export const AddGroup = () => {
         <Button onClick={backNavigation}>뒤로</Button>
 
         {select ? (
-          <Button onClick={handleCreateUserInfo}>그룹 선택</Button>
+          <Button variant="contained" onClick={handleCreateUserInfo}>
+            그룹 참가하기
+          </Button>
         ) : (
-          <Button onClick={handleCreateUserInfo}>그룹 생성</Button>
+          <Button variant="contained" onClick={handleCreateUserInfo}>
+            그룹 생성하기
+          </Button>
         )}
+        <Button variant="outlined" onClick={toggleSelect}>
+          {select ? "그룹 생성" : "그룹 선택"}
+        </Button>
       </S.ButtonContainer>
     </S.AddGroupContainer>
   );
