@@ -10,10 +10,6 @@ import { PathUrl } from "../../types/router/pathUrl";
 import * as S from "./AddGroupStyles";
 
 export const AddGroup = () => {
-  const navigate = useNavigate();
-  const [select, setSelect] = useState(true);
-  const [groupName, setGroupName] = useState("");
-  const [groupDescription, setGroupDescription] = useState("");
   const {
     groups,
     setGroups,
@@ -22,6 +18,12 @@ export const AddGroup = () => {
     setHasUser,
     hasUser,
   } = useContext(MyContext);
+  const navigate = useNavigate();
+  const [select, setSelect] = useState(true);
+  const [groupName, setGroupName] = useState(groups[0]);
+  const [groupDescription, setGroupDescription] = useState("");
+
+  // useEffect(() => {}, []);
 
   const toggleSelect = () => {
     setSelect(!select);
@@ -70,8 +72,10 @@ export const AddGroup = () => {
 
   const handleCreateUserInfo = async () => {
     if (!userInstance || !groupName) {
+      console.log(userInstance, groupName, "userInstance, groupName");
       alert("정보를 다시 입력해주세요");
-      window.location.reload();
+
+      // window.location.reload();
     }
 
     // const getId = await firebaseApi.getDocIdByUid("Users", userInstance.uid);
