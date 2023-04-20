@@ -58,9 +58,6 @@ export const convertDayjsTostamp = (dayjsObj: Dayjs) => {
 };
 
 export const convertTimeTostampToDayjs = (timestamp: Timestamp) => {
-  // Dayjs 객체를 JavaScript Date 객체로 변환
-  console.log(timestamp, "convertTimeTostampToDayjs timestamp");
-
   const timeToEndTimestamp = new Timestamp(
     timestamp.seconds,
     timestamp.nanoseconds
@@ -74,4 +71,48 @@ export const convertTimeTostampToDayjs = (timestamp: Timestamp) => {
 
   // Firestore에 Timestamp 객체를 저장
   return dayjsObj;
+};
+
+export const compareTimeToStartWithToday = (timestamp: Timestamp) => {
+  const today = dayjs();
+
+  const timeToStartTimestamp = new Timestamp(
+    timestamp.seconds,
+    timestamp.nanoseconds
+  );
+
+  const dateObj = timeToStartTimestamp.toDate();
+
+  const dayjsObj = dayjs(dateObj);
+
+  const compareResult = today.isAfter(dayjsObj);
+
+  return compareResult;
+};
+
+export const compareTimeToEndWithToday = (timestamp: Timestamp) => {
+  const today = dayjs();
+
+  const timeToEndTimestamp = new Timestamp(
+    timestamp.seconds,
+    timestamp.nanoseconds
+  );
+
+  const dateObj = timeToEndTimestamp.toDate();
+
+  const dayjsObj = dayjs(dateObj);
+
+  const compareResult = today.isBefore(dayjsObj);
+
+  return compareResult;
+};
+
+export const isItValidTimeArrange = (
+  timeToStart: Timestamp,
+  timeToEnd: Timestamp
+) => {
+  return (
+    compareTimeToStartWithToday(timeToStart) &&
+    compareTimeToEndWithToday(timeToEnd)
+  );
 };

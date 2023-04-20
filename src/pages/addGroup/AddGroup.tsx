@@ -1,6 +1,6 @@
 import { Button, TextField, Typography } from "@mui/material";
 import { addDoc, collection } from "firebase/firestore";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { firebaseApi } from "../../api/firebase-api";
 import { BasicSelect } from "../../components/basicSelect/BasicSelect";
@@ -48,6 +48,8 @@ export const AddGroup = () => {
       alert("그룹 생성에 실패했습니다. 다시 시도해주세요.");
       console.error(error);
     }
+
+    return true;
   };
 
   const updateGroup = async () => {
@@ -62,6 +64,8 @@ export const AddGroup = () => {
         members: [...groupData.members, userInstance.name],
       });
     }
+
+    return true;
   };
 
   const handleCreateUserInfo = async () => {
@@ -75,11 +79,10 @@ export const AddGroup = () => {
       groups: [groupName],
     });
 
-    if (!select) {
-      createGroup();
-    } else {
-      updateGroup();
+    if (userInstance.groups.includes(groupName)) {
+      return alert("이미 가입된 그룹입니다.");
     }
+    const responseGroup = !select ? await createGroup() : await updateGroup();
 
     setUserInstance({
       ...userInstance,
@@ -89,17 +92,21 @@ export const AddGroup = () => {
     if (response) {
       setHasUser(true);
     }
+
+    if (responseGroup) {
+      navigate(`${PathUrl.MyZiphap}`);
+    }
   };
 
   if (!userInstance.name) {
     navigate(`${PathUrl.AddName}`);
   }
 
-  useEffect(() => {
-    if (hasUser) {
-      navigate(`${PathUrl.MyZiphap}`);
-    }
-  }, [hasUser]);
+  // useEffect(() => {
+  //   if (hasUser) {
+  //     navigate(`${PathUrl.MyZiphap}`);
+  //   }
+  // }, [hasUser]);
 
   return (
     <S.AddGroupContainer>

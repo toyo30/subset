@@ -3,8 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import MyContext from "../../contexts/MyContext";
 import * as S from "./HistoryStyles";
 
-import { Card, CardActions, CardContent, Typography } from "@mui/material";
-import { CustomizedDialogs } from "../../components/dialog/dialog";
+import { Card, CardContent, Typography } from "@mui/material";
 import { db } from "../../firebase";
 import {
   backgroundColors,
@@ -119,22 +118,14 @@ export const History = () => {
                                 margin: "0 auto",
                               }}
                             >
-                              <div
+                              <S.NameCircle
                                 style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  borderRadius: "50%",
-                                  width: "40px",
-                                  height: "40px",
                                   background:
                                     randomArray[(idx + 1) % randomArray.length],
-                                  color: "white",
-                                  fontWeight: "bold",
                                 }}
                               >
                                 {attendance.name}
-                              </div>
+                              </S.NameCircle>
                               <div
                                 style={{
                                   display: "flex",
@@ -177,9 +168,6 @@ export const History = () => {
                       {convertTimestampToDate(eventDocument.timeToEnd)}
                     </Typography>
                   </CardContent>
-                  <CardActions>
-                    <CustomizedDialogs eventDocument={eventDocument} />
-                  </CardActions>
                 </Card>
               </S.CardContainer>
             );

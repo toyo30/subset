@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { firebaseApi } from "../../api/firebase-api";
 import { DateAndTimePicker } from "../../components/dateAndTimePicker/DateAndTimePicker";
 import MyContext from "../../contexts/MyContext";
+import { PathUrl } from "../../types/router/pathUrl";
 import { convertDayjsTostamp } from "../../utils/time/timeFormat";
 import * as S from "./AddEventStyles";
 
@@ -47,7 +48,7 @@ export const AddEvent = () => {
       setEventLocation("");
       setEventTimeStart(today);
       setEventTimeEnd(today);
-      navigate("/");
+      navigate(`${PathUrl.MyZiphap}`);
     } catch (error) {
       alert("이벤트 생성에 실패했습니다. 다시 시도해주세요.");
       console.error(error);

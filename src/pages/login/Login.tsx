@@ -9,12 +9,13 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../../firebase";
+import { getKoreanErrorMessage } from "../../utils/error/error";
 import * as S from "./LoginStyles";
 
 export const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState<string>("");
   const [authCheck, setAuthCheck] = useState("로그인");
   const [error, setError] = useState<string>("");
 
@@ -41,6 +42,7 @@ export const Login = () => {
   };
   const handleAuthEvent = async (event: any) => {
     event.preventDefault();
+    console.log(email, password, "email, password");
     try {
       if (authCheck === "로그인") {
         const response = await signInWithEmailAndPassword(
@@ -52,7 +54,7 @@ export const Login = () => {
         await createUserWithEmailAndPassword(authService, email, password);
       }
     } catch (error: any) {
-      setError(error.message);
+      setError(getKoreanErrorMessage(error.code));
       console.log(error);
     } finally {
     }
@@ -92,7 +94,7 @@ export const Login = () => {
         />
       </S.TextFieldContainer>
 
-      {error && <Typography>이메일과 비밀번호를 다시 확인해주세요</Typography>}
+      {error && <Typography>{error}</Typography>}
       <S.LoginButtonContainer>
         <Button
           variant="contained"

@@ -1,3 +1,4 @@
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { BasicSelect } from "../../components/basicSelect/BasicSelect";
@@ -11,6 +12,7 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { firebaseApi } from "../../api/firebase-api";
 import { CustomizedDialogs } from "../../components/dialog/dialog";
 import { db } from "../../firebase";
@@ -22,12 +24,11 @@ import {
 import {
   convertTimestampToDate,
   formatConvertTimestampToDate,
+  isItValidTimeArrange,
 } from "../../utils/time/timeFormat";
 
 export const MyZiphap = () => {
-  // const [documents, setDocuments] = useState<
-  //   Array<QuerySnapshot<DocumentData>>
-  // >([]);
+  const navigate = useNavigate();
   const [eventDocuments, setEventDocuments] = useState([]);
   const { userInstance, selectGroup, setSelectGroup } = useContext(MyContext);
 
@@ -53,10 +54,14 @@ export const MyZiphap = () => {
       const unsubscribe = onSnapshot(filteredQuery, (querySnapshot) => {
         const newEventDocuments: any = [];
         querySnapshot.forEach((doc) => {
-          newEventDocuments.push({
-            ...doc.data(),
-            id: doc.id,
-          });
+          if (
+            isItValidTimeArrange(doc.data().timeToStart, doc.data().timeToEnd)
+          ) {
+            newEventDocuments.push({
+              ...doc.data(),
+              id: doc.id,
+            });
+          }
         });
         setEventDocuments(newEventDocuments);
       });
@@ -68,6 +73,11 @@ export const MyZiphap = () => {
     }
   }, [selectGroup]); // 의존성 배열에 빈 배열 사용
 
+  const navigateToAddGroup = () => {
+    navigate("/add-group");
+    // navigate(`${PathUrl.AddGroup}`);
+  };
+
   return (
     <>
       <S.MyZiphapContainer>
@@ -75,6 +85,12 @@ export const MyZiphap = () => {
           selectOptions={userInstance.groups}
           setSelectGroup={onChange}
         />
+        <Button
+          startIcon={<AddCircleOutlineIcon />}
+          onClick={navigateToAddGroup}
+        >
+          집합 만들기
+        </Button>
         {eventDocuments && eventDocuments.length > 0 ? (
           eventDocuments.map((eventDocument: any, idx) => {
             const randomArray = shuffleArray(backgroundColors);
@@ -116,24 +132,17 @@ export const MyZiphap = () => {
                                 justifyContent: "space-between",
                                 maxWidth: "280px",
                                 margin: "0 auto",
+                                fontSize: "16px",
                               }}
                             >
-                              <div
+                              <S.NameCircle
                                 style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  borderRadius: "50%",
-                                  width: "40px",
-                                  height: "40px",
                                   background:
                                     randomArray[(idx + 1) % randomArray.length],
-                                  color: "white",
-                                  fontWeight: "bold",
                                 }}
                               >
                                 {attendance.name}
-                              </div>
+                              </S.NameCircle>
                               <div
                                 style={{
                                   display: "flex",

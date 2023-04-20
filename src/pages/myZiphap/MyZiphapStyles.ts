@@ -9,3 +9,21 @@ export const MyZiphapContainer = styled.div`
 export const CardContainer = styled.div`
   margin-bottom: 4px;
 `;
+
+export const NameCircle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  min-width: 40px;
+  color: white;
+  font-weight: bold;
+  font-size: 1em;
+  padding: 5px;
+
+  &:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+  }
+`;
