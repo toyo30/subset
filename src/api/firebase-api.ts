@@ -29,6 +29,8 @@ class FirebaseApi {
     } catch (e) {
       console.error("Error adding document: ", e);
     }
+
+    return true;
   }
 
   async readData(collectionName: string) {

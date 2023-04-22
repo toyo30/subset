@@ -2,6 +2,7 @@ import { Button, TextField, Typography } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { fcmApi } from "../../api/fcm-api";
 import { firebaseApi } from "../../api/firebase-api";
 import { DateAndTimePicker } from "../../components/dateAndTimePicker/DateAndTimePicker";
 import MyContext from "../../contexts/MyContext";
@@ -14,7 +15,6 @@ export const AddEvent = () => {
   const date = new Date();
   const today = dayjs(date);
   const navigate = useNavigate();
-  const [modal, setModal] = useState(false);
   const [eventTitle, setEventTitle] = useState("");
   const [eventLocation, setEventLocation] = useState("");
   const [eventTimeStart, setEventTimeStart] = useState<Dayjs | null>(today);
@@ -47,13 +47,21 @@ export const AddEvent = () => {
         return;
       }
 
-      await firebaseApi.createData("Events", eventData);
-      alert("이벤트가 성공적으로 되었습니다.");
+      const reponse = await firebaseApi.createData("Events", eventData);
+      alert("이벤트가 성공적으로 생성되었습니다.");
       setEventTitle("");
       setEventLocation("");
       setEventTimeStart(today);
       setEventTimeEnd(today);
       navigate(`${PathUrl.MyZiphap}`);
+
+      if (reponse) {
+        await fcmApi.sendMessage({
+          message: `${selectGroup || userInstance.groups[0]}이 ${
+            eventData.title
+          } 이벤트를 생성했습니다.`,
+        });
+      }
     } catch (error) {
       alert("이벤트 생성에 실패했습니다. 다시 시도해주세요.");
       console.error(error);

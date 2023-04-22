@@ -129,17 +129,13 @@ export const MyZiphap = () => {
                     subheader={eventDocument.location}
                   />
                   <CardContent>
-                    {eventDocument.attendance.map(
-                      (attendance: any, idx: number) => (
-                        <Typography variant="body2">
-                          {"시작: "}
-                          {convertTimestampToDate(eventDocument.timeToStart)}
-                          <br />
-                          {"종료: "}
-                          {convertTimestampToDate(eventDocument.timeToEnd)}
-                        </Typography>
-                      )
-                    )}
+                    <Typography variant="body2">
+                      {"시작: "}
+                      {convertTimestampToDate(eventDocument.timeToStart)}
+                      <br />
+                      {"종료: "}
+                      {convertTimestampToDate(eventDocument.timeToEnd)}
+                    </Typography>
                     {eventDocument.attendance.map(
                       (attendance: any, idx: number) => {}
                     )}
@@ -256,7 +252,7 @@ export const MyZiphap = () => {
                     <Button
                       onClick={async () => {
                         const currentURL = window.location.href;
-                        const text = `[${selectGroup}]에서 만든 집합에 초대되었습니다.\n\n링크: ${currentURL}\n\n링크를 통해 회원가입 후 이벤트에 참여해보세요.\n\n서비스집합소개: https://minhazinayoung.notion.site/_0418-e2448767efa94b1a973c300b98331ced`;
+                        const text = `[${selectGroup}]에서 만든 집합에 초대되었습니다.\n\n링크: ${currentURL}\n\n링크를 통해 회원가입 후 이벤트에 참여해보세요.(사파리 또는 기본브라우저에서 접속하는 걸 추천합니다!) \n\n서비스집합소개: https://minhazinayoung.notion.site/ziphap-cb475ad60e044b008ede63fb40c6f271`;
                         try {
                           // navigator.clipboard API를 사용하여 클립보드에 텍스트 복사
                           await navigator.clipboard.writeText(text);

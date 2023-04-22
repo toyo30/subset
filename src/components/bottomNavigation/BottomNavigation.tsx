@@ -8,6 +8,7 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import Box from "@mui/material/Box";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
+import { fcmApi } from "../../api/fcm-api";
 import { PathUrl } from "../../types/router/pathUrl";
 import * as S from "./BottomNavigationStyles";
 export const SimpleBottomNavigation = () => {
@@ -27,6 +28,17 @@ export const SimpleBottomNavigation = () => {
     <S.BottomNavigationContainer>
       <Box>
         <BottomNavigation showLabels value={value} onChange={handleChange}>
+          <button
+            onClick={async (e) => {
+              await fcmApi.sendMessage({
+                message: `test이
+                  test
+               이벤트를 생성했습니다.`,
+              });
+            }}
+          >
+            fcm butotn
+          </button>
           <BottomNavigationAction
             label="History"
             // value={`${PathUrl.History.slice(1)}`}

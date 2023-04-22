@@ -117,17 +117,13 @@ export const History = () => {
                     subheader={eventDocument.location}
                   />
                   <CardContent>
-                    {eventDocument.attendance.map(
-                      (attendance: any, idx: number) => (
-                        <Typography variant="body2">
-                          {"시작: "}
-                          {convertTimestampToDate(eventDocument.timeToStart)}
-                          <br />
-                          {"종료: "}
-                          {convertTimestampToDate(eventDocument.timeToEnd)}
-                        </Typography>
-                      )
-                    )}
+                    <Typography variant="body2">
+                      {"시작: "}
+                      {convertTimestampToDate(eventDocument.timeToStart)}
+                      <br />
+                      {"종료: "}
+                      {convertTimestampToDate(eventDocument.timeToEnd)}
+                    </Typography>
 
                     <Typography
                       variant="body1"

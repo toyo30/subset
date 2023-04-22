@@ -44,14 +44,17 @@ export const OtherZiphap = () => {
           //   ...doc.data(),
           //   id: doc.id,
           // });
-          if (doc.data().name !== userInstance.name) {
+          if (
+            doc.data().attendance.filter((object: any) => {
+              return object.name !== userInstance.name;
+            }).length > 0
+          ) {
             newEventDocuments.push({
               ...doc.data(),
               id: doc.id,
             });
           }
         });
-        console.log(newEventDocuments, "newEventDocuments");
         setEventDocuments(newEventDocuments);
       });
 
