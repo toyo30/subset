@@ -35,7 +35,6 @@ export const OtherZiphap = () => {
       //   collectionRef,
       //   where("group", "==", selectGroup)
       // );
-      // console.log(selectGroup, "selectGroup");
       // 실시간 리스너 설정
       const unsubscribe = onSnapshot(collectionRef, (querySnapshot) => {
         const newEventDocuments: any = [];
@@ -88,7 +87,6 @@ export const OtherZiphap = () => {
         {eventDocuments && eventDocuments.length > 0 ? (
           eventDocuments.map((eventDocument: any, idx) => {
             const randomArray = shuffleArray(backgroundColors);
-            console.log(randomArray, "randomArray");
             return (
               <S.CardContainer>
                 <Card

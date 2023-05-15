@@ -42,7 +42,6 @@ export const Login = () => {
   };
   const handleAuthEvent = async (event: any) => {
     event.preventDefault();
-    console.log(email, password, "email, password");
     try {
       if (authCheck === "로그인") {
         const response = await signInWithEmailAndPassword(

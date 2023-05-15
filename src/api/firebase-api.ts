@@ -53,6 +53,21 @@ class FirebaseApi {
     }
   }
 
+  async getTokenByName(collectionName: string, name: string) {
+    const q = query(
+      collection(this._db, collectionName),
+      where("name", "==", name)
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      return null;
+    } else {
+      return querySnapshot.docs[0].data().token;
+    }
+  }
+
   async getDocIdByUid(collectionName: string, uid: string) {
     const q = query(
       collection(this._db, collectionName),
@@ -65,6 +80,24 @@ class FirebaseApi {
       return null;
     } else {
       return querySnapshot;
+    }
+  }
+
+  async getGroupMembersByName(collectionName: string, name: string) {
+    const q = query(
+      collection(this._db, collectionName),
+      where("name", "==", name)
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      return null;
+    } else {
+      const newGroupMembers = querySnapshot.docs.flatMap((doc) => {
+        return doc.data().members;
+      });
+      return newGroupMembers;
     }
   }
 

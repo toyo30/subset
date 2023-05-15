@@ -1,6 +1,6 @@
 import { Button, TextField, Typography } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fcmApi } from "../../api/fcm-api";
 import { firebaseApi } from "../../api/firebase-api";
@@ -55,11 +55,27 @@ export const AddEvent = () => {
       setEventTimeEnd(today);
       navigate(`${PathUrl.MyZiphap}`);
 
+      const groupMembers = await firebaseApi.getGroupMembersByName(
+        "groups",
+        selectGroup
+      );
+
+      const newTokens: string[] = [];
+
+      if (groupMembers) {
+        groupMembers.forEach(async (member) => {
+          const token = await firebaseApi.getTokenByName("users", member);
+          newTokens.push(token);
+        });
+      }
+
       if (reponse) {
+        console.log(newTokens, "newTokens");
         await fcmApi.sendMessage({
-          message: `${selectGroup || userInstance.groups[0]}이 ${
-            eventData.title
-          } 이벤트를 생성했습니다.`,
+          message: `${
+            selectGroup || userInstance.groups[0]
+          }에서 새로운 이벤트가 생성되었습니다.`,
+          tokens: newTokens,
         });
       }
     } catch (error) {
@@ -67,10 +83,6 @@ export const AddEvent = () => {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    console.log("eventTimeStart", eventTimeStart);
-  }, [eventTimeStart]);
 
   return (
     <S.AddGroupContainer>

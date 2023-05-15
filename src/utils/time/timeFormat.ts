@@ -33,7 +33,6 @@ export const formatConvertTimestampToDate = (timestamp: Timestamp) => {
 };
 
 function formatHourAndMinutes(date: Date) {
-  console.log(date, "date");
   let hours = date.getHours();
   let minutes = date.getMinutes().toString();
   let amPm = hours >= 12 ? "오후" : "오전";
@@ -42,7 +41,6 @@ function formatHourAndMinutes(date: Date) {
   hours = hours ? hours : 12; // 시간이 0이면 12로 설정
   const strMinutes = minutes.length < 2 ? "0" + minutes : minutes; // 분이 10보다 작으면 앞에 0을 추가
 
-  console.log(`${amPm} : ${hours}: ${strMinutes}`, "date");
   return amPm + " " + hours + ":" + strMinutes;
 }
 

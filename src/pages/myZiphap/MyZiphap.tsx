@@ -53,7 +53,6 @@ export const MyZiphap = () => {
         collectionRef,
         where("group", "==", selectGroup)
       );
-      // console.log(selectGroup, "selectGroup");
       // 실시간 리스너 설정
       const unsubscribe = onSnapshot(filteredQuery, (querySnapshot) => {
         const newEventDocuments: any = [];
@@ -100,7 +99,7 @@ export const MyZiphap = () => {
           eventDocuments.map((eventDocument: any, idx) => {
             const randomArray = shuffleArray(backgroundColors);
             return (
-              <S.CardContainer>
+              <S.CardContainer key={eventDocument.id}>
                 <Card
                   sx={{ minWidth: 275 }}
                   variant="outlined"
@@ -136,9 +135,6 @@ export const MyZiphap = () => {
                       {"종료: "}
                       {convertTimestampToDate(eventDocument.timeToEnd)}
                     </Typography>
-                    {eventDocument.attendance.map(
-                      (attendance: any, idx: number) => {}
-                    )}
                     {/* <Typography
                       sx={{ fontSize: 14 }}
                       color="text.secondary"
@@ -174,6 +170,7 @@ export const MyZiphap = () => {
 
                           return (
                             <div
+                              key={idx}
                               style={{
                                 display: "flex",
                                 alignItems: "center",

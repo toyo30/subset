@@ -41,8 +41,6 @@ export const History = () => {
     // 컬렉션 참조 생성
     if (selectGroup) {
       const collectionRef = collection(db, "Events");
-
-      // console.log(selectGroup, "selectGroup");
       // 실시간 리스너 설정
       const unsubscribe = onSnapshot(collectionRef, (querySnapshot) => {
         const newEventDocuments: any = [];
@@ -86,7 +84,7 @@ export const History = () => {
         {eventDocuments && eventDocuments.length > 0 ? (
           eventDocuments.map((eventDocument: any, idx) => {
             const randomArray = shuffleArray(backgroundColors);
-            console.log(randomArray, "randomArray");
+
             return (
               <S.CardContainer>
                 <Card

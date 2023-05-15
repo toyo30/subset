@@ -28,7 +28,10 @@ const AppContent = () => {
   const { userInstance, setUserInstance, value, setValue } =
     useContext(MyContext);
   const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState(false);
+  const [message, setMessage] = useState({
+    title: "",
+    body: "",
+  });
 
   const handleClose = (
     event: React.SyntheticEvent | Event,
@@ -82,6 +85,13 @@ const AppContent = () => {
     onMessage(messaging, (payload) => {
       console.log("Message received. ", payload);
 
+      setMessage({
+        title: payload.notification?.title || "",
+        body: payload.notification?.body || "",
+      });
+
+      setOpen(true);
+      // setMessage(payload?.body.);
       // ...
     });
   };
@@ -120,27 +130,27 @@ const AppContent = () => {
 
     requestNotificationPermissionAndGetToken();
     // // Get the FCM token and log it to the console
-    // getToken(messaging, {
-    //   vapidKey:
-    //     "BILnzoSfp_R5AqlOq_E0cVaPrymPxneIPe9uMtoSInnzsUh9J1oigJEWkMGBVynpEdnk4UKFYhytqS19q-KvA40",
-    // })
-    //   .then((token) => {
-    //     console.log("FCM Token:", token);
-    //     //여기서도 fcm 토큰 관련, db 생성해서 추가해주기
-    //     setUserInstance({
-    //       ...userInstance,
-    //       fcmToken: token,
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     console.error("Failed to get FCM token:", err);
-    //   });
+    getToken(messaging, {
+      vapidKey:
+        "BILnzoSfp_R5AqlOq_E0cVaPrymPxneIPe9uMtoSInnzsUh9J1oigJEWkMGBVynpEdnk4UKFYhytqS19q-KvA40",
+    })
+      .then((token) => {
+        console.log("FCM Token:", token);
+        //여기서도 fcm 토큰 관련, db 생성해서 추가해주기
+        setUserInstance({
+          ...userInstance,
+          fcmToken: token,
+        });
+      })
+      .catch((err) => {
+        console.error("Failed to get FCM token:", err);
+      });
 
-    // // Handle incoming messages
-    // onMessage(messaging, (payload) => {
-    //   console.log("Message received. ", payload);
-    //   // ...
-    // });
+    // Handle incoming messages
+    onMessage(messaging, (payload) => {
+      console.log("Message received. ", payload);
+      // ...
+    });
 
     return () => {
       unsubscribe();
@@ -184,18 +194,16 @@ const AppContent = () => {
     <S.AppContainer className="App">
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-
-        <button onClick={requestNotificationPermissionAndGetToken}>
-          허락 요구
-        </button>
         {isLoggedIn ? <MainRouter /> : <AuthRouter />}
         <S.ScrollContainer />
       </ThemeProvider>
       <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={open}
         autoHideDuration={6000}
         onClose={handleClose}
-        message="Note archived"
+        title={message.title}
+        message={message.body}
       />
     </S.AppContainer>
   );

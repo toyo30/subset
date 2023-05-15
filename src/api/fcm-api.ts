@@ -14,7 +14,10 @@ class FcmApi {
     this._api = api;
   }
 
-  async sendMessage(payload: { message: string }): Promise<any> {
+  async sendMessage(payload: {
+    message: string;
+    tokens: string[];
+  }): Promise<any> {
     return await this._api.post(FcmApiUrl.SendMessage, payload, {
       withCredentials: true,
     });

@@ -5,6 +5,7 @@ import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 import { getFirestore } from "firebase/firestore";
 import { getMessaging } from "firebase/messaging";
+// import * as serviceAccount from "../firebase-admin-key.json";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,6 +22,10 @@ const firebaseConfig = {
   databaseURL:
     "https://subset-abd73-default-rtdb.asia-southeast1.firebasedatabase.app",
 };
+
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount as any),
+// });
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);

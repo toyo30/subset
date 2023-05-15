@@ -8,4 +8,5 @@ export enum PathUrl {
   AddEvent = "/add-event",
   AddGroup = "/add-group",
   AddName = "/add-name",
+  Map = "/map",
 }

@@ -4,14 +4,12 @@ import { useEffect, useRef } from "react";
 export const TextFieldCustom: React.FC<TextFieldProps> = ({ ...rest }) => {
   const textFieldRef = useRef<HTMLInputElement | null>(null);
   const handleInputBlur = (e: any) => {
-    console.log("---");
     if (!textFieldRef?.current?.contains(e.target)) {
       textFieldRef.current?.blur();
     }
   };
 
   useEffect(() => {
-    console.log("---");
     handleInputBlur("asdf");
     window?.addEventListener("touchstart", handleInputBlur);
     window?.addEventListener("touchmove", handleInputBlur);

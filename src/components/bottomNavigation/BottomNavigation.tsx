@@ -1,6 +1,7 @@
 import AddIcon from "@mui/icons-material/Add";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import Map from "@mui/icons-material/Map";
 import RestoreIcon from "@mui/icons-material/Restore";
 import { Fab, Typography } from "@mui/material";
 import BottomNavigation from "@mui/material/BottomNavigation";
@@ -8,7 +9,6 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import Box from "@mui/material/Box";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { fcmApi } from "../../api/fcm-api";
 import { PathUrl } from "../../types/router/pathUrl";
 import * as S from "./BottomNavigationStyles";
 export const SimpleBottomNavigation = () => {
@@ -27,18 +27,23 @@ export const SimpleBottomNavigation = () => {
   return (
     <S.BottomNavigationContainer>
       <Box>
-        <BottomNavigation showLabels value={value} onChange={handleChange}>
-          <button
+        <BottomNavigation
+          value={value}
+          onChange={handleChange}
+          showLabels={true}
+        >
+          {/* <button
             onClick={async (e) => {
               await fcmApi.sendMessage({
                 message: `test이
                   test
                이벤트를 생성했습니다.`,
+                tokens: ["fcmToken"],
               });
             }}
           >
             fcm butotn
-          </button>
+          </button> */}
           <BottomNavigationAction
             label="History"
             // value={`${PathUrl.History.slice(1)}`}
@@ -50,6 +55,12 @@ export const SimpleBottomNavigation = () => {
             value=""
             // value={`${PathUrl.MyZiphap.slice(1)}`}
             icon={<FavoriteIcon />}
+          />
+          <BottomNavigationAction
+            label="지도"
+            value="map"
+            // value={`${PathUrl.MyZiphap.slice(1)}`}
+            icon={<Map />}
           />
           <BottomNavigationAction
             label="외집합"

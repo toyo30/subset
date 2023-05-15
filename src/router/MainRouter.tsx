@@ -10,6 +10,7 @@ import { AddEvent } from "../pages/addEvent/AddEvent";
 import { AddGroup } from "../pages/addGroup/AddGroup";
 import { AddName } from "../pages/addName/AddName";
 import { History } from "../pages/history/History";
+import { Map } from "../pages/map/Map";
 import { MyZiphap } from "../pages/myZiphap/MyZiphap";
 import { OtherZiphap } from "../pages/otherZiphap/OtherZiphap";
 import { PathUrl } from "../types/router/pathUrl";
@@ -66,6 +67,7 @@ export const MainRouter = () => {
               <Route path={`${PathUrl.History}`} element={<History />} />
               <Route path={`${PathUrl.AddGroup}`} element={<AddGroup />} />
               <Route path={`${PathUrl.AddEvent}`} element={<AddEvent />} />
+              <Route path={`${PathUrl.Map}`} element={<Map />} />
               <Route
                 path="*"
                 element={<Navigate to={`${PathUrl.MyZiphap}`} />}

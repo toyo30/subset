@@ -60,7 +60,6 @@ export const AddGroup = () => {
     if (groupPayload) {
       const groupId = groupPayload.docs[0].id;
       const groupData = groupPayload.docs[0].data();
-      console.log(groupData, "groupData");
       const groupResponse = await firebaseApi.updateData(groupId, "groups", {
         ...groupData,
         members: [...groupData.members, userInstance.name],
@@ -72,7 +71,6 @@ export const AddGroup = () => {
 
   const handleCreateUserInfo = async () => {
     if (!userInstance || !groupName) {
-      console.log(userInstance, groupName, "userInstance, groupName");
       alert("정보를 다시 입력해주세요");
 
       // window.location.reload();

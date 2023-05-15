@@ -83,10 +83,10 @@ messaging.onBackgroundMessage(function (payload) {
     payload
   );
   // Customize notification here
-  const notificationTitle = "Background Message Title";
+  const notificationTitle = `${payload.data.title}`;
   const notificationOptions = {
-    body: "Background Message body.",
-    icon: "/firebase-logo.png",
+    body: `${payload.data.body}`,
+    icon: "/planetLogo192.png",
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
@@ -125,7 +125,7 @@ messaging.onBackgroundMessage(function (payload) {
 //   // Customize notification here
 //   const notificationTitle = "Background Message Title";
 //   const notificationOptions = {
-//     body: "Background Message body.",
+//     body: "Background Message body.g하하하하하",
 //     icon: "/firebase-logo.png",
 //   };
 
