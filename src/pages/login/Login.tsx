@@ -102,7 +102,7 @@ export const Login = () => {
           size="large"
           sx={{ minWidth: "280px" }}
         >
-          {authCheck === "로그인" ? "로그인" : "회원가입"}
+          {authCheck === "로그인" ? "로그인" : "회원가"}
         </Button>
       </S.LoginButtonContainer>
 
@@ -118,7 +118,7 @@ export const Login = () => {
         onClick={toggleAuth}
         sx={{ minWidth: "280px" }}
       >
-        {authCheck === "로그인" ? "회원가입" : "로그인"}
+        {authCheck === "로그인" ? "회원가" : "로그"}
       </Button>
     </S.LoginContainer>
   );

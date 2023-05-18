@@ -19,15 +19,25 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage(function (payload) {
-  console.log(
-    "[firebase-messaging-sw.js] Received background message ",
-    payload
-  );
-  // Customize notification here
-  const notificationTitle = `${payload.data.title}`;
+// messaging.onBackgroundMessage(function (payload) {
+//   console.log(
+//     "[firebase-messaging-sw.js] Received background message ",
+//     payload
+//   );
+//   // Customize notification here
+//   const notificationTitle = `${payload.data.title}`;
+//   const notificationOptions = {
+//     body: `${payload.data.body}`,
+//     icon: "/planetLogo192.png",
+//   };
+
+//   self.registration.showNotification(notificationTitle, notificationOptions);
+// });
+
+messaging.onBackgroundMessage((payload) => {
+  const notificationTitle = payload.notification.title;
   const notificationOptions = {
-    body: `${payload.data.body}`,
+    body: payload.notification.body,
     icon: "/planetLogo192.png",
   };
 
