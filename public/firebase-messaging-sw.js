@@ -1,3 +1,39 @@
+importScripts(
+  "https://www.gstatic.com/firebasejs/9.2.0/firebase-app-compat.js"
+);
+importScripts(
+  "https://www.gstatic.com/firebasejs/9.2.0/firebase-messaging-compat.js"
+);
+
+firebase.initializeApp({
+  apiKey: "AIzaSyBY0cKVHZHSGHZfYw3wxC2RiA7Ss2LBL-8",
+  authDomain: "subset-abd73.firebaseapp.com",
+  projectId: "subset-abd73",
+  storageBucket: "subset-abd73.appspot.com",
+  messagingSenderId: "1002646336340",
+  appId: "1:1002646336340:web:a4187dca93d5eba3c8cec1",
+  measurementId: "G-PV45ZT9JM4",
+  databaseURL:
+    "https://subset-abd73-default-rtdb.asia-southeast1.firebasedatabase.app",
+});
+
+const messaging = firebase.messaging();
+
+messaging.onBackgroundMessage(function (payload) {
+  console.log(
+    "[firebase-messaging-sw.js] Received background message ",
+    payload
+  );
+  // Customize notification here
+  const notificationTitle = `${payload.data.title}`;
+  const notificationOptions = {
+    body: `${payload.data.body}`,
+    icon: "/planetLogo192.png",
+  };
+
+  self.registration.showNotification(notificationTitle, notificationOptions);
+});
+
 // // Import and configure the Firebase SDK
 // importScripts(
 //   "https://www.gstatic.com/firebasejs/9.6.9/firebase-app-compat.js"
@@ -23,26 +59,6 @@
 // importScripts("/__/firebase/9.2.0/firebase-app-compat.js");
 // importScripts("/__/firebase/9.2.0/firebase-messaging-compat.js");
 // importScripts("/__/firebase/init.js");
-importScripts(
-  "https://www.gstatic.com/firebasejs/9.2.0/firebase-app-compat.js"
-);
-importScripts(
-  "https://www.gstatic.com/firebasejs/9.2.0/firebase-messaging-compat.js"
-);
-
-firebase.initializeApp({
-  apiKey: "AIzaSyBY0cKVHZHSGHZfYw3wxC2RiA7Ss2LBL-8",
-  authDomain: "subset-abd73.firebaseapp.com",
-  projectId: "subset-abd73",
-  storageBucket: "subset-abd73.appspot.com",
-  messagingSenderId: "1002646336340",
-  appId: "1:1002646336340:web:a4187dca93d5eba3c8cec1",
-  measurementId: "G-PV45ZT9JM4",
-  databaseURL:
-    "https://subset-abd73-default-rtdb.asia-southeast1.firebasedatabase.app",
-});
-
-const messaging = firebase.messaging();
 
 /**
  * Here is is the code snippet to initialize Firebase Messaging in the Service
@@ -77,21 +93,6 @@ const messaging = firebase.messaging();
 // and you should use data messages for custom notifications.
 // For more info see:
 // https://firebase.google.com/docs/cloud-messaging/concept-options
-messaging.onBackgroundMessage(function (payload) {
-  console.log(
-    "[firebase-messaging-sw.js] Received background message ",
-    payload
-  );
-  // Customize notification here
-  const notificationTitle = `${payload.data.title}`;
-  const notificationOptions = {
-    body: `${payload.data.body}`,
-    icon: "/planetLogo192.png",
-  };
-
-  self.registration.showNotification(notificationTitle, notificationOptions);
-});
-
 // import { initializeApp } from "firebase/app";
 // import { getMessaging } from "firebase/messaging/sw";
 

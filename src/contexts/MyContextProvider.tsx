@@ -18,6 +18,7 @@ const MyContextProvider: React.FC<MyContextProviderProps> = ({ children }) => {
   const [groups, setGroups] = useState<string[]>([]);
   const [hasUser, setHasUser] = useState<boolean>(true);
   const [selectGroup, setSelectGroup] = useState<string>("");
+  const [bottomSheetStatus, setBottomSheetStatus] = useState<boolean>(false);
 
   const contextValue = {
     value,
@@ -30,6 +31,8 @@ const MyContextProvider: React.FC<MyContextProviderProps> = ({ children }) => {
     setHasUser,
     selectGroup,
     setSelectGroup,
+    bottomSheetStatus,
+    setBottomSheetStatus,
   };
 
   return (

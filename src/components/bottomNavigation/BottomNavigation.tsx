@@ -11,6 +11,7 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { PathUrl } from "../../types/router/pathUrl";
 import * as S from "./BottomNavigationStyles";
+
 export const SimpleBottomNavigation = () => {
   const [value, setValue] = React.useState("");
   const navigate = useNavigate();
