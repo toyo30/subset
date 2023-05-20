@@ -32,7 +32,7 @@ export const Map = () => {
 
       window.naver.maps.Event.addListener(marker, "click", (e) => {
         setBottomSheetStatus(true);
-        setPinStatus(item[1].name);
+        setPinStatus(item[0]);
       });
     });
 

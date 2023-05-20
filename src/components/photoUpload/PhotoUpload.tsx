@@ -6,8 +6,12 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { ChangeEvent, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { pins } from "../../constant/pins";
 import MyContext from "../../contexts/MyContext";
 import { app, db } from "../../firebase";
+import { PathUrl } from "../../types/router/pathUrl";
+import { BasicSelect } from "../basicSelect/BasicSelect";
 
 const PhotoUpload = () => {
   const { pinStatus } = useContext(MyContext);
@@ -15,6 +19,7 @@ const PhotoUpload = () => {
   const [id, setId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [text, setText] = useState<string>("");
+  const [location, setLocation] = useState<string>("");
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -24,6 +29,7 @@ const PhotoUpload = () => {
 
   const handleUpload = async () => {
     if (!file || !id || !password || !text) return;
+    const navigate = useNavigate();
 
     const storage = getStorage(app);
     const storageRef = ref(storage, `images/${file.name}`);
@@ -51,6 +57,7 @@ const PhotoUpload = () => {
           id: id,
           password: password,
           text: text,
+          location: location,
           like: 0,
         };
 
@@ -59,6 +66,7 @@ const PhotoUpload = () => {
     );
 
     alert("업로드가 완료되었습니다");
+    navigate(`${PathUrl.Map}`);
   };
 
   return (
@@ -89,6 +97,12 @@ const PhotoUpload = () => {
         />
       </div>
       <input type="file" onChange={handleFileChange} />
+      <BasicSelect
+        label="장소"
+        selectOptions={Object.values(pins).map((value) => value.name)}
+        onChange={(e) => setLocation(e.target.value)}
+      />
+
       <button onClick={handleUpload}>Upload</button>
     </div>
   );

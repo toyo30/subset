@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
+import { pins } from "../../constant/pins";
 import MyContext from "../../contexts/MyContext";
 import TopAppBars from "../topAppBar/TopAppBar";
 
@@ -29,7 +30,6 @@ const Handle = styled.div`
 
 const BottomSheetHeader: React.FC<BottomSheetHeaderProps> = ({ className }) => {
   const { setBottomSheetStatus, pinStatus } = useContext(MyContext);
-  const pinStautsText = `${pinStatus} 실시간 축제 근황`;
   return (
     <Wrapper className={className}>
       <Handle />
@@ -47,7 +47,7 @@ const BottomSheetHeader: React.FC<BottomSheetHeaderProps> = ({ className }) => {
           </button>
         }
       >
-        {pinStautsText}
+        {pinStatus && pins[pinStatus].name}
       </TopAppBars>
     </Wrapper>
   );

@@ -62,12 +62,13 @@ export default function MenuAppBar() {
               justifyContent: "center",
             }}
           >
-            <img
+            {/* <img
               src={process.env.PUBLIC_URL + "/app-bar.png"}
               style={{
                 width: "120px",
               }}
-            />
+            /> */}
+            실시간 축제 근황!
           </Typography>
           {auth && (
             <div>
