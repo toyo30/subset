@@ -15,6 +15,9 @@ interface MyContextType {
   selectGroup: string;
   setSelectGroup: Dispatch<SetStateAction<string>>;
   bottomSheetStatus: boolean;
+  setBottomSheetStatus: Dispatch<SetStateAction<boolean>>;
+  pinStatus: string;
+  setPinStatus: Dispatch<SetStateAction<string>>;
 }
 
 const MyContext = createContext<MyContextType>({
@@ -35,6 +38,9 @@ const MyContext = createContext<MyContextType>({
   selectGroup: "",
   setSelectGroup: () => {},
   bottomSheetStatus: false,
+  setBottomSheetStatus: () => {},
+  pinStatus: "",
+  setPinStatus: () => {},
 });
 
 export default MyContext;

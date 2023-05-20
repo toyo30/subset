@@ -110,10 +110,12 @@ export function useBottomSheet(MIN_Y: any, MAX_Y: any) {
         }
 
         // sheet 위치 갱신.
-        sheetRef.current.style.setProperty(
-          "transform",
-          `translateY(${nextSheetY}px)`
-        );
+        if (sheetRef.current) {
+          sheetRef.current.style.setProperty(
+            "transform",
+            `translateY(${nextSheetY}px)`
+          );
+        }
       } else {
         // document.body.style.overflowY = "hidden";
       }

@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import MyContext from "../../contexts/MyContext";
+import TopAppBars from "../topAppBar/TopAppBar";
 
 interface BottomSheetHeaderProps {
   /* children: react node */
@@ -26,16 +28,27 @@ const Handle = styled.div`
 `;
 
 const BottomSheetHeader: React.FC<BottomSheetHeaderProps> = ({ className }) => {
+  const { setBottomSheetStatus, pinStatus } = useContext(MyContext);
+  const pinStautsText = `${pinStatus} 실시간 축제 근황`;
   return (
     <Wrapper className={className}>
       <Handle />
-      {/* <TopAppBars
+      <TopAppBars
         topAppType="collapsed"
         borderBottom
         sx={{ padding: "18px 16px", height: "64px" }}
+        topAppRight={
+          <button
+            onClick={() => {
+              setBottomSheetStatus(false);
+            }}
+          >
+            닫기
+          </button>
+        }
       >
-        배송 전체 일정
-      </TopAppBars> */}
+        {pinStautsText}
+      </TopAppBars>
     </Wrapper>
   );
 };

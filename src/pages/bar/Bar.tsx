@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef } from "react";
 import BottomSheet from "../../components/bottomSheet/BottomSheet";
 import MyContext from "../../contexts/MyContext";
-import * as S from "./MapStyles";
+import * as S from "./BarStyles";
 
 const pins = {
   Minju: { lat: 37.587269, lng: 127.031758, name: "민주광장" }, // 민주광장
@@ -28,12 +28,6 @@ export const Map = () => {
       const marker = new window.naver.maps.Marker({
         position: new window.naver.maps.LatLng(item[1].lat, item[1].lng),
         map: mapRef.current,
-        icon: {
-          url: "./img/pin_default.png",
-          size: new naver.maps.Size(22, 35),
-          origin: new naver.maps.Point(0, 0),
-          anchor: new naver.maps.Point(11, 35),
-        },
       });
 
       window.naver.maps.Event.addListener(marker, "click", (e) => {

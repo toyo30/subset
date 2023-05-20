@@ -8,7 +8,6 @@ import * as S from "./AppStyles";
 import MyContext from "./contexts/MyContext";
 import MyContextProvider from "./contexts/MyContextProvider";
 import { authService, messaging } from "./firebase";
-import { AuthRouter } from "./router/AuthRouter";
 import { MainRouter } from "./router/MainRouter";
 import { GlobalStyle } from "./themes/globalStyle";
 import theme from "./themes/theme";
@@ -194,7 +193,7 @@ const AppContent = () => {
     <S.AppContainer className="App">
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        {isLoggedIn ? <MainRouter /> : <AuthRouter />}
+        <MainRouter />
         <S.ScrollContainer />
       </ThemeProvider>
       <Snackbar

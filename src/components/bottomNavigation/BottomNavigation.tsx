@@ -2,7 +2,6 @@ import AddIcon from "@mui/icons-material/Add";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Map from "@mui/icons-material/Map";
-import RestoreIcon from "@mui/icons-material/Restore";
 import { Fab, Typography } from "@mui/material";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -22,7 +21,7 @@ export const SimpleBottomNavigation = () => {
   };
 
   const handleClick = () => {
-    navigate(`${PathUrl.AddEvent}`);
+    navigate(`${PathUrl.AddFestival}`);
   };
 
   return (
@@ -45,28 +44,34 @@ export const SimpleBottomNavigation = () => {
           >
             fcm butotn
           </button> */}
-          <BottomNavigationAction
+          {/* <BottomNavigationAction
             label="History"
             // value={`${PathUrl.History.slice(1)}`}
             value="history"
             icon={<RestoreIcon />}
-          />
+          /> */}
           <BottomNavigationAction
-            label="내집합"
-            value=""
+            label="한줄평"
+            value={`${PathUrl.Comment.slice(1)}`}
             // value={`${PathUrl.MyZiphap.slice(1)}`}
             icon={<FavoriteIcon />}
           />
           <BottomNavigationAction
             label="지도"
-            value="map"
+            value=""
             // value={`${PathUrl.MyZiphap.slice(1)}`}
             icon={<Map />}
           />
-          <BottomNavigationAction
+          {/* <BottomNavigationAction
             label="외집합"
             // value={`${PathUrl.Other.slice(1)}`}
             value="other"
+            icon={<LocationOnIcon />}
+          /> */}
+          <BottomNavigationAction
+            label="주점 지도"
+            // value={`${PathUrl.Other.slice(1)}`}
+            value={`${PathUrl.Bar.slice(1)}`}
             icon={<LocationOnIcon />}
           />
         </BottomNavigation>
@@ -74,7 +79,7 @@ export const SimpleBottomNavigation = () => {
 
       <Fab color="primary" aria-label="add" sx={fabStyle} onClick={handleClick}>
         <Typography sx={textStyle}>
-          이벤트 <AddIcon />
+          실축근 <AddIcon />
         </Typography>
       </Fab>
     </S.BottomNavigationContainer>

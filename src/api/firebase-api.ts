@@ -20,6 +20,7 @@ class FirebaseApi {
 
   async createData(collectionName: string, payload: any) {
     try {
+      console.log("-------- createData");
       const docRef = await addDoc(
         collection(this._db, collectionName),
         payload

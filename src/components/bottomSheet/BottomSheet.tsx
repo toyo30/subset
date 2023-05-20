@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled, { css, keyframes } from "styled-components";
+import MyContext from "../../contexts/MyContext";
 import BottomSheetHeader from "./BottomSheetHeader";
 import { useBottomSheet } from "./UseBottomSheetHook";
 
@@ -30,6 +31,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
   opacity,
   ...rest
 }) => {
+  const { bottomSheetStatus, setBottomSheetStatus } = useContext(MyContext);
   let MIN_Y = minHeight || 64;
   let BOTTOM_SHEET_HEIGHT = window.innerHeight - MIN_Y - 66;
   let MAX_Y = maxHeight || BOTTOM_SHEET_HEIGHT;
@@ -38,6 +40,18 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
     width: window.innerWidth,
     height: window.innerHeight,
   });
+
+  const closeShowBottomSheet = (e: TouchEvent) => {
+    if (
+      e.target === sheetRef.current ||
+      e.target === content.current ||
+      sheetRef.current?.contains(e.target as Node)
+    ) {
+      return;
+    } else if (bottomSheetStatus) {
+      setBottomSheetStatus(false);
+    }
+  };
 
   useEffect(() => {
     MIN_Y = minHeight || MIN_Y;
@@ -52,15 +66,15 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
       sheetRef?.current?.style.setProperty("transfrom", `translateY${MAX_Y}px`);
     }
 
-    // window.addEventListener("touchstart", closeShowBottomSheet);
-    // window.addEventListener("touchmove", closeShowBottomSheet);
-    // window.addEventListener("touchend", closeShowBottomSheet);
+    window.addEventListener("touchstart", closeShowBottomSheet);
+    window.addEventListener("touchmove", closeShowBottomSheet);
+    window.addEventListener("touchend", closeShowBottomSheet);
 
-    // return () => {
-    //   window.removeEventListener("touchstart", closeShowBottomSheet);
-    //   window.removeEventListener("touchmove", closeShowBottomSheet);
-    //   window.removeEventListener("touchend", closeShowBottomSheet);
-    // };
+    return () => {
+      window.removeEventListener("touchstart", closeShowBottomSheet);
+      window.removeEventListener("touchmove", closeShowBottomSheet);
+      window.removeEventListener("touchend", closeShowBottomSheet);
+    };
   }, []);
 
   const handleSize = () => {
@@ -74,9 +88,6 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
   };
 
   useEffect(() => {
-    console.log(window.innerHeight, "window.innerHeight");
-    console.log(MIN_Y, "MIN_Y");
-    console.log(window.innerHeight - MIN_Y - 66, "window.innerHeight minus");
     window.addEventListener("resize", handleSize);
     if (sheetRef) {
       sheetRef?.current?.style.setProperty("height", `${BOTTOM_SHEET_HEIGHT}`);
