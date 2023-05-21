@@ -14,7 +14,7 @@ import {
 } from "firebase/storage";
 import { ChangeEvent, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { pins } from "../../constant/pins";
+import { bar_pins, pins } from "../../constant/pins";
 import MyContext from "../../contexts/MyContext";
 import { app, db } from "../../firebase";
 import { PathUrl } from "../../types/router/pathUrl";
@@ -26,7 +26,7 @@ export const PhotoUpload = () => {
   const [id, setId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [text, setText] = useState<string>("");
-  const [location, setLocation] = useState<string>("Minju");
+  const [location, setLocation] = useState<string>(pinStatus || "Minju");
   const navigate = useNavigate();
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -82,6 +82,8 @@ export const PhotoUpload = () => {
 
     // }, 100);
   };
+
+  const result = { ...pins, ...bar_pins };
 
   return (
     <div style={{ width: "300px", margin: "auto", marginTop: "50px" }}>
@@ -214,7 +216,7 @@ export const PhotoUpload = () => {
           {/* <label style={{ display: 'block', marginBottom: '10px' }}>장소</label> */}
           <BasicSelect
             defaultValue={location}
-            selectOptions={Object.keys(pins).map((key) => key)}
+            selectOptions={Object.keys(result).map((key) => key)}
             onChange={(e) => setLocation(e.target.value)}
           />
         </ListItem>

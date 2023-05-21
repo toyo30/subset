@@ -47,8 +47,15 @@ export const Map = () => {
       window.naver.maps.Event.addListener(marker, "click", (e) => {
         setBottomSheetStatus(true);
         setPinStatus(item[0]);
+        map.panTo(
+          new naver.maps.LatLng(item[1].lat - 0.003, item[1].lng - 0.00008)
+        );
       });
     });
+
+    return () => {
+      setBottomSheetStatus(false);
+    };
   }, []);
 
   useEffect(() => {

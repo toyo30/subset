@@ -5,7 +5,7 @@ import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { pins } from "../../constant/pins";
+import { bar_pins, pins } from "../../constant/pins";
 
 interface Props {
   label?: string;
@@ -23,6 +23,7 @@ export const BasicSelect: React.FC<Props> = ({
   defaultValue,
 }) => {
   const [selectValue, setSelectValue] = useState("");
+  const result = { ...pins, ...bar_pins };
 
   const handleChange = (event: SelectChangeEvent) => {
     onChange?.(event);
@@ -60,7 +61,7 @@ export const BasicSelect: React.FC<Props> = ({
           {selectOptions.length > 0 ? (
             selectOptions.map((item, idx) => (
               <MenuItem key={idx} value={item}>
-                {pins[item].name}
+                {result[item].name}
               </MenuItem>
             ))
           ) : (

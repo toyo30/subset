@@ -9,7 +9,7 @@ import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { firebaseApi } from "../../api/firebase-api";
 import { ImageComponent } from "../../components/imgBox/ImgBox";
-import { pins } from "../../constant/pins";
+import { bar_pins, pins } from "../../constant/pins";
 import { LottieComponent } from "../lottie/Lottie";
 
 interface Props {
@@ -37,6 +37,8 @@ export const ImgCard: React.FC<Props> = ({
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const modalRef = useRef<any>(null);
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+
+  const result = { ...pins, ...bar_pins };
 
   const list = [
     `${process.env.PUBLIC_URL}/peope_white.png`,
@@ -216,7 +218,7 @@ export const ImgCard: React.FC<Props> = ({
                 color: "gray",
               }}
             >
-              {`${pins[location].name}`}
+              {`${result[location].name}`}
             </p>
           </div>
           <div

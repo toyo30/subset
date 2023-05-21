@@ -51,8 +51,16 @@ export const MapBar = () => {
 
       window.naver.maps.Event.addListener(marker, "click", (e) => {
         infoWindow.open(map, marker);
+        setBottomSheetStatus(true);
+        setPinStatus(item[0]);
+        map.panTo(
+          new naver.maps.LatLng(item[1].lat - 0.0007, item[1].lng - 0.00005)
+        );
       });
     });
+    return () => {
+      setBottomSheetStatus(false);
+    };
   }, []);
 
   useEffect(() => {
@@ -109,13 +117,12 @@ export const MapBar = () => {
               최신순
             </Button>
           </div>
-          {/* {eventDocuments.length > 0 && 
-            eventDocuments
-              .filter((item: any) => item.location === pinStatus)
-              .map((item: any) => {
-                console.log(item, "item");
-                console.log(item, "item");
-                return (
+          {eventDocuments.filter((item: any) => item.location === pinStatus)
+            .length > 0 ? (
+            likeSort ? (
+              sortByLike(eventDocuments)
+                .filter((item: any) => item.location === pinStatus)
+                .map((item: any) => (
                   <>
                     <ImgCard
                       key={item.id}
@@ -128,9 +135,34 @@ export const MapBar = () => {
                       location={item.location}
                     />
                   </>
-                );
-              })} */}
-          {eventDocuments.length > 0 && likeSort
+                ))
+            ) : (
+              sortByTime(eventDocuments)
+                .filter((item: any) => item.location === pinStatus)
+                .map((item: any) => (
+                  <>
+                    <ImgCard
+                      key={item.id}
+                      id={item.id}
+                      url={item.url}
+                      userId={item.userId}
+                      password={item.password}
+                      text={item.text}
+                      likeCount={item.like}
+                      location={item.location}
+                    />
+                  </>
+                ))
+            )
+          ) : (
+            <>
+              <img
+                src={`${process.env.PUBLIC_URL}/Empty-img.png`}
+                style={{ width: "100%" }}
+              />
+            </>
+          )}
+          {/* {eventDocuments.filter((item: any) => item.location === pinStatus).length > 0 && likeSort
             ? sortByLike(eventDocuments)
                 .filter((item: any) => item.location === pinStatus)
                 .map((item: any) => (
@@ -162,7 +194,7 @@ export const MapBar = () => {
                       location={item.location}
                     />
                   </>
-                ))}
+                ))} */}
         </BottomSheet>
       )}
     </S.MapContainer>
