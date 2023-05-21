@@ -175,11 +175,11 @@ const AppContent = () => {
         <ThemeProvider theme={theme}>
           <S.LoadingContainer>
             <img
-              src={process.env.PUBLIC_URL + "/background.png"}
+              src={process.env.PUBLIC_URL + "/assets/marker/Zola.png"}
               alt="loading"
               style={{
-                width: "220px",
-                height: "220px",
+                maxWidth: "300px",
+                maxHeight: "180px",
               }}
             />
           </S.LoadingContainer>

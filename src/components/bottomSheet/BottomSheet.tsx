@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 import MyContext from "../../contexts/MyContext";
 import BottomSheetHeader from "./BottomSheetHeader";
@@ -31,6 +31,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
   opacity,
   ...rest
 }) => {
+  const backgroundRef = useRef<any>(null);
   const { bottomSheetStatus, setBottomSheetStatus } = useContext(MyContext);
   let MIN_Y = minHeight || 64;
   let BOTTOM_SHEET_HEIGHT = window.innerHeight - MIN_Y - 66;
@@ -45,7 +46,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
     if (
       e.target === sheetRef.current ||
       e.target === content.current ||
-      sheetRef.current?.contains(e.target as Node)
+      !backgroundRef.current?.contains(e.target as Node)
     ) {
       return;
     } else if (bottomSheetStatus) {
@@ -102,16 +103,23 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
   }, [windonwSize]);
 
   return (
-    <Wrapper ref={sheetRef} className={`${opacity ? "opacity" : ""}`} {...rest}>
-      <BottomSheetHeader className={`${opacity ? "opacity" : ""}`} />
-      <BottomSheetContent
+    <>
+      <FixedBackground ref={backgroundRef} />
+      <Wrapper
+        ref={sheetRef}
         className={`${opacity ? "opacity" : ""}`}
-        ref={content}
-        style={{ height: `${BOTTOM_SHEET_HEIGHT}px` }}
+        {...rest}
       >
-        {children}
-      </BottomSheetContent>
-    </Wrapper>
+        <BottomSheetHeader className={`${opacity ? "opacity" : ""}`} />
+        <BottomSheetContent
+          className={`${opacity ? "opacity" : ""}`}
+          ref={content}
+          style={{ height: `${BOTTOM_SHEET_HEIGHT}px` }}
+        >
+          {children}
+        </BottomSheetContent>
+      </Wrapper>
+    </>
   );
 };
 
@@ -121,6 +129,17 @@ const fadeIn = keyframes`
   50% {
     opacity: 0;
   }
+`;
+
+const FixedBackground = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
 `;
 
 const Wrapper = styled.div`

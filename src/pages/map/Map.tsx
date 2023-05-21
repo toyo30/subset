@@ -42,7 +42,7 @@ export const Map = () => {
   useEffect(() => {
     // 컬렉션 참조 생성
     if (pinStatus.length > 0 && bottomSheetStatus) {
-      const collectionRef = collection(db, pinStatus);
+      const collectionRef = collection(db, "Post");
       // 실시간 리스너 설정
       const unsubscribe = onSnapshot(collectionRef, (querySnapshot) => {
         const newEventDocuments: any = [];
@@ -74,24 +74,26 @@ export const Map = () => {
       {bottomSheetStatus && (
         <BottomSheet>
           {eventDocuments.length > 0 &&
-            eventDocuments.map((item: any) => {
-              console.log(item, "item");
-              console.log(item, "item");
-              return (
-                <>
-                  <ImgCard
-                    key={item.id}
-                    id={item.id}
-                    url={item.url}
-                    userId={item.userId}
-                    password={item.password}
-                    text={item.text}
-                    likeCount={item.like}
-                    location={item.location}
-                  />
-                </>
-              );
-            })}
+            eventDocuments
+              .filter((item: any) => item.location === pinStatus)
+              .map((item: any) => {
+                console.log(item, "item");
+                console.log(item, "item");
+                return (
+                  <>
+                    <ImgCard
+                      key={item.id}
+                      id={item.id}
+                      url={item.url}
+                      userId={item.userId}
+                      password={item.password}
+                      text={item.text}
+                      likeCount={item.like}
+                      location={item.location}
+                    />
+                  </>
+                );
+              })}
         </BottomSheet>
       )}
     </S.MapContainer>

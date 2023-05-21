@@ -61,7 +61,7 @@ const PhotoUpload = () => {
           like: 0,
         };
 
-        const docRef = await addDoc(collection(db, location), payload);
+        const docRef = await addDoc(collection(db, "Post"), payload);
       }
     );
 

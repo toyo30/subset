@@ -1,3 +1,4 @@
+import CloseSharpIcon from "@mui/icons-material/CloseSharp";
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { pins } from "../../constant/pins";
@@ -39,11 +40,15 @@ const BottomSheetHeader: React.FC<BottomSheetHeaderProps> = ({ className }) => {
         sx={{ padding: "18px 16px", height: "64px" }}
         topAppRight={
           <button
+            style={{
+              background: "none",
+              border: "none",
+            }}
             onClick={() => {
               setBottomSheetStatus(false);
             }}
           >
-            닫기
+            <CloseSharpIcon />
           </button>
         }
       >

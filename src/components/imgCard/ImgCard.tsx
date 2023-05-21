@@ -9,9 +9,10 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { firebaseApi } from "../../api/firebase-api";
 import { ImageComponent } from "../../components/imgBox/ImgBox";
+import { pins } from "../../constant/pins";
 import { LottieComponent } from "../lottie/Lottie";
 
 interface Props {
@@ -35,8 +36,10 @@ export const ImgCard: React.FC<Props> = ({
 }) => {
   const [like, setLike] = useState<boolean>(false);
   const [lottieStauts, setLottieStatus] = useState<boolean>(false);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
+  const modalRef = useRef<any>(null);
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -47,8 +50,35 @@ export const ImgCard: React.FC<Props> = ({
   };
 
   const logout = () => {
+    handleClose();
     setDeleteModal(true);
-    document.body.style.overflowY = "hidden";
+  };
+
+  const closeModalFunction = () => {
+    setDeleteModal(false);
+  };
+
+  const deletePost = async () => {
+    if (confirmPassword === password) {
+      await firebaseApi.deleteData(id, location);
+      closeModalFunction();
+    } else {
+      alert("비밀번호를 다시 입력해주세요");
+    }
+  };
+
+  const closeModal = (e: TouchEvent) => {
+    e.stopPropagation();
+    if (
+      e.target === modalRef.current ||
+      modalRef.current?.contains(e.target as Node)
+    ) {
+      console.log("no");
+      return;
+    } else {
+      console.log("yes");
+      setDeleteModal(false);
+    }
   };
 
   const handleLike = async () => {
@@ -61,7 +91,7 @@ export const ImgCard: React.FC<Props> = ({
       location,
     };
 
-    await firebaseApi.updateData(id, location, updatePayload);
+    await firebaseApi.updateData(id, "Post", updatePayload);
 
     setLike(true);
     setLottieStatus(true);
@@ -70,19 +100,52 @@ export const ImgCard: React.FC<Props> = ({
     }, 1000);
   };
 
+  useEffect(() => {
+    window.addEventListener("touchstart", closeModal);
+    window.addEventListener("touchmove", closeModal);
+    window.addEventListener("touchend", closeModal);
+
+    return () => {
+      window.removeEventListener("touchstart", closeModal);
+      window.removeEventListener("touchmove", closeModal);
+      window.removeEventListener("touchend", closeModal);
+    };
+  }, []);
+
   return (
     <>
       {deleteModal && (
         <div
           style={{
             position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "#4949491B",
             zIndex: 1000,
           }}
         >
-          <div>test</div>
+          <div
+            ref={modalRef}
+            style={{
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              zIndex: 1000,
+              background: "white",
+              minWidth: "80%",
+              height: "70vh",
+              border: "1px solid black",
+            }}
+          >
+            <div>"게시글"의 비밀번호를 입력해주세요.</div>
+            <input
+              type="password"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            <button onClick={deletePost}>삭제하기</button>
+            <button onClick={closeModalFunction}>취소하기</button>
+          </div>
         </div>
       )}
 
@@ -166,6 +229,7 @@ export const ImgCard: React.FC<Props> = ({
               path={url}
               style={{
                 objectFit: "cover",
+                width: "100%",
                 height: "100%",
                 position: "absolute",
                 top: "50%",
@@ -211,16 +275,33 @@ export const ImgCard: React.FC<Props> = ({
               />
             )}
           </div>
-          <p
+          <div
             style={{
-              fontSize: "14px",
-              textAlign: "left",
-              fontWeight: "600",
-              marginBottom: "12px",
+              display: "flex",
+              justifyContent: "space-between",
             }}
           >
-            좋아요 {likeCount}개
-          </p>
+            <p
+              style={{
+                fontSize: "14px",
+                textAlign: "left",
+                fontWeight: "600",
+                marginBottom: "12px",
+              }}
+            >
+              좋아요 {likeCount}개
+            </p>
+            <p
+              style={{
+                fontSize: "14px",
+                textAlign: "left",
+                marginBottom: "12px",
+                color: "gray",
+              }}
+            >
+              {`${pins[location].name}`}
+            </p>
+          </div>
           <Typography variant="body2" textAlign={"left"}>
             <span style={{ fontWeight: "600", marginRight: "6px" }}>
               {userId}
