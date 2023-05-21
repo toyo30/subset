@@ -48,7 +48,7 @@ export const Map = () => {
         setBottomSheetStatus(true);
         setPinStatus(item[0]);
         map.panTo(
-          new naver.maps.LatLng(item[1].lat - 0.003, item[1].lng - 0.00008)
+          new naver.maps.LatLng(item[1].lat - 0.005, item[1].lng - 0.0001)
         );
       });
     });
