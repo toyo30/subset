@@ -43,56 +43,67 @@ export const Comment = () => {
 
   return (
     <S.CommentContainer>
-      <div style={{ padding: "10px 20px 10px", textAlign: "right" }}>
-        <Button
-          variant={`${likeSort ? "contained" : "outlined"}`}
-          onClick={handleClickLike}
-        >
-          좋아요 순
-        </Button>
-        <span
+      <div
+        style={{
+          paddingBottom: "100px",
+        }}
+      >
+        <div
           style={{
-            display: "inline-block",
-            width: "20px",
+            padding: "10px 20px 10px",
+            textAlign: "right",
           }}
-        />
-        <Button
-          variant={`${likeSort ? "outlined" : "contained"}`}
-          onClick={handleClickRecent}
         >
-          최신순
-        </Button>
+          <Button
+            variant={`${likeSort ? "contained" : "outlined"}`}
+            onClick={handleClickLike}
+          >
+            좋아요 순
+          </Button>
+          <span
+            style={{
+              display: "inline-block",
+              width: "20px",
+            }}
+          />
+          <Button
+            variant={`${likeSort ? "outlined" : "contained"}`}
+            onClick={handleClickRecent}
+          >
+            최신순
+          </Button>
+        </div>
+        {eventDocuments.length > 0 &&
+          (likeSort
+            ? sortByLike(eventDocuments).map((item: any) => (
+                <>
+                  <ImgCard
+                    key={item.id}
+                    id={item.id}
+                    url={item.url}
+                    userId={item.userId}
+                    password={item.password}
+                    text={item.text}
+                    likeCount={item.like}
+                    location={item.location}
+                  />
+                </>
+              ))
+            : sortByTime(eventDocuments).map((item: any) => (
+                <>
+                  <ImgCard
+                    key={item.id}
+                    id={item.id}
+                    url={item.url}
+                    userId={item.userId}
+                    password={item.password}
+                    text={item.text}
+                    likeCount={item.like}
+                    location={item.location}
+                  />
+                </>
+              )))}
       </div>
-      {eventDocuments.length > 0 &&
-        (likeSort
-          ? sortByLike(eventDocuments).map((item: any) => (
-              <>
-                <ImgCard
-                  key={item.id}
-                  id={item.id}
-                  url={item.url}
-                  userId={item.userId}
-                  password={item.password}
-                  text={item.text}
-                  likeCount={item.like}
-                  location={item.location}
-                />
-              </>
-            ))
-          : sortByTime(eventDocuments).map((item: any) => (
-              <>
-                <ImgCard
-                  key={item.id}
-                  id={item.id}
-                  url={item.url}
-                  userId={item.userId}
-                  password={item.password}
-                  text={item.text}
-                  likeCount={item.like}
-                  location={item.location}
-                />
-              </>
-            )))}
     </S.CommentContainer>
   );
 };
