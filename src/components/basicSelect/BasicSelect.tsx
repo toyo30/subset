@@ -39,7 +39,7 @@ export const BasicSelect: React.FC<Props> = ({
   return (
     <Box sx={{ minWidth: 280 }}>
       <FormControl variant="standard" sx={{ m: 1, minWidth: 280 }}>
-        <InputLabel id="demo-simple-select-standard-label">집합</InputLabel>
+        <InputLabel id="demo-simple-select-standard-label"></InputLabel>
         <Select
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"

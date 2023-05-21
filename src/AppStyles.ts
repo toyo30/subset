@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const AppContainer = styled.div`
   position: relative;
-  max-width: 430px;
   overflow-y: auto;
   margin: 0 auto;
   height: var(--app-height);

@@ -1,4 +1,4 @@
-import PhotoUpload from "../../components/photoUpload/PhotoUpload";
+import { PhotoUpload } from "../../components/photoUpload/PhotoUpload";
 import * as S from "./AddFestivalStyles";
 
 export const AddFestival = () => {

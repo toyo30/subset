@@ -217,9 +217,7 @@ export const ImgCard: React.FC<Props> = ({
           </div>
           <div
             style={{
-              maxWidth: "430px",
               minWidth: "calc(100vw - 32px)",
-              maxHeight: "430px",
               height: "calc(100vw - 32px)",
               overflow: "hidden",
               position: "relative",

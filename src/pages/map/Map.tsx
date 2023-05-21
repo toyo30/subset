@@ -24,12 +24,13 @@ export const Map = () => {
       const marker = new window.naver.maps.Marker({
         position: new window.naver.maps.LatLng(item[1].lat, item[1].lng),
         map: mapRef.current,
-        // icon: {
-        //   url: `${process.env.PUBLIC_URL}/Hot.png`,
-        //   size: new naver.maps.Size(10, 10),
-        //   origin: new naver.maps.Point(0, 0),
-        //   anchor: new naver.maps.Point(2, 13),
-        // },
+        icon: {
+          url: `${process.env.PUBLIC_URL}/Hot.png`,
+          size: new naver.maps.Size(30, 40),
+          scaledSize: new naver.maps.Size(30, 40),
+          origin: new naver.maps.Point(0, 0),
+          anchor: new naver.maps.Point(2, 13),
+        },
       });
 
       window.naver.maps.Event.addListener(marker, "click", (e) => {
