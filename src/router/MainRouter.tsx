@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Appbar from "../components/appbar/Appbar";
 import { SimpleBottomNavigation } from "../components/bottomNavigation/BottomNavigation";
+import { MapBar } from "../pages/MapBar/MapBar";
 import { AddFestival } from "../pages/addFestival/AddFestival";
 import { Comment } from "../pages/comment/Comment";
 import { Map } from "../pages/map/Map";
@@ -20,7 +21,7 @@ export const MainRouter = () => {
               <Route path={`${PathUrl.AddEvent}`} element={<AddEvent />} /> */}
             <Route path={`${PathUrl.AddFestival}`} element={<AddFestival />} />
             <Route path={`${PathUrl.Home}`} element={<Map />} />
-            <Route path={`${PathUrl.Bar}`} element={<Map />} />
+            <Route path={`${PathUrl.Bar}`} element={<MapBar />} />
             <Route path={`${PathUrl.Comment}`} element={<Comment />} />
             <Route path="*" element={<Navigate to={`${PathUrl.MyZiphap}`} />} />
           </Routes>

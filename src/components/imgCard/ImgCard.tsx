@@ -1,7 +1,6 @@
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import MoreHorizSharpIcon from "@mui/icons-material/MoreHorizSharp";
-import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import IconButton from "@mui/material/IconButton";
@@ -40,6 +39,16 @@ export const ImgCard: React.FC<Props> = ({
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const modalRef = useRef<any>(null);
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+
+  const list = [
+    `${process.env.PUBLIC_URL}/peope_white.png`,
+    `${process.env.PUBLIC_URL}/tiger.png`,
+    `${process.env.PUBLIC_URL}/bottle.png`,
+  ];
+
+  const randomIndex = Math.floor(Math.random() * list.length);
+
+  const randomItem = list[randomIndex];
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -166,13 +175,30 @@ export const ImgCard: React.FC<Props> = ({
                 justifyContent: "left",
               }}
             >
-              <SupervisedUserCircleIcon
+              <div
                 style={{
-                  width: "42px",
+                  minWidth: "42px",
                   height: "42px",
                   marginRight: "8px",
+                  borderRadius: "30px",
+                  background: "black",
+                  position: "relative",
+                  // border: "1px solid black",
                 }}
-              />
+              >
+                <img
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: "41px",
+                    height: "41px",
+                    borderRadius: "30px",
+                  }}
+                  src={randomItem}
+                />
+              </div>
               <p
                 style={{
                   fontSize: "14px",

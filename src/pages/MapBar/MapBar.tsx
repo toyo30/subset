@@ -3,13 +3,13 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { useContext, useEffect, useRef, useState } from "react";
 import BottomSheet from "../../components/bottomSheet/BottomSheet";
 import { ImgCard } from "../../components/imgCard/ImgCard";
-import { pins } from "../../constant/pins";
+import { bar_pins } from "../../constant/pins";
 import MyContext from "../../contexts/MyContext";
 import { db } from "../../firebase";
 import { sortByLike, sortByTime } from "../../utils/listSort/list-sort";
 import * as S from "./MapStyles";
 
-export const Map = () => {
+export const MapBar = () => {
   const { bottomSheetStatus, setBottomSheetStatus, pinStatus, setPinStatus } =
     useContext(MyContext);
   const mapRef = useRef<HTMLElement | null | any>(null);
@@ -27,16 +27,16 @@ export const Map = () => {
   useEffect(() => {
     const map = (mapRef.current = new naver.maps.Map("map", {
       //지도 추가, 좌표를 기점으로 주변 지도가 추가된다.
-      center: new naver.maps.LatLng(37.586466, 127.029169),
-      zoom: 16,
+      center: new naver.maps.LatLng(37.5876055, 127.03138),
+      zoom: 18,
     }));
 
-    Object.entries(pins).forEach((item) => {
+    Object.entries(bar_pins).forEach((item) => {
       const marker = new window.naver.maps.Marker({
         position: new window.naver.maps.LatLng(item[1].lat, item[1].lng),
         map: mapRef.current,
         icon: {
-          url: `${process.env.PUBLIC_URL}/Cool.png`,
+          url: `${process.env.PUBLIC_URL}/Hot.png`,
           size: new naver.maps.Size(30, 40),
           scaledSize: new naver.maps.Size(30, 40),
           origin: new naver.maps.Point(0, 0),
@@ -44,9 +44,13 @@ export const Map = () => {
         },
       });
 
+      const infoWindow = new window.naver.maps.InfoWindow({
+        content: `<div style="min-width:150px;text-align:center;padding:10px;">
+        ${item[1].name} 주점</div>`,
+      });
+
       window.naver.maps.Event.addListener(marker, "click", (e) => {
-        setBottomSheetStatus(true);
-        setPinStatus(item[0]);
+        infoWindow.open(map, marker);
       });
     });
   }, []);
@@ -105,11 +109,29 @@ export const Map = () => {
               최신순
             </Button>
           </div>
-
-          {eventDocuments.filter((item: any) => item.location === pinStatus)
-            .length > 0 ? (
-            likeSort ? (
-              sortByLike(eventDocuments)
+          {/* {eventDocuments.length > 0 && 
+            eventDocuments
+              .filter((item: any) => item.location === pinStatus)
+              .map((item: any) => {
+                console.log(item, "item");
+                console.log(item, "item");
+                return (
+                  <>
+                    <ImgCard
+                      key={item.id}
+                      id={item.id}
+                      url={item.url}
+                      userId={item.userId}
+                      password={item.password}
+                      text={item.text}
+                      likeCount={item.like}
+                      location={item.location}
+                    />
+                  </>
+                );
+              })} */}
+          {eventDocuments.length > 0 && likeSort
+            ? sortByLike(eventDocuments)
                 .filter((item: any) => item.location === pinStatus)
                 .map((item: any) => (
                   <>
@@ -125,8 +147,7 @@ export const Map = () => {
                     />
                   </>
                 ))
-            ) : (
-              sortByTime(eventDocuments)
+            : sortByTime(eventDocuments)
                 .filter((item: any) => item.location === pinStatus)
                 .map((item: any) => (
                   <>
@@ -141,16 +162,7 @@ export const Map = () => {
                       location={item.location}
                     />
                   </>
-                ))
-            )
-          ) : (
-            <>
-              <img
-                src={`${process.env.PUBLIC_URL}/Empty-img.png`}
-                style={{ width: "100%" }}
-              />
-            </>
-          )}
+                ))}
         </BottomSheet>
       )}
     </S.MapContainer>

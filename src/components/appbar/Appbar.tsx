@@ -1,10 +1,8 @@
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import { Menu, MenuItem } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { signOut } from "firebase/auth";
@@ -65,7 +63,7 @@ export default function MenuAppBar() {
             <img
               src={process.env.PUBLIC_URL + "/logo_festival.png"}
               style={{
-                width: "250px"
+                width: "250px",
               }}
             />
             {/* 실시간 축제 근황! */}
@@ -77,10 +75,10 @@ export default function MenuAppBar() {
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                onClick={handleMenu}
+                // onClick={handleMenu}
                 color="inherit"
               >
-                <AccountCircle />
+                {/* <AccountCircle /> */}
               </IconButton>
               <Menu
                 id="menu-appbar"

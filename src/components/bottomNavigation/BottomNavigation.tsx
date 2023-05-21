@@ -6,13 +6,14 @@ import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import Box from "@mui/material/Box";
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { PathUrl } from "../../types/router/pathUrl";
 import * as S from "./BottomNavigationStyles";
 
 export const SimpleBottomNavigation = () => {
   const [value, setValue] = React.useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -76,17 +77,24 @@ export const SimpleBottomNavigation = () => {
         </BottomNavigation>
       </Box>
 
-      <Fab color="primary" aria-label="add" sx={fabStyle} onClick={handleClick}>
-        <Typography sx={textStyle}>
-          <img
-            src={process.env.PUBLIC_URL + "/fab.png"}
-            style={{
-              width: "80px",
-            }}
-          />
-          {/* <AddIcon /> */}
-        </Typography>
-      </Fab>
+      {location.pathname !== PathUrl.AddFestival && (
+        <Fab
+          color="primary"
+          aria-label="add"
+          sx={fabStyle}
+          onClick={handleClick}
+        >
+          <Typography sx={textStyle}>
+            <img
+              src={process.env.PUBLIC_URL + "/fab.png"}
+              style={{
+                width: "80px",
+              }}
+            />
+            {/* <AddIcon /> */}
+          </Typography>
+        </Fab>
+      )}
     </S.BottomNavigationContainer>
   );
 };

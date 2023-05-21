@@ -36,7 +36,10 @@ export const PhotoUpload = () => {
   };
 
   const handleUpload = async () => {
-    if (!file || !id || !password || !text) return;
+    if (!file || !id || !password || !text) {
+      alert("필수항목 모두 넣어주세요");
+      return;
+    }
 
     const storage = getStorage(app);
     const storageRef = ref(storage, `images/${file.name}`);
@@ -74,7 +77,7 @@ export const PhotoUpload = () => {
     );
 
     alert("업로드가 완료되었습니다");
-    navigate(`${PathUrl.Map}`);
+    navigate(`${PathUrl.Comment}`);
   };
 
   return (
@@ -88,7 +91,17 @@ export const PhotoUpload = () => {
             marginBottom: "20px",
           }}
         >
-          <label style={{ display: "block", marginBottom: "10px" }}>ID</label>
+          <label style={{ display: "block", marginBottom: "10px" }}>
+            ID
+            <span
+              style={{
+                fontSize: "12px",
+                color: "#EF3A4A",
+              }}
+            >
+              *
+            </span>
+          </label>
           <Input
             type="text"
             onChange={(e) => {
@@ -97,7 +110,17 @@ export const PhotoUpload = () => {
             style={{ width: "100%", padding: "10px" }}
           />
 
-          <label style={{ display: "block", marginBottom: "10px" }}>PW</label>
+          <label style={{ display: "block", marginBottom: "10px" }}>
+            PW
+            <span
+              style={{
+                fontSize: "12px",
+                color: "#EF3A4A",
+              }}
+            >
+              *
+            </span>
+          </label>
           <Input
             type="password"
             onChange={(e) => {
@@ -110,11 +133,26 @@ export const PhotoUpload = () => {
         <ListItem
           style={{
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
             justifyContent: "left",
             marginBottom: "20px",
           }}
         >
+          <div style={{ textAlign: "left", width: "100%" }}>
+            <label style={{ display: "block", marginBottom: "10px" }}>
+              이미지
+              <span
+                style={{
+                  fontSize: "12px",
+                  color: "#EF3A4A",
+                }}
+              >
+                *
+              </span>
+            </label>
+          </div>
+
           <Input type="file" onChange={handleFileChange} />
         </ListItem>
 
@@ -127,9 +165,17 @@ export const PhotoUpload = () => {
           }}
         >
           <label
-            style={{ display: "block", marginBottom: "10px", width: "30px" }}
+            style={{ display: "block", marginBottom: "10px", width: "40px" }}
           >
-            글
+            캡션
+            <span
+              style={{
+                fontSize: "12px",
+                color: "#EF3A4A",
+              }}
+            >
+              *
+            </span>
           </label>
           <Input
             type="text"
@@ -140,9 +186,23 @@ export const PhotoUpload = () => {
           />
         </ListItem>
 
+        <div style={{ textAlign: "left", width: "100%" }}>
+          <label style={{ display: "block", marginBottom: "-15px" }}>
+            장소
+            <span
+              style={{
+                fontSize: "12px",
+                color: "#EF3A4A",
+              }}
+            >
+              *
+            </span>
+          </label>
+        </div>
         <ListItem
           style={{
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
             justifyContent: "left",
             marginBottom: "20px",
@@ -150,13 +210,16 @@ export const PhotoUpload = () => {
         >
           {/* <label style={{ display: 'block', marginBottom: '10px' }}>장소</label> */}
           <BasicSelect
+            defaultValue={location}
             selectOptions={Object.keys(pins).map((key) => key)}
             onChange={(e) => setLocation(e.target.value)}
           />
         </ListItem>
       </List>
 
-      <Button onClick={handleUpload}>Upload</Button>
+      <Button onClick={handleUpload} variant="contained">
+        Upload
+      </Button>
     </div>
   );
 };

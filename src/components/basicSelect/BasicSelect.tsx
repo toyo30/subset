@@ -12,6 +12,7 @@ interface Props {
   selectOptions: string[];
   onChange?: (event: SelectChangeEvent) => void;
   setSelectGroup?: (groupName: string) => void;
+  defaultValue?: string;
 }
 
 export const BasicSelect: React.FC<Props> = ({
@@ -19,6 +20,7 @@ export const BasicSelect: React.FC<Props> = ({
   selectOptions,
   onChange,
   setSelectGroup,
+  defaultValue,
 }) => {
   const [selectValue, setSelectValue] = useState("");
 
@@ -31,7 +33,7 @@ export const BasicSelect: React.FC<Props> = ({
 
   useEffect(() => {
     if (selectOptions.length > 0) {
-      setSelectValue(selectOptions[0]);
+      setSelectValue(defaultValue || "");
       // setSelectGroup(selectOptions[0]);
     }
   }, [selectOptions]);
@@ -46,7 +48,7 @@ export const BasicSelect: React.FC<Props> = ({
           value={selectValue}
           onChange={handleChange}
           label={label}
-          defaultValue={selectOptions[0]}
+          defaultValue={defaultValue}
         >
           {selectOptions.length > 0 ? (
             selectOptions.map((item, idx) => (

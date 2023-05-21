@@ -1,19 +1,19 @@
 {
-  "short_name": "집합",
+  "short_name": "실축근",
   "name": "아우르",
   "icons": [
     {
-      "src": "favicon.png",
+      "src": "people_white.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "planetLogo192.png",
+      "src": "people_white.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "planetLogo512.png",
+      "src": "people_white.png",
       "type": "image/png",
       "sizes": "512x512"
     }

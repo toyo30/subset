@@ -1,6 +1,8 @@
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
+import Lottie from "lottie-react";
 import { useEffect, useState } from "react";
 import { app } from "../../firebase";
+import LoadingLottie from "../../lotties/loading.json";
 
 interface Props {
   path: string;
@@ -33,6 +35,8 @@ export const ImageComponent: React.FC<Props> = ({ path, style }) => {
   return imageUrl ? (
     <img src={imageUrl} alt="From Firebase Storage" style={style} />
   ) : (
-    <img src={`${process.env.PUBLIC_URL}/Zola.png`}></img>
+    <div style={{ width: "40px", height: "40px" }}>
+      <Lottie animationData={LoadingLottie} />
+    </div>
   );
 };
