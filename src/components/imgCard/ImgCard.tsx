@@ -1,34 +1,103 @@
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import MoreHorizSharpIcon from "@mui/icons-material/MoreHorizSharp";
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
+import * as React from "react";
 import { useState } from "react";
+import { firebaseApi } from "../../api/firebase-api";
+import { ImageComponent } from "../../components/imgBox/ImgBox";
 import { LottieComponent } from "../lottie/Lottie";
 
-export const ImgCard = () => {
+interface Props {
+  id: string;
+  url: string;
+  userId: string;
+  password: string;
+  text: string;
+  likeCount: number;
+  location: string;
+}
+
+export const ImgCard: React.FC<Props> = ({
+  id,
+  url,
+  likeCount,
+  text,
+  userId,
+  password,
+  location,
+}) => {
   const [like, setLike] = useState<boolean>(false);
   const [lottieStauts, setLottieStatus] = useState<boolean>(false);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
-  const handleLike = () => {
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const logout = () => {
+    setDeleteModal(true);
+    document.body.style.overflowY = "hidden";
+  };
+
+  const handleLike = async () => {
+    const updatePayload = {
+      url,
+      userId,
+      password,
+      text,
+      like: likeCount + 1,
+      location,
+    };
+
+    await firebaseApi.updateData(id, location, updatePayload);
+
     setLike(true);
     setLottieStatus(true);
     setTimeout(() => {
       setLottieStatus(false);
     }, 1000);
-    // debounce((term: any) => {
-    //   // API 호출 등의 비용이 큰 연산
-    // }, 500);
   };
 
   return (
     <>
+      {deleteModal && (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: 1000,
+          }}
+        >
+          <div>test</div>
+        </div>
+      )}
+
       <Card sx={{ minWidth: "100vw" }} variant="outlined">
         <CardContent>
-          <div>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
             <div
               style={{
+                minWidth: "calc(100% - 52px)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "left",
@@ -46,8 +115,41 @@ export const ImgCard = () => {
                   fontSize: "14px",
                 }}
               >
-                테스트입니다
+                {userId}
               </p>
+            </div>
+            <div
+              style={{
+                minWidth: "48px",
+              }}
+            >
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <MoreHorizSharpIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={logout}>삭제하기</MenuItem>
+              </Menu>
             </div>
           </div>
           <div
@@ -60,8 +162,8 @@ export const ImgCard = () => {
               position: "relative",
             }}
           >
-            <img
-              src={`${process.env.PUBLIC_URL}/Cool.png`}
+            <ImageComponent
+              path={url}
               style={{
                 objectFit: "cover",
                 height: "100%",
@@ -72,6 +174,7 @@ export const ImgCard = () => {
               }}
             />
           </div>
+
           <div
             style={{
               textAlign: "left",
@@ -116,13 +219,13 @@ export const ImgCard = () => {
               marginBottom: "12px",
             }}
           >
-            좋아요 354개
+            좋아요 {likeCount}개
           </p>
           <Typography variant="body2" textAlign={"left"}>
             <span style={{ fontWeight: "600", marginRight: "6px" }}>
-              텍스트입니다!
+              {userId}
             </span>
-            <p style={{ display: "inline" }}>글자입니다!</p>
+            <p style={{ display: "inline" }}>{text}</p>
           </Typography>
         </CardContent>
       </Card>

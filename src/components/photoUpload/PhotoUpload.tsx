@@ -19,7 +19,8 @@ const PhotoUpload = () => {
   const [id, setId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [text, setText] = useState<string>("");
-  const [location, setLocation] = useState<string>("");
+  const [location, setLocation] = useState<string>("Minju");
+  const navigate = useNavigate();
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -29,7 +30,6 @@ const PhotoUpload = () => {
 
   const handleUpload = async () => {
     if (!file || !id || !password || !text) return;
-    const navigate = useNavigate();
 
     const storage = getStorage(app);
     const storageRef = ref(storage, `images/${file.name}`);
@@ -54,14 +54,14 @@ const PhotoUpload = () => {
         const payload = {
           url: downloadURL,
           name: file.name,
-          id: id,
+          userId: id,
           password: password,
           text: text,
           location: location,
           like: 0,
         };
 
-        const docRef = await addDoc(collection(db, pinStatus), payload);
+        const docRef = await addDoc(collection(db, location), payload);
       }
     );
 
@@ -99,8 +99,11 @@ const PhotoUpload = () => {
       <input type="file" onChange={handleFileChange} />
       <BasicSelect
         label="장소"
-        selectOptions={Object.values(pins).map((value) => value.name)}
-        onChange={(e) => setLocation(e.target.value)}
+        selectOptions={Object.keys(pins).map((key) => key)}
+        onChange={(e) => {
+          console.log(e.target.value);
+          setLocation(e.target.value);
+        }}
       />
 
       <button onClick={handleUpload}>Upload</button>

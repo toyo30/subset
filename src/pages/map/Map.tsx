@@ -1,7 +1,7 @@
 import { collection, onSnapshot } from "firebase/firestore";
 import { useContext, useEffect, useRef, useState } from "react";
 import BottomSheet from "../../components/bottomSheet/BottomSheet";
-import { ImageComponent } from "../../components/imgBox/ImgBox";
+import { ImgCard } from "../../components/imgCard/ImgCard";
 import { pins } from "../../constant/pins";
 import MyContext from "../../contexts/MyContext";
 import { db } from "../../firebase";
@@ -14,7 +14,6 @@ export const Map = () => {
   const [eventDocuments, setEventDocuments] = useState([]);
 
   useEffect(() => {
-    console.log(process.env.PUBLIC_URL, "--------- url");
     const map = (mapRef.current = new naver.maps.Map("map", {
       //지도 추가, 좌표를 기점으로 주변 지도가 추가된다.
       center: new naver.maps.LatLng(37.586466, 127.029169),
@@ -38,23 +37,12 @@ export const Map = () => {
         setPinStatus(item[0]);
       });
     });
-
-    // window.addEventListener("touchstart", closeShowBottomSheet);
-    // window.addEventListener("touchmove", closeShowBottomSheet);
-    // window.addEventListener("touchend", closeShowBottomSheet);
-
-    // return () => {
-    //   window.removeEventListener("touchstart", closeShowBottomSheet);
-    //   window.removeEventListener("touchmove", closeShowBottomSheet);
-    //   window.removeEventListener("touchend", closeShowBottomSheet);
-    // };
   }, []);
 
   useEffect(() => {
     // 컬렉션 참조 생성
     if (pinStatus.length > 0 && bottomSheetStatus) {
       const collectionRef = collection(db, pinStatus);
-      console.log(collectionRef, "collectionRef", pinStatus, "pinStatus");
       // 실시간 리스너 설정
       const unsubscribe = onSnapshot(collectionRef, (querySnapshot) => {
         const newEventDocuments: any = [];
@@ -76,10 +64,6 @@ export const Map = () => {
     }
   }, [bottomSheetStatus]); // 의존성 배열에 빈 배열 사용
 
-  useEffect(() => {
-    console.log(eventDocuments, "eventDocuments");
-  }, [eventDocuments]);
-
   return (
     <S.MapContainer>
       <div
@@ -90,12 +74,24 @@ export const Map = () => {
       {bottomSheetStatus && (
         <BottomSheet>
           {eventDocuments.length > 0 &&
-            eventDocuments.map((item: any) => (
-              <div>
-                <h1>{item.name}</h1>
-                <ImageComponent key={item.id} path={item.url} />
-              </div>
-            ))}
+            eventDocuments.map((item: any) => {
+              console.log(item, "item");
+              console.log(item, "item");
+              return (
+                <>
+                  <ImgCard
+                    key={item.id}
+                    id={item.id}
+                    url={item.url}
+                    userId={item.userId}
+                    password={item.password}
+                    text={item.text}
+                    likeCount={item.like}
+                    location={item.location}
+                  />
+                </>
+              );
+            })}
         </BottomSheet>
       )}
     </S.MapContainer>

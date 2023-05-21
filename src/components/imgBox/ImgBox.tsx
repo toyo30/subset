@@ -4,9 +4,10 @@ import { app } from "../../firebase";
 
 interface Props {
   path: string;
+  style?: React.CSSProperties;
 }
 
-export const ImageComponent: React.FC<Props> = ({ path }) => {
+export const ImageComponent: React.FC<Props> = ({ path, style }) => {
   const [imageUrl, setImageUrl] = useState<string>("");
   const storage = getStorage(app);
 
@@ -30,8 +31,8 @@ export const ImageComponent: React.FC<Props> = ({ path }) => {
   }, []);
 
   return imageUrl ? (
-    <img src={imageUrl} alt="From Firebase Storage" />
+    <img src={imageUrl} alt="From Firebase Storage" style={style} />
   ) : (
-    <p>이미지없음</p>
+    <img src={`${process.env.PUBLIC_URL}/Zola.png`}></img>
   );
 };
