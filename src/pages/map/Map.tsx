@@ -27,7 +27,7 @@ export const Map = () => {
   useEffect(() => {
     const map = (mapRef.current = new naver.maps.Map("map", {
       //지도 추가, 좌표를 기점으로 주변 지도가 추가된다.
-      center: new naver.maps.LatLng(37.586466, 127.029169),
+      center: new naver.maps.LatLng(37.5876055, 127.03138),
       zoom: 16,
     }));
 

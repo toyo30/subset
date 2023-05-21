@@ -95,7 +95,7 @@ export const PhotoUpload = () => {
           }}
         >
           <label style={{ display: "block", marginBottom: "10px" }}>
-            ID
+            닉네임
             <span
               style={{
                 fontSize: "12px",

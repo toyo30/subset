@@ -1,11 +1,9 @@
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import MoreHorizSharpIcon from "@mui/icons-material/MoreHorizSharp";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { IconButton, Menu, MenuItem } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
@@ -50,6 +48,8 @@ export const ImgCard: React.FC<Props> = ({
 
   const randomItem = list[randomIndex];
 
+  const [profile, setProfile] = useState(randomItem);
+
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -69,7 +69,7 @@ export const ImgCard: React.FC<Props> = ({
 
   const deletePost = async () => {
     if (confirmPassword === password) {
-      await firebaseApi.deleteData(id, location);
+      await firebaseApi.deleteData(id, "Post");
       closeModalFunction();
     } else {
       alert("비밀번호를 다시 입력해주세요");
@@ -165,11 +165,13 @@ export const ImgCard: React.FC<Props> = ({
               width: "100%",
               display: "flex",
               justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "10px",
             }}
           >
             <div
               style={{
-                minWidth: "calc(100% - 52px)",
+                minWidth: "unset",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "left",
@@ -196,7 +198,7 @@ export const ImgCard: React.FC<Props> = ({
                     height: "41px",
                     borderRadius: "30px",
                   }}
-                  src={randomItem}
+                  src={profile}
                 />
               </div>
               <p
@@ -207,39 +209,15 @@ export const ImgCard: React.FC<Props> = ({
                 {userId}
               </p>
             </div>
-            <div
+            <p
               style={{
-                minWidth: "48px",
+                fontSize: "14px",
+                textAlign: "left",
+                color: "gray",
               }}
             >
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <MoreHorizSharpIcon />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={logout}>삭제하기</MenuItem>
-              </Menu>
-            </div>
+              {`${pins[location].name}`}
+            </p>
           </div>
           <div
             style={{
@@ -263,41 +241,119 @@ export const ImgCard: React.FC<Props> = ({
             />
           </div>
 
+          <Typography
+            variant="body2"
+            textAlign={"center"}
+            style={{ padding: "10px 0" }}
+          >
+            {/* <span style={{ fontWeight: "600", marginRight: "6px" }}>
+                {userId}
+              </span> */}
+            <p style={{ display: "inline" }}>{text}</p>
+          </Typography>
+
           <div
             style={{
-              textAlign: "left",
-              marginBottom: "12px",
-              position: "relative",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              minWidth: "unset",
             }}
           >
-            {lottieStauts && (
-              <LottieComponent
-                style={{
-                  position: "absolute",
-                  top: "-200px",
-                  left: "-30px",
+            <div
+              style={{
+                textAlign: "left",
+                marginBottom: "12px",
+                position: "relative",
+                minWidth: "unset",
+              }}
+            >
+              {lottieStauts && (
+                <LottieComponent
+                  style={{
+                    position: "absolute",
+                    top: "-100px",
+                    left: "-30px",
+                  }}
+                />
+              )}
+              {like ? (
+                <>
+                  <FavoriteIcon
+                    onClick={handleLike}
+                    fill="rgb(255, 48, 64)"
+                    style={{
+                      width: "24px",
+                      height: "24px",
+                      color: "rgb(255, 48, 64)",
+                    }}
+                  />
+                  <span
+                    style={{
+                      fontSize: "14px",
+                      textAlign: "left",
+                      fontWeight: "600",
+                      marginBottom: "12px",
+                    }}
+                  >
+                    {likeCount}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <FavoriteBorderIcon
+                    onClick={handleLike}
+                    style={{
+                      width: "24px",
+                      height: "24px",
+                    }}
+                  />
+                  <span
+                    style={{
+                      fontSize: "14px",
+                      textAlign: "left",
+                      fontWeight: "600",
+                      marginBottom: "12px",
+                    }}
+                  >
+                    {likeCount}
+                  </span>
+                </>
+              )}
+            </div>
+            <div
+              style={{
+                minWidth: "48px",
+              }}
+            >
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <MoreHorizIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
                 }}
-              />
-            )}
-            {like ? (
-              <FavoriteIcon
-                onClick={handleLike}
-                fill="rgb(255, 48, 64)"
-                style={{
-                  width: "24px",
-                  height: "24px",
-                  color: "rgb(255, 48, 64)",
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
                 }}
-              />
-            ) : (
-              <FavoriteBorderIcon
-                onClick={handleLike}
-                style={{
-                  width: "24px",
-                  height: "24px",
-                }}
-              />
-            )}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={logout}>삭제하기</MenuItem>
+              </Menu>
+            </div>
           </div>
           <div
             style={{
@@ -305,7 +361,7 @@ export const ImgCard: React.FC<Props> = ({
               justifyContent: "space-between",
             }}
           >
-            <p
+            {/* <p
               style={{
                 fontSize: "14px",
                 textAlign: "left",
@@ -314,24 +370,8 @@ export const ImgCard: React.FC<Props> = ({
               }}
             >
               좋아요 {likeCount}번
-            </p>
-            <p
-              style={{
-                fontSize: "14px",
-                textAlign: "left",
-                marginBottom: "12px",
-                color: "gray",
-              }}
-            >
-              {`${pins[location].name}`}
-            </p>
+            </p> */}
           </div>
-          <Typography variant="body2" textAlign={"left"}>
-            <span style={{ fontWeight: "600", marginRight: "6px" }}>
-              {userId}
-            </span>
-            <p style={{ display: "inline" }}>{text}</p>
-          </Typography>
         </CardContent>
       </Card>
     </>

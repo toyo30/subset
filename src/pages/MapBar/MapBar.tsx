@@ -46,7 +46,7 @@ export const MapBar = () => {
 
       const infoWindow = new window.naver.maps.InfoWindow({
         content: `<div style="min-width:150px;text-align:center;padding:10px;">
-        ${item[1].name} 주점</div>`,
+        ${item[1].name}</div>`,
       });
 
       window.naver.maps.Event.addListener(marker, "click", (e) => {

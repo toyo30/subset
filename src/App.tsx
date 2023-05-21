@@ -127,29 +127,29 @@ const AppContent = () => {
       setInit(true);
     });
 
-    requestNotificationPermissionAndGetToken();
+    // requestNotificationPermissionAndGetToken();
     // // Get the FCM token and log it to the console
-    getToken(messaging, {
-      vapidKey:
-        "BILnzoSfp_R5AqlOq_E0cVaPrymPxneIPe9uMtoSInnzsUh9J1oigJEWkMGBVynpEdnk4UKFYhytqS19q-KvA40",
-    })
-      .then((token) => {
-        console.log("FCM Token:", token);
-        //여기서도 fcm 토큰 관련, db 생성해서 추가해주기
-        setUserInstance({
-          ...userInstance,
-          fcmToken: token,
-        });
-      })
-      .catch((err) => {
-        console.error("Failed to get FCM token:", err);
-      });
+    // getToken(messaging, {
+    //   vapidKey:
+    //     "BILnzoSfp_R5AqlOq_E0cVaPrymPxneIPe9uMtoSInnzsUh9J1oigJEWkMGBVynpEdnk4UKFYhytqS19q-KvA40",
+    // })
+    //   .then((token) => {
+    //     console.log("FCM Token:", token);
+    //     //여기서도 fcm 토큰 관련, db 생성해서 추가해주기
+    //     setUserInstance({
+    //       ...userInstance,
+    //       fcmToken: token,
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     console.error("Failed to get FCM token:", err);
+    //   });
 
-    // Handle incoming messages
-    onMessage(messaging, (payload) => {
-      console.log("Message received. ", payload);
-      // ...
-    });
+    // // Handle incoming messages
+    // onMessage(messaging, (payload) => {
+    //   console.log("Message received. ", payload);
+    //   // ...
+    // });
 
     return () => {
       unsubscribe();

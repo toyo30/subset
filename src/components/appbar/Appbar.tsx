@@ -1,3 +1,4 @@
+import InstagramIcon from "@mui/icons-material/Instagram";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import { Menu, MenuItem } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
@@ -8,7 +9,6 @@ import Typography from "@mui/material/Typography";
 import { signOut } from "firebase/auth";
 import * as React from "react";
 import { authService } from "../../firebase";
-
 export default function MenuAppBar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -48,7 +48,12 @@ export default function MenuAppBar() {
             sx={{ mr: 2 }}
           >
             {/* <MenuIcon /> */}
-            <NotificationsNoneIcon fill="transparent" />
+            <InstagramIcon
+              style={{ color: "white" }}
+              onClick={(e) => {
+                window.open("https://www.instagram.com/ku_festivalupdates/");
+              }}
+            />
           </IconButton>
           <Typography
             variant="h6"
@@ -78,7 +83,7 @@ export default function MenuAppBar() {
                 // onClick={handleMenu}
                 color="inherit"
               >
-                {/* <AccountCircle /> */}
+                <NotificationsNoneIcon style={{ color: "transparent" }} />
               </IconButton>
               <Menu
                 id="menu-appbar"
