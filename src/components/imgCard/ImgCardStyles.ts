@@ -1,3 +1,5 @@
 import styled from "styled-components";
 
-export const BottomNavigationContainer = styled.div``;
+export const ImgCardContainer = styled.div`
+
+`;

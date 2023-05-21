@@ -79,7 +79,13 @@ export const SimpleBottomNavigation = () => {
 
       <Fab color="primary" aria-label="add" sx={fabStyle} onClick={handleClick}>
         <Typography sx={textStyle}>
-          실축근 <AddIcon />
+          <img
+              src={process.env.PUBLIC_URL + "/fab.png"}
+              style={{
+                width: "80px"
+              }}
+            />
+            {/* <AddIcon /> */}
         </Typography>
       </Fab>
     </S.BottomNavigationContainer>

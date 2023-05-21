@@ -2,7 +2,10 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { LottieComponent } from "../lottie/Lottie";
@@ -23,8 +26,7 @@ export const ImgCard = () => {
   };
 
   return (
-    <>
-      <Card sx={{ minWidth: "100vw" }} variant="outlined">
+    <Card sx={{ minWidth: "100vw" }} variant="outlined">
         <CardContent>
           <div>
             <div
@@ -109,7 +111,7 @@ export const ImgCard = () => {
             )}
           </div>
           <p
-            style={{
+            style={{ 
               fontSize: "14px",
               textAlign: "left",
               fontWeight: "600",
@@ -126,6 +128,5 @@ export const ImgCard = () => {
           </Typography>
         </CardContent>
       </Card>
-    </>
   );
 };

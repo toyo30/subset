@@ -12,6 +12,8 @@ import MyContext from "../../contexts/MyContext";
 import { app, db } from "../../firebase";
 import { PathUrl } from "../../types/router/pathUrl";
 import { BasicSelect } from "../basicSelect/BasicSelect";
+import { Button, Input, TextField, Container, List, ListItem } from '@mui/material';
+import { UploadContainer } from "./PhotoUploadStyles";
 
 const PhotoUpload = () => {
   const { pinStatus } = useContext(MyContext);
@@ -27,9 +29,10 @@ const PhotoUpload = () => {
     setFile(files[0]);
   };
 
+  const navigate = useNavigate();
+
   const handleUpload = async () => {
     if (!file || !id || !password || !text) return;
-    const navigate = useNavigate();
 
     const storage = getStorage(app);
     const storageRef = ref(storage, `images/${file.name}`);
@@ -70,41 +73,87 @@ const PhotoUpload = () => {
   };
 
   return (
-    <div>
-      <div>
-        <label>아이디</label>
-        <input
-          type="text"
-          onChange={(e) => {
-            setId(e.target.value);
-          }}
-        />
-        <label>비번</label>
-        <input
-          type="password"
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-      </div>
-      <div>
-        <label>text</label>
-        <input
-          type="text"
-          onChange={(e) => {
-            setText(e.target.value);
-          }}
-        />
-      </div>
-      <input type="file" onChange={handleFileChange} />
-      <BasicSelect
-        label="장소"
-        selectOptions={Object.values(pins).map((value) => value.name)}
-        onChange={(e) => setLocation(e.target.value)}
-      />
+<div style={{ width: '300px', margin: 'auto', marginTop: '50px' }}>
+      <List >
+        <ListItem               
+            style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "left",
+                marginBottom: '20px'
+            }}
+        >
+            <label style={{ display: 'block', marginBottom: '10px'}}>ID</label>
+            <Input
+              type="text"
+              onChange={(e) => {
+                setId(e.target.value);
+              }}
+              style={{ width: '100%', padding: '10px' }}
+            />
 
-      <button onClick={handleUpload}>Upload</button>
-    </div>
+            <label style={{ display: 'block', marginBottom: '10px'}}>PW</label>
+            <Input
+              type="password"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              style={{ width: '100%', padding: '10px' }}
+            />
+        </ListItem>
+
+
+        <ListItem
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "left",
+            marginBottom: '20px'
+          }}
+        >
+          <Input type="file" onChange={handleFileChange} />
+        </ListItem>
+
+        <ListItem
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "left",
+                marginBottom: '20px'
+            }}
+        >
+            <label style={{ display: 'block', marginBottom: '10px', width:'30px'}}>글</label>
+            <Input
+              type="text"
+              onChange={(e) => {
+                setText(e.target.value);
+              }}
+              style={{ width: '100%', padding: '10px' }}
+            />
+        </ListItem>
+        
+
+        <ListItem 
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "left",
+            marginBottom: '20px'
+          }}
+        >
+          {/* <label style={{ display: 'block', marginBottom: '10px' }}>장소</label> */}
+          <BasicSelect
+          selectOptions={Object.values(pins).map((value) => value.name)}
+          onChange={(e) => setLocation(e.target.value)}
+          />
+        </ListItem>
+      </List>
+
+      <Button onClick={handleUpload}>Upload</Button>
+</div>
+
+
+
   );
 };
 
