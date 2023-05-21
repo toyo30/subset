@@ -52,5 +52,5 @@ export const bar_pins: Record<string, Pin> = {
   Smartsec: { lat: 37.5871299, lng: 127.031673, name: "스마트보안학과 주점" },
   Foodeco: { lat: 37.5870135, lng: 127.0318266, name: "식품자원경제학과 주점" },
   Cyber: { lat: 37.587097, lng: 127.0320019, name: "사이버국방학과 주점" },
-  Biz: { lat: 37.5902808, lng: 127.0348337, name: "경영대 주점" },
+  // Biz: { lat: 37.5902808, lng: 127.0348337, name: "경영대 주점" },
 };

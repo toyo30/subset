@@ -1,4 +1,4 @@
-import { Button, Input, List, ListItem } from "@mui/material";
+import { Button, Input, TextField } from "@mui/material";
 import {
   addDoc,
   collection,
@@ -86,145 +86,77 @@ export const PhotoUpload = () => {
   const result = { ...pins, ...bar_pins };
 
   return (
-    <div style={{ width: "300px", margin: "auto", marginTop: "50px" }}>
-      <List>
-        <ListItem
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "left",
-            marginBottom: "20px",
-          }}
-        >
-          <label style={{ display: "block", marginBottom: "10px" }}>
-            닉네임
-            <span
-              style={{
-                fontSize: "12px",
-                color: "#EF3A4A",
-              }}
-            >
-              *
-            </span>
-          </label>
-          <Input
-            type="text"
-            onChange={(e) => {
-              setId(e.target.value);
+    <>
+      <h2
+        style={{
+          color: "#EF3A4A",
+          padding: "10px 0",
+          marginBottom: "30px",
+        }}
+      >
+        ✨실시간 축제 근황 공유✨
+      </h2>
+      <TextField
+        id="standard-required"
+        required
+        label="닉네임"
+        onChange={(e) => {
+          setId(e.target.value);
+        }}
+        style={{
+          marginBottom: "20px",
+        }}
+      />
+      <TextField
+        id="standard-required"
+        required
+        label="비번"
+        color="primary"
+        type="password"
+        onChange={(e) => {
+          setPassword(e.target.value);
+        }}
+        style={{
+          marginBottom: "20px",
+        }}
+      />
+
+      <div style={{ textAlign: "left", width: "100%", marginBottom: "20px" }}>
+        <label style={{ display: "block", marginBottom: "10px" }}>
+          이미지
+          <span
+            style={{
+              fontSize: "12px",
+              color: "#EF3A4A",
             }}
-            style={{ width: "100%", padding: "10px" }}
-          />
-
-          <label style={{ display: "block", marginBottom: "10px" }}>
-            PW
-            <span
-              style={{
-                fontSize: "12px",
-                color: "#EF3A4A",
-              }}
-            >
-              *
-            </span>
-          </label>
-          <Input
-            type="password"
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            style={{ width: "100%", padding: "10px" }}
-          />
-        </ListItem>
-
-        <ListItem
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "left",
-            marginBottom: "20px",
-          }}
-        >
-          <div style={{ textAlign: "left", width: "100%" }}>
-            <label style={{ display: "block", marginBottom: "10px" }}>
-              이미지
-              <span
-                style={{
-                  fontSize: "12px",
-                  color: "#EF3A4A",
-                }}
-              >
-                *
-              </span>
-            </label>
-          </div>
-
-          <Input type="file" onChange={handleFileChange} />
-        </ListItem>
-
-        <ListItem
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "left",
-            marginBottom: "20px",
-          }}
-        >
-          <label
-            style={{ display: "block", marginBottom: "10px", width: "40px" }}
           >
-            캡션
-            <span
-              style={{
-                fontSize: "12px",
-                color: "#EF3A4A",
-              }}
-            >
-              *
-            </span>
-          </label>
-          <Input
-            type="text"
-            onChange={(e) => {
-              setText(e.target.value);
-            }}
-            style={{ width: "100%", padding: "10px" }}
-          />
-        </ListItem>
+            *
+          </span>
+        </label>
 
-        <div style={{ textAlign: "left", width: "100%" }}>
-          <label style={{ display: "block", marginBottom: "-15px" }}>
-            장소
-            <span
-              style={{
-                fontSize: "12px",
-                color: "#EF3A4A",
-              }}
-            >
-              *
-            </span>
-          </label>
-        </div>
-        <ListItem
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "left",
-            marginBottom: "20px",
-          }}
-        >
-          {/* <label style={{ display: 'block', marginBottom: '10px' }}>장소</label> */}
-          <BasicSelect
-            defaultValue={location}
-            selectOptions={Object.keys(result).map((key) => key)}
-            onChange={(e) => setLocation(e.target.value)}
-          />
-        </ListItem>
-      </List>
+        <Input type="file" onChange={handleFileChange} />
+      </div>
+      <TextField
+        id="standard-required"
+        required
+        label="이미지 한 줄 설명"
+        color="primary"
+        onChange={(e) => {
+          setText(e.target.value);
+        }}
+        style={{
+          marginBottom: "20px",
+        }}
+      />
+      <BasicSelect
+        defaultValue={location}
+        selectOptions={Object.keys(result).map((key) => key)}
+        onChange={(e) => setLocation(e.target.value)}
+      />
 
       <Button onClick={handleUpload} variant="contained">
         Upload
       </Button>
-    </div>
+    </>
   );
 };

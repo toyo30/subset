@@ -1,7 +1,7 @@
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { IconButton, Menu, MenuItem } from "@mui/material";
+import { Button, IconButton, Menu, MenuItem, TextField } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -73,6 +73,7 @@ export const ImgCard: React.FC<Props> = ({
     if (confirmPassword === password) {
       await firebaseApi.deleteData(id, "Post");
       closeModalFunction();
+      alert("삭제되었습니다.");
     } else {
       alert("비밀번호를 다시 입력해주세요");
     }
@@ -133,29 +134,64 @@ export const ImgCard: React.FC<Props> = ({
             height: "100%",
             backgroundColor: "#4949491B",
             zIndex: 1000,
+            top: 0,
+            left: 0,
           }}
         >
           <div
             ref={modalRef}
             style={{
               position: "fixed",
-              top: "50%",
+              top: "30%",
               left: "50%",
               transform: "translate(-50%, -50%)",
               zIndex: 1000,
               background: "white",
               minWidth: "80%",
-              height: "70vh",
+              height: "300px",
               border: "1px solid black",
+              borderRadius: "20px",
+              padding: "30px 0",
             }}
           >
-            <div>"게시글"의 비밀번호를 입력해주세요.</div>
-            <input
-              type="password"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-            <button onClick={deletePost}>삭제하기</button>
-            <button onClick={closeModalFunction}>취소하기</button>
+            <h2
+              style={{
+                color: "#EF3A4A",
+                padding: "10px 0",
+                marginBottom: "30px",
+              }}
+            >
+              "게시글"의 비밀번호를 입력해주세요.
+            </h2>
+            <div
+              style={{
+                padding: "0 20px",
+              }}
+            >
+              <TextField
+                id="standard-required"
+                required
+                label="비번"
+                color="primary"
+                type="password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                style={{
+                  marginBottom: "20px",
+                }}
+              />
+            </div>
+            <Button variant="contained" onClick={deletePost}>
+              삭제하기
+            </Button>
+            <span
+              style={{
+                display: "inline-block",
+                width: "15px",
+              }}
+            ></span>
+            <Button variant="outlined" onClick={closeModalFunction}>
+              취소하기
+            </Button>
           </div>
         </div>
       )}

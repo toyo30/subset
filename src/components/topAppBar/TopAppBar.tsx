@@ -137,7 +137,6 @@ const TopAppLeftBtn = styled.div``;
 const TopAppRightBtn = styled.div`
   position: absolute;
   right: 0;
-  padding: 0 16px;
 `;
 
 const TopAppCenterText = styled.p`

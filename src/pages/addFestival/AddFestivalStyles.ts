@@ -20,7 +20,7 @@ export const TextFieldContainer = styled.div`
   justify-content: space-around;
   max-width: 400px;
   margin: 0 auto;
-  padding: 0 48px;
+  padding: 30px 48px 0px;
   margin-bottom: 30px;
 `;
 

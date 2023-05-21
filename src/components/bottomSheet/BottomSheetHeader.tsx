@@ -42,17 +42,29 @@ const BottomSheetHeader: React.FC<BottomSheetHeaderProps> = ({ className }) => {
         borderBottom
         sx={{ padding: "18px 16px", height: "64px" }}
         topAppRight={
-          <button
+          <CloseSharpIcon
             style={{
-              background: "none",
-              border: "none",
+              padding: "16px 16px",
             }}
             onClick={() => {
               setBottomSheetStatus(false);
             }}
-          >
-            <CloseSharpIcon />
-          </button>
+          />
+          // <button
+          //   style={{
+          //     background: "none",
+          //     border: "none",
+          //   }}
+          //   onClick={() => {
+          //     setBottomSheetStatus(false);
+          //   }}
+          // >
+          //   <CloseSharpIcon
+          //     onClick={() => {
+          //       setBottomSheetStatus(false);
+          //     }}
+          //   />
+          // </button>
         }
       >
         {(pinStatus && result[pinStatus].name) || ""}
