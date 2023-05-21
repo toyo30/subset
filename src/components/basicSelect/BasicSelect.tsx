@@ -49,6 +49,13 @@ export const BasicSelect: React.FC<Props> = ({
           onChange={handleChange}
           label={label}
           defaultValue={defaultValue}
+          MenuProps={{
+            PaperProps: {
+              sx: {
+                maxHeight: "200px", // 여기에 원하는 높이를 설정합니다.
+              },
+            },
+          }}
         >
           {selectOptions.length > 0 ? (
             selectOptions.map((item, idx) => (

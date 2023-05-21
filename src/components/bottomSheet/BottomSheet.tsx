@@ -184,6 +184,6 @@ const BottomSheetContent = styled.div`
 `;
 
 BottomSheet.defaultProps = {
-  maxHeight: 500,
+  maxHeight: 300,
   opacityTime: 500,
 };

@@ -6,14 +6,21 @@ import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import Box from "@mui/material/Box";
 import * as React from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { PathUrl } from "../../types/router/pathUrl";
 import * as S from "./BottomNavigationStyles";
 
 export const SimpleBottomNavigation = () => {
-  const [value, setValue] = React.useState("");
   const navigate = useNavigate();
   const location = useLocation();
+  const [value, setValue] = useState(location.pathname.slice(1));
+
+  // console.log(location.pathname);
+
+  // useEffect(() => {
+  //   setValue(location.pathname);
+  // }, []);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -28,6 +35,7 @@ export const SimpleBottomNavigation = () => {
     <S.BottomNavigationContainer>
       <Box>
         <BottomNavigation
+          defaultValue={value}
           value={value}
           onChange={handleChange}
           showLabels={true}

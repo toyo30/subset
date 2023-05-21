@@ -73,11 +73,14 @@ export const PhotoUpload = () => {
         };
 
         const docRef = await addDoc(collection(db, "Post"), payload);
+        alert("업로드가 완료되었습니다");
+        navigate(`${PathUrl.Comment}`);
       }
     );
 
-    alert("업로드가 완료되었습니다");
-    navigate(`${PathUrl.Comment}`);
+    // setTimeout(() => {
+
+    // }, 100);
   };
 
   return (
