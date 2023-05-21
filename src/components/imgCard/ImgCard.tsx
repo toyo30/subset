@@ -287,7 +287,7 @@ export const ImgCard: React.FC<Props> = ({
                 marginBottom: "12px",
               }}
             >
-              좋아요 {likeCount}개
+              좋아요 {likeCount}번
             </p>
             <p
               style={{

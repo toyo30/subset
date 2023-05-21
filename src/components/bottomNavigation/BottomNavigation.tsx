@@ -50,7 +50,7 @@ export const SimpleBottomNavigation = () => {
             icon={<RestoreIcon />}
           /> */}
           <BottomNavigationAction
-            label="한줄평"
+            label="피드"
             value={`${PathUrl.Comment.slice(1)}`}
             // value={`${PathUrl.MyZiphap.slice(1)}`}
             icon={<FavoriteIcon />}

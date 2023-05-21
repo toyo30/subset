@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { collection, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { ImgCard } from "../../components/imgCard/ImgCard";
@@ -7,6 +8,7 @@ import * as S from "./CommentStyles";
 
 export const Comment = () => {
   const [eventDocuments, setEventDocuments] = useState<any[]>([]);
+  const [likeSort, setLikeSort] = useState<boolean>(false);
 
   // useEffect(() => {
   //   const collectionNames = Object.keys(pins); // 각 컬렉션의 이름을 담은 배열
@@ -190,16 +192,44 @@ export const Comment = () => {
     };
   }, []); // 의존성 배열에 빈 배열 사용
 
+  const handleClickLike = () => {
+    setLikeSort(true);
+  };
+
+  const handleClickRecent = () => {
+    setLikeSort(false);
+  };
+
   useEffect(() => {
-    console.log(eventDocuments, "eventDocuments");
-  }, [eventDocuments]);
+    console.log(likeSort, "likeSort");
+  }, [likeSort]);
 
   return (
     <S.CommentContainer>
-      {eventDocuments.length > 0 &&
-        sortByLike(eventDocuments).map((item: any) => {
-          return (
+      <div style={{ padding: "10px 20px 10px", textAlign: "right" }}>
+        <Button
+          variant={`${likeSort ? "contained" : "outlined"}`}
+          onClick={handleClickLike}
+        >
+          좋아요 순
+        </Button>
+        <span
+          style={{
+            display: "inline-block",
+            width: "20px",
+          }}
+        />
+        <Button
+          variant={`${likeSort ? "outlined" : "contained"}`}
+          onClick={handleClickRecent}
+        >
+          최신순
+        </Button>
+      </div>
+      {eventDocuments.length > 0 && likeSort
+        ? sortByLike(eventDocuments).map((item: any) => (
             <>
+              asdf
               <ImgCard
                 key={item.id}
                 id={item.id}
@@ -211,8 +241,22 @@ export const Comment = () => {
                 location={item.location}
               />
             </>
-          );
-        })}
+          ))
+        : eventDocuments.map((item: any) => (
+            <>
+              aa
+              <ImgCard
+                key={item.id}
+                id={item.id}
+                url={item.url}
+                userId={item.userId}
+                password={item.password}
+                text={item.text}
+                likeCount={item.like}
+                location={item.location}
+              />
+            </>
+          ))}
     </S.CommentContainer>
   );
 };
