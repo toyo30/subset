@@ -3,7 +3,7 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { ImgCard } from "../../components/imgCard/ImgCard";
 import { db } from "../../firebase";
-import { sortByLike } from "../../utils/listSort/list-sort";
+import { sortByLike, sortByTime } from "../../utils/listSort/list-sort";
 import * as S from "./CommentStyles";
 
 export const Comment = () => {
@@ -200,10 +200,6 @@ export const Comment = () => {
     setLikeSort(false);
   };
 
-  useEffect(() => {
-    console.log(likeSort, "likeSort");
-  }, [likeSort]);
-
   return (
     <S.CommentContainer>
       <div style={{ padding: "10px 20px 10px", textAlign: "right" }}>
@@ -229,7 +225,6 @@ export const Comment = () => {
       {eventDocuments.length > 0 && likeSort
         ? sortByLike(eventDocuments).map((item: any) => (
             <>
-              asdf
               <ImgCard
                 key={item.id}
                 id={item.id}
@@ -242,9 +237,8 @@ export const Comment = () => {
               />
             </>
           ))
-        : eventDocuments.map((item: any) => (
+        : sortByTime(eventDocuments).map((item: any) => (
             <>
-              aa
               <ImgCard
                 key={item.id}
                 id={item.id}

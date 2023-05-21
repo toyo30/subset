@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { collection, onSnapshot } from "firebase/firestore";
 import { useContext, useEffect, useRef, useState } from "react";
 import BottomSheet from "../../components/bottomSheet/BottomSheet";
@@ -5,6 +6,7 @@ import { ImgCard } from "../../components/imgCard/ImgCard";
 import { pins } from "../../constant/pins";
 import MyContext from "../../contexts/MyContext";
 import { db } from "../../firebase";
+import { sortByLike, sortByTime } from "../../utils/listSort/list-sort";
 import * as S from "./MapStyles";
 
 export const Map = () => {
@@ -12,6 +14,15 @@ export const Map = () => {
     useContext(MyContext);
   const mapRef = useRef<HTMLElement | null | any>(null);
   const [eventDocuments, setEventDocuments] = useState([]);
+  const [likeSort, setLikeSort] = useState<boolean>(false);
+
+  const handleClickLike = () => {
+    setLikeSort(true);
+  };
+
+  const handleClickRecent = () => {
+    setLikeSort(false);
+  };
 
   useEffect(() => {
     const map = (mapRef.current = new naver.maps.Map("map", {
@@ -74,7 +85,27 @@ export const Map = () => {
       ></div>
       {bottomSheetStatus && (
         <BottomSheet>
-          {eventDocuments.length > 0 &&
+          <div style={{ padding: "10px 20px 10px", textAlign: "right" }}>
+            <Button
+              variant={`${likeSort ? "contained" : "outlined"}`}
+              onClick={handleClickLike}
+            >
+              좋아요 순
+            </Button>
+            <span
+              style={{
+                display: "inline-block",
+                width: "20px",
+              }}
+            />
+            <Button
+              variant={`${likeSort ? "outlined" : "contained"}`}
+              onClick={handleClickRecent}
+            >
+              최신순
+            </Button>
+          </div>
+          {/* {eventDocuments.length > 0 && 
             eventDocuments
               .filter((item: any) => item.location === pinStatus)
               .map((item: any) => {
@@ -94,7 +125,40 @@ export const Map = () => {
                     />
                   </>
                 );
-              })}
+              })} */}
+          {eventDocuments.length > 0 && likeSort
+            ? sortByLike(eventDocuments)
+                .filter((item: any) => item.location === pinStatus)
+                .map((item: any) => (
+                  <>
+                    <ImgCard
+                      key={item.id}
+                      id={item.id}
+                      url={item.url}
+                      userId={item.userId}
+                      password={item.password}
+                      text={item.text}
+                      likeCount={item.like}
+                      location={item.location}
+                    />
+                  </>
+                ))
+            : sortByTime(eventDocuments)
+                .filter((item: any) => item.location === pinStatus)
+                .map((item: any) => (
+                  <>
+                    <ImgCard
+                      key={item.id}
+                      id={item.id}
+                      url={item.url}
+                      userId={item.userId}
+                      password={item.password}
+                      text={item.text}
+                      likeCount={item.like}
+                      location={item.location}
+                    />
+                  </>
+                ))}
         </BottomSheet>
       )}
     </S.MapContainer>

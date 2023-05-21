@@ -1,5 +1,11 @@
 import { Button, Input, List, ListItem } from "@mui/material";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 import {
   getDownloadURL,
   getStorage,
@@ -59,6 +65,7 @@ export const PhotoUpload = () => {
           password: password,
           text: text,
           location: location,
+          time: serverTimestamp(),
           like: 0,
         };
 
