@@ -7,6 +7,7 @@ import { pins } from "../../constant/pins";
 import MyContext from "../../contexts/MyContext";
 import { db } from "../../firebase";
 import { sortByLike, sortByTime } from "../../utils/listSort/list-sort";
+import { urlByStatus } from "../../utils/status/status";
 import * as S from "./MapStyles";
 
 export const Map = () => {
@@ -37,7 +38,7 @@ export const Map = () => {
         position: new window.naver.maps.LatLng(item[1].lat, item[1].lng),
         map: mapRef.current,
         icon: {
-          url: `${process.env.PUBLIC_URL}/Cool.png`,
+          url: urlByStatus(item[1].status),
           size: new naver.maps.Size(30, 40),
           scaledSize: new naver.maps.Size(30, 40),
           origin: new naver.maps.Point(0, 0),
