@@ -1,5 +1,4 @@
 import { Button, Input, TextField } from "@mui/material";
-import ImageResizer from "browser-image-resizer";
 import {
   addDoc,
   collection,
@@ -13,12 +12,15 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
+import Lottie from "lottie-react";
 import { ChangeEvent, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { bar_pins, pins } from "../../constant/pins";
 import MyContext from "../../contexts/MyContext";
 import { app, db } from "../../firebase";
+import LoadingLottie from "../../lotties/loading.json";
 import { PathUrl } from "../../types/router/pathUrl";
+import { resizeImage } from "../../utils/resize/resize";
 import { BasicSelect } from "../basicSelect/BasicSelect";
 
 const config = {
@@ -38,6 +40,7 @@ export const PhotoUpload = () => {
   const [text, setText] = useState<string>("");
   const [location, setLocation] = useState<string>(pinStatus || "Minju");
   const navigate = useNavigate();
+  const [uploading, setUploading] = useState(false);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -49,23 +52,22 @@ export const PhotoUpload = () => {
     const file = e.target.files?.[0];
     if (!file) return;
     try {
-      const resizedImage = await ImageResizer.readAndCompressImage(
-        file,
-        config
-      );
+      setUploading(true);
+      const resizedImage = await resizeImage(file, 800, 800, 0.7);
       setFileData(resizedImage);
-      // 이제 `resizedImage`를 서버에 업로드합니다.
-      // 여기서는 firebase storage를 예로 들겠습니다.
-      // const storageRef = firebase.storage().ref();
-      // const fileRef = storageRef.child('some-directory/' + resizedImage.name);
-      // await fileRef.put(resizedImage);
+
+      console.log("Upload is complete");
+      setUploading(false);
     } catch (error) {
       console.log(error);
+      setUploading(false);
     }
   };
 
   const handleUpload = async () => {
+    setUploading(true);
     if (!file || !id || !password || !text || !fileData) {
+      console.log(fileData, "fileData");
       alert("필수항목 모두 넣어주세요");
       return;
     }
@@ -108,6 +110,7 @@ export const PhotoUpload = () => {
         };
 
         const docRef = await addDoc(collection(db, "Post"), payload);
+        setUploading(false);
         alert("업로드가 완료되었습니다");
         navigate(`${PathUrl.Comment}`);
       }
@@ -122,6 +125,19 @@ export const PhotoUpload = () => {
 
   return (
     <>
+      {uploading && (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: 100,
+          }}
+        >
+          <Lottie animationData={LoadingLottie} />
+        </div>
+      )}
       <h2
         style={{
           color: "#EF3A4A",
@@ -171,7 +187,7 @@ export const PhotoUpload = () => {
 
         <Input
           type="file"
-          onChange={(e: any) => {
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
             handleFileChange(e);
             handleFileChangeData(e);
           }}
