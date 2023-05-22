@@ -4,7 +4,6 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 import { getFirestore } from "firebase/firestore";
-import { getMessaging } from "firebase/messaging";
 // import * as serviceAccount from "../firebase-admin-key.json";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -31,6 +30,5 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const authService = getAuth(app);
 export const analytics = getAnalytics(app);
-export const messaging = getMessaging(app);
 export const db = getFirestore(app);
 export const dbRT = getDatabase(app);

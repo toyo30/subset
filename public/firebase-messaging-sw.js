@@ -34,15 +34,15 @@ const messaging = firebase.messaging();
 //   self.registration.showNotification(notificationTitle, notificationOptions);
 // });
 
-messaging.onBackgroundMessage((payload) => {
-  const notificationTitle = payload.notification.title;
-  const notificationOptions = {
-    body: payload.notification.body,
-    icon: "/planetLogo192.png",
-  };
+// messaging.onBackgroundMessage((payload) => {
+//   const notificationTitle = payload.notification.title;
+//   const notificationOptions = {
+//     body: payload.notification.body,
+//     icon: "/planetLogo192.png",
+//   };
 
-  self.registration.showNotification(notificationTitle, notificationOptions);
-});
+//   self.registration.showNotification(notificationTitle, notificationOptions);
+// });
 
 // // Import and configure the Firebase SDK
 // importScripts(

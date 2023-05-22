@@ -53,7 +53,7 @@ export const PhotoUpload = () => {
     if (!file) return;
     try {
       setUploading(true);
-      const resizedImage = await resizeImage(file, 800, 800, 0.7);
+      const resizedImage = await resizeImage(file, 800, 800, 0.8);
       setFileData(resizedImage);
 
       console.log("Upload is complete");

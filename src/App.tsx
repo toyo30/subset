@@ -1,13 +1,12 @@
 import { Snackbar } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { onAuthStateChanged } from "firebase/auth";
-import { getToken, onMessage } from "firebase/messaging";
 import { useContext, useEffect, useState } from "react";
 import "./App.css";
 import * as S from "./AppStyles";
 import MyContext from "./contexts/MyContext";
 import MyContextProvider from "./contexts/MyContextProvider";
-import { authService, messaging } from "./firebase";
+import { authService } from "./firebase";
 import { MainRouter } from "./router/MainRouter";
 import { GlobalStyle } from "./themes/globalStyle";
 import theme from "./themes/theme";
@@ -43,57 +42,57 @@ const AppContent = () => {
     setOpen(false);
   };
 
-  const requestNotificationPermissionAndGetToken = async () => {
-    if (
-      Notification.permission === "default" ||
-      Notification.permission === "denied"
-    ) {
-      try {
-        const permission = await Notification.requestPermission();
-        if (permission === "granted") {
-          console.log("Notification permission granted.");
-        } else {
-          console.log("Notification permission denied.");
-          return;
-        }
-      } catch (error) {
-        console.error("Error requesting notification permission:", error);
-        return;
-      }
-    } else if (Notification.permission === "granted") {
-      console.log("Notification permission already granted.");
-    }
+  // const requestNotificationPermissionAndGetToken = async () => {
+  //   if (
+  //     Notification.permission === "default" ||
+  //     Notification.permission === "denied"
+  //   ) {
+  //     try {
+  //       const permission = await Notification.requestPermission();
+  //       if (permission === "granted") {
+  //         console.log("Notification permission granted.");
+  //       } else {
+  //         console.log("Notification permission denied.");
+  //         return;
+  //       }
+  //     } catch (error) {
+  //       console.error("Error requesting notification permission:", error);
+  //       return;
+  //     }
+  //   } else if (Notification.permission === "granted") {
+  //     console.log("Notification permission already granted.");
+  //   }
 
-    // Get FCM token
-    try {
-      const token = await getToken(messaging, {
-        vapidKey:
-          "BILnzoSfp_R5AqlOq_E0cVaPrymPxneIPe9uMtoSInnzsUh9J1oigJEWkMGBVynpEdnk4UKFYhytqS19q-KvA40",
-      });
-      console.log("FCM Token:", token);
-      // 여기서도 fcm 토큰 관련, db 생성해서 추가해주기
-      setUserInstance({
-        ...userInstance,
-        fcmToken: token,
-      });
-    } catch (err) {
-      console.error("Failed to get FCM token:", err);
-    }
+  //   // Get FCM token
+  //   try {
+  //     const token = await getToken(messaging, {
+  //       vapidKey:
+  //         "BILnzoSfp_R5AqlOq_E0cVaPrymPxneIPe9uMtoSInnzsUh9J1oigJEWkMGBVynpEdnk4UKFYhytqS19q-KvA40",
+  //     });
+  //     console.log("FCM Token:", token);
+  //     // 여기서도 fcm 토큰 관련, db 생성해서 추가해주기
+  //     setUserInstance({
+  //       ...userInstance,
+  //       fcmToken: token,
+  //     });
+  //   } catch (err) {
+  //     console.error("Failed to get FCM token:", err);
+  //   }
 
-    // Handle incoming messages
-    onMessage(messaging, (payload) => {
-      console.log("Message received. ", payload);
+  //   // Handle incoming messages
+  //   onMessage(messaging, (payload) => {
+  //     console.log("Message received. ", payload);
 
-      setMessage({
-        title: payload.notification?.title || "",
-        body: payload.notification?.body || "",
-      });
+  //     setMessage({
+  //       title: payload.notification?.title || "",
+  //       body: payload.notification?.body || "",
+  //     });
 
-      setOpen(true);
-      // setMessage(payload?.body.);
-      // ...
-    });
-  };
+  //     setOpen(true);
+  //     // setMessage(payload?.body.);
+  //     // ...
+  //   });
+  // };
 
   useEffect(() => {
     // const handleForegroundMessage = async () => {
