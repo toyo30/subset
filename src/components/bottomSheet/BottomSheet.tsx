@@ -32,15 +32,31 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
   ...rest
 }) => {
   const backgroundRef = useRef<any>(null);
-  const { bottomSheetStatus, setBottomSheetStatus } = useContext(MyContext);
+  const { bottomSheetStatus, setBottomSheetStatus, pinStatus } =
+    useContext(MyContext);
   let MIN_Y = minHeight || 64;
   let BOTTOM_SHEET_HEIGHT = window.innerHeight - MIN_Y - 66;
   let MAX_Y = maxHeight || BOTTOM_SHEET_HEIGHT;
-  const { sheetRef, content } = useBottomSheet(MIN_Y, MAX_Y);
+  const [samePinStatus, setSamePinStatus] = useState(false);
+  const { sheetRef, content } = useBottomSheet(
+    MIN_Y,
+    MAX_Y,
+    pinStatus,
+    setSamePinStatus
+  );
   const [windonwSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
+
+  // useEffect(() => {
+  //   console.log(samePinStatus, "samePinStatus");
+  //   if (samePinStatus && localStorage["pinStatus"] === pinStatus) {
+  //     content.current.scrollTo({
+  //       top: Number(localStorage["bottomSheetScrollY"]),
+  //     });
+  //   }
+  // }, [samePinStatus]);
 
   const closeShowBottomSheet = (e: TouchEvent) => {
     if (

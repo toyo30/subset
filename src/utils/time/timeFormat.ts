@@ -114,3 +114,38 @@ export const isItValidTimeArrange = (
     compareTimeToEndWithToday(timeToEnd)
   );
 };
+
+export const getTimeDiff = (timestamp: Timestamp): string => {
+  const now = Date.now(); // 현재 시간 (밀리초 단위)
+
+  if (!timestamp) {
+    return "";
+  }
+
+  const timeToEndTimestamp = new Timestamp(
+    timestamp.seconds,
+    timestamp.nanoseconds
+  );
+  const convertedTimestampToDate = timeToEndTimestamp.toDate();
+  const receivedTime = convertedTimestampToDate.getTime();
+
+  // 두 시간의 차이를 분으로 변환
+  const diffInMinutes = Math.round((now - receivedTime) / (1000 * 60));
+
+  if (diffInMinutes < 1) {
+    // 1분 이내면 "방금 전" 반환
+    return "방금 전";
+  } else if (diffInMinutes < 60) {
+    // 1시간 이내면 ~분 전 반환
+    return `${diffInMinutes}분 전`;
+  } else if (diffInMinutes < 1440) {
+    // 1440분 = 24시간
+    // 24시간 이내면 시간 반환 (소수점 이하 버림)
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    return `${diffInHours}시간 전`;
+  } else {
+    // 그렇지 않으면 일자 반환 (소수점 이하 버림)
+    const diffInDays = Math.floor(diffInMinutes / (60 * 24));
+    return `${diffInDays}일 전`;
+  }
+};

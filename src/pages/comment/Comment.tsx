@@ -86,6 +86,7 @@ export const Comment = () => {
                     text={item.text}
                     likeCount={item.like}
                     location={item.location}
+                    time={item.time}
                   />
                 </>
               ))
@@ -100,6 +101,7 @@ export const Comment = () => {
                     text={item.text}
                     likeCount={item.like}
                     location={item.location}
+                    time={item.time}
                   />
                 </>
               )))}

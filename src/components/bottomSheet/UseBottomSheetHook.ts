@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { Dispatch, useEffect, useRef } from "react";
 // import { MAX_Y, MIN_Y } from "./BottomSheet";
 
 interface BottomSheetMetrics {
@@ -13,7 +13,12 @@ interface BottomSheetMetrics {
   isContentAreaTouched: boolean; // 컨텐츠 영역을 터치하고 있음을 기록
 }
 
-export function useBottomSheet(MIN_Y: any, MAX_Y: any) {
+export function useBottomSheet(
+  MIN_Y: any,
+  MAX_Y: any,
+  pinStatus: string,
+  setSamePinStatus: Dispatch<React.SetStateAction<boolean>>
+) {
   const sheetRef = useRef<any>(null);
   const content = useRef<any>(null);
 
@@ -137,6 +142,7 @@ export function useBottomSheet(MIN_Y: any, MAX_Y: any) {
           );
           document.body.style.overflow = "unset";
           localStorage.setItem("bottomSheetExpand", "DOWN");
+          localStorage.setItem("pinStatus", pinStatus);
         }
 
         if (touchMove.movingDirection === "up") {
@@ -149,6 +155,7 @@ export function useBottomSheet(MIN_Y: any, MAX_Y: any) {
             document.body.style.overflow = "hidden";
           }
           localStorage.setItem("bottomSheetExpand", "UP");
+          localStorage.setItem("pinStatus", pinStatus);
         }
       }
 
@@ -190,18 +197,26 @@ export function useBottomSheet(MIN_Y: any, MAX_Y: any) {
       metrics.current.isContentAreaTouched = true;
     };
     const { touchMove } = metrics.current;
-    if (localStorage["bottomSheetExpand"] === "UP") {
+    if (
+      localStorage["bottomSheetExpand"] === "UP" &&
+      localStorage["pinStatus"] === pinStatus
+    ) {
       sheetRef.current.style.setProperty("transform", `translateY(${MIN_Y}px)`);
+      setSamePinStatus(true);
 
       if (typeof window != "undefined" && window.document) {
         document.body.style.overflow = "hidden";
       }
     } else {
-      if (touchMove.movingDirection === "down") {
+      if (
+        touchMove.movingDirection === "down" &&
+        localStorage["pinStatus"] === pinStatus
+      ) {
         sheetRef.current.style.setProperty(
           "transform",
           `translateY(${MAX_Y}px)`
         );
+        setSamePinStatus(true);
         document.body.style.overflow = "unset";
       }
     }

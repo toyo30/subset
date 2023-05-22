@@ -5,11 +5,13 @@ import { Button, IconButton, Menu, MenuItem, TextField } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import { Timestamp } from "firebase/firestore";
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { firebaseApi } from "../../api/firebase-api";
 import { ImageComponent } from "../../components/imgBox/ImgBox";
 import { bar_pins, pins } from "../../constant/pins";
+import { getTimeDiff } from "../../utils/time/timeFormat";
 import { LottieComponent } from "../lottie/Lottie";
 
 interface Props {
@@ -20,6 +22,7 @@ interface Props {
   text: string;
   likeCount: number;
   location: string;
+  time: Timestamp;
 }
 
 export const ImgCard: React.FC<Props> = ({
@@ -30,6 +33,7 @@ export const ImgCard: React.FC<Props> = ({
   userId,
   password,
   location,
+  time,
 }) => {
   const [like, setLike] = useState<boolean>(false);
   const [lottieStauts, setLottieStatus] = useState<boolean>(false);
@@ -85,10 +89,8 @@ export const ImgCard: React.FC<Props> = ({
       e.target === modalRef.current ||
       modalRef.current?.contains(e.target as Node)
     ) {
-      console.log("no");
       return;
     } else {
-      console.log("yes");
       setDeleteModal(false);
     }
   };
@@ -397,8 +399,12 @@ export const ImgCard: React.FC<Props> = ({
             style={{
               display: "flex",
               justifyContent: "space-between",
+              fontSize: "14px",
+              textAlign: "left",
+              color: "gray",
             }}
           >
+            {getTimeDiff(time)}
             {/* <p
               style={{
                 fontSize: "14px",

@@ -45,7 +45,7 @@ export default function MenuAppBar() {
             edge="start"
             color="primary"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            sx={{ mr: 2, marginRight: 0 }}
           >
             {/* <MenuIcon /> */}
             <InstagramIcon
@@ -74,7 +74,7 @@ export default function MenuAppBar() {
             {/* 실시간 축제 근황! */}
           </Typography>
           {auth && (
-            <div>
+            <>
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -102,7 +102,7 @@ export default function MenuAppBar() {
               >
                 <MenuItem onClick={logout}>Logout</MenuItem>
               </Menu>
-            </div>
+            </>
           )}
         </Toolbar>
       </AppBar>

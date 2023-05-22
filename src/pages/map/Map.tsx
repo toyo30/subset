@@ -14,6 +14,7 @@ export const Map = () => {
     useContext(MyContext);
   const mapRef = useRef<HTMLElement | null | any>(null);
   const [eventDocuments, setEventDocuments] = useState([]);
+  const [eventCount, setEventCount] = useState(0);
   const [likeSort, setLikeSort] = useState<boolean>(false);
 
   const handleClickLike = () => {
@@ -60,31 +61,40 @@ export const Map = () => {
 
   useEffect(() => {
     // 컬렉션 참조 생성
-    if (pinStatus.length > 0 && bottomSheetStatus) {
-      const collectionRef = collection(db, "Post");
-      // 실시간 리스너 설정
-      const unsubscribe = onSnapshot(collectionRef, (querySnapshot) => {
-        const newEventDocuments: any = [];
-        querySnapshot.forEach((doc) => {
-          if (doc.data()) {
-            newEventDocuments.push({
-              ...doc.data(),
-              id: doc.id,
-            });
-          }
-        });
-        setEventDocuments(newEventDocuments);
-      });
 
-      // 컴포넌트가 언마운트되면 실시간 리스너 해제
-      return () => {
-        unsubscribe();
-      };
-    }
-  }, [bottomSheetStatus]); // 의존성 배열에 빈 배열 사용
+    const collectionRef = collection(db, "Post");
+    // 실시간 리스너 설정
+    const unsubscribe = onSnapshot(collectionRef, (querySnapshot) => {
+      const newEventDocuments: any = [];
+      querySnapshot.forEach((doc) => {
+        if (doc.data()) {
+          newEventDocuments.push({
+            ...doc.data(),
+            id: doc.id,
+          });
+        }
+      });
+      setEventDocuments(newEventDocuments);
+      setEventCount(newEventDocuments.length);
+    });
+
+    // 컴포넌트가 언마운트되면 실시간 리스너 해제
+    return () => {
+      unsubscribe();
+    };
+  }, []); // 의존성 배열에 빈 배열 사용
+
+  // useEffect(() => {
+  //   if (eventDocuments.length > 0) {
+  //     setEventCount(eventDocuments.length);
+  //   }
+  // }, [eventDocuments]);
 
   return (
     <S.MapContainer>
+      <S.InfoContainer>
+        <div>🏃‍♂️ 현재 근황 수 {eventCount}</div>
+      </S.InfoContainer>
       <div
         id="map"
         ref={mapRef}
@@ -129,6 +139,7 @@ export const Map = () => {
                       text={item.text}
                       likeCount={item.like}
                       location={item.location}
+                      time={item.time}
                     />
                   </>
                 ))
@@ -146,6 +157,7 @@ export const Map = () => {
                       text={item.text}
                       likeCount={item.like}
                       location={item.location}
+                      time={item.time}
                     />
                   </>
                 ))

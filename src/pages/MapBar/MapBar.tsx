@@ -15,6 +15,7 @@ export const MapBar = () => {
   const mapRef = useRef<HTMLElement | null | any>(null);
   const [eventDocuments, setEventDocuments] = useState([]);
   const [likeSort, setLikeSort] = useState<boolean>(false);
+  const [eventCount, setEventCount] = useState<any[]>([]);
 
   const handleClickLike = () => {
     setLikeSort(true);
@@ -90,6 +91,18 @@ export const MapBar = () => {
 
   return (
     <S.MapContainer>
+      {/* <S.InfoContainer>
+        <div
+          onClick={(e) => {
+            const filteredList = eventCount.sort((a, b) => b.count - a.count);
+            console.log(filteredList, "filteredList");
+            setBottomSheetStatus(true);
+            setPinStatus(filteredList[0].location);
+          }}
+        >
+          🔥 현재 제일 핫한 주점
+        </div>
+      </S.InfoContainer> */}
       <div
         id="map"
         ref={mapRef}
@@ -133,6 +146,7 @@ export const MapBar = () => {
                       text={item.text}
                       likeCount={item.like}
                       location={item.location}
+                      time={item.time}
                     />
                   </>
                 ))
@@ -150,6 +164,7 @@ export const MapBar = () => {
                       text={item.text}
                       likeCount={item.like}
                       location={item.location}
+                      time={item.time}
                     />
                   </>
                 ))
