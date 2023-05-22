@@ -1,4 +1,5 @@
 import { Button, Input, TextField } from "@mui/material";
+import ImageResizer from "browser-image-resizer";
 import {
   addDoc,
   collection,
@@ -20,9 +21,18 @@ import { app, db } from "../../firebase";
 import { PathUrl } from "../../types/router/pathUrl";
 import { BasicSelect } from "../basicSelect/BasicSelect";
 
+const config = {
+  quality: 0.5,
+  maxWidth: 800,
+  maxHeight: 800,
+  autoRotate: true,
+  debug: true,
+};
+
 export const PhotoUpload = () => {
   const { pinStatus } = useContext(MyContext);
   const [file, setFile] = useState<File | null>(null);
+  const [fileData, setFileData] = useState<Blob | null>(null);
   const [id, setId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [text, setText] = useState<string>("");
@@ -35,15 +45,40 @@ export const PhotoUpload = () => {
     setFile(files[0]);
   };
 
+  const handleFileChangeData = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const resizedImage = await ImageResizer.readAndCompressImage(
+        file,
+        config
+      );
+      setFileData(resizedImage);
+      // 이제 `resizedImage`를 서버에 업로드합니다.
+      // 여기서는 firebase storage를 예로 들겠습니다.
+      // const storageRef = firebase.storage().ref();
+      // const fileRef = storageRef.child('some-directory/' + resizedImage.name);
+      // await fileRef.put(resizedImage);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleUpload = async () => {
-    if (!file || !id || !password || !text) {
+    if (!file || !id || !password || !text || !fileData) {
       alert("필수항목 모두 넣어주세요");
       return;
     }
 
     const storage = getStorage(app);
     const storageRef = ref(storage, `images/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    if (!fileData) {
+      alert("사진을 다시 업로드해주세요");
+      return;
+    }
+
+    const uploadTask = uploadBytesResumable(storageRef, fileData);
 
     uploadTask.on(
       "state_changed",
@@ -134,7 +169,13 @@ export const PhotoUpload = () => {
           </span>
         </label>
 
-        <Input type="file" onChange={handleFileChange} />
+        <Input
+          type="file"
+          onChange={(e: any) => {
+            handleFileChange(e);
+            handleFileChangeData(e);
+          }}
+        />
       </div>
       <TextField
         id="standard-required"
