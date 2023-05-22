@@ -19,6 +19,7 @@ import { bar_pins, pins } from "../../constant/pins";
 import MyContext from "../../contexts/MyContext";
 import { app, db } from "../../firebase";
 import LoadingLottie from "../../lotties/loading.json";
+import { PostPathTest } from "../../types/constants/constants";
 import { PathUrl } from "../../types/router/pathUrl";
 import { resizeImage } from "../../utils/resize/resize";
 import { BasicSelect } from "../basicSelect/BasicSelect";
@@ -109,7 +110,7 @@ export const PhotoUpload = () => {
           like: 0,
         };
 
-        const docRef = await addDoc(collection(db, "Post"), payload);
+        const docRef = await addDoc(collection(db, PostPathTest), payload);
         setUploading(false);
         alert("업로드가 완료되었습니다");
         navigate(`${PathUrl.Comment}`);

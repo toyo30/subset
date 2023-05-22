@@ -6,6 +6,7 @@ import { ImgCard } from "../../components/imgCard/ImgCard";
 import { bar_pins } from "../../constant/pins";
 import MyContext from "../../contexts/MyContext";
 import { db } from "../../firebase";
+import { PostPathTest } from "../../types/constants/constants";
 import { sortByLike, sortByTime } from "../../utils/listSort/list-sort";
 import * as S from "./MapStyles";
 
@@ -67,7 +68,7 @@ export const MapBar = () => {
   useEffect(() => {
     // 컬렉션 참조 생성
     if (pinStatus.length > 0 && bottomSheetStatus) {
-      const collectionRef = collection(db, "Post");
+      const collectionRef = collection(db, PostPathTest);
       // 실시간 리스너 설정
       const unsubscribe = onSnapshot(collectionRef, (querySnapshot) => {
         const newEventDocuments: any = [];

@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import { firebaseApi } from "../../api/firebase-api";
 import { ImageComponent } from "../../components/imgBox/ImgBox";
 import { bar_pins, pins } from "../../constant/pins";
+import { PostPathTest } from "../../types/constants/constants";
 import { getTimeDiff } from "../../utils/time/timeFormat";
 import { LottieComponent } from "../lottie/Lottie";
 
@@ -75,7 +76,7 @@ export const ImgCard: React.FC<Props> = ({
 
   const deletePost = async () => {
     if (confirmPassword === password) {
-      await firebaseApi.deleteData(id, "Post");
+      await firebaseApi.deleteData(id, PostPathTest);
       closeModalFunction();
       alert("삭제되었습니다.");
     } else {
@@ -105,7 +106,7 @@ export const ImgCard: React.FC<Props> = ({
       location,
     };
 
-    await firebaseApi.updateData(id, "Post", updatePayload);
+    await firebaseApi.updateData(id, PostPathTest, updatePayload);
 
     setLike(true);
     setLottieStatus(true);

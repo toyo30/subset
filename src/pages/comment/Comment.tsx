@@ -3,6 +3,7 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { ImgCard } from "../../components/imgCard/ImgCard";
 import { db } from "../../firebase";
+import { PostPathTest } from "../../types/constants/constants";
 import { sortByLike, sortByTime } from "../../utils/listSort/list-sort";
 import * as S from "./CommentStyles";
 
@@ -12,7 +13,7 @@ export const Comment = () => {
   const [loading, setLoading] = useState<boolean>(true); // 로딩 상태를 관리하는 상태
   useEffect(() => {
     // 컬렉션 참조 생성
-    const collectionRef = collection(db, "Post");
+    const collectionRef = collection(db, PostPathTest);
     // 실시간 리스너 설정
     const unsubscribe = onSnapshot(collectionRef, (querySnapshot) => {
       const newEventDocuments: any = [];

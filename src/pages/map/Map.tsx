@@ -6,6 +6,7 @@ import { ImgCard } from "../../components/imgCard/ImgCard";
 import { pins } from "../../constant/pins";
 import MyContext from "../../contexts/MyContext";
 import { db } from "../../firebase";
+import { PostPathTest } from "../../types/constants/constants";
 import { sortByLike, sortByTime } from "../../utils/listSort/list-sort";
 import * as S from "./MapStyles";
 
@@ -62,7 +63,7 @@ export const Map = () => {
   useEffect(() => {
     // 컬렉션 참조 생성
 
-    const collectionRef = collection(db, "Post");
+    const collectionRef = collection(db, PostPathTest);
     // 실시간 리스너 설정
     const unsubscribe = onSnapshot(collectionRef, (querySnapshot) => {
       const newEventDocuments: any = [];
