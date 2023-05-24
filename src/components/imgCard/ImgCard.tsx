@@ -10,7 +10,7 @@ import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { firebaseApi } from "../../api/firebase-api";
 import { ImageComponent } from "../../components/imgBox/ImgBox";
-import { bar_pins, pins } from "../../constant/pins";
+import { bar_pins, bar_pins_day1, pins } from "../../constant/pins";
 import { getTimeDiff } from "../../utils/time/timeFormat";
 import { LottieComponent } from "../lottie/Lottie";
 
@@ -42,7 +42,7 @@ export const ImgCard: React.FC<Props> = ({
   const modalRef = useRef<any>(null);
   const [confirmPassword, setConfirmPassword] = useState<string>("");
 
-  const result = { ...pins, ...bar_pins };
+  const result = { ...pins, ...bar_pins, ...bar_pins_day1 };
 
   const list = [
     `${process.env.PUBLIC_URL}/peope_white.png`,

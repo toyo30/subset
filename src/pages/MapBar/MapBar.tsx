@@ -47,8 +47,15 @@ export const MapBar = () => {
       });
 
       const infoWindow = new window.naver.maps.InfoWindow({
-        content: `<div style="min-width:150px;text-align:center;padding:10px;">
-        ${item[1].name}</div>`,
+        content: `
+                  <div style="min-width:150px;text-align:center;padding:10px;">
+                    <div>${item[1].name}</div>
+                    ${
+                      item[1].link
+                        ? `<a href=${item[1].link} target="_blank">👉 주점정보 바로가기</a>`
+                        : ""
+                    }
+                  </div>`,
       });
 
       window.naver.maps.Event.addListener(marker, "click", (e) => {

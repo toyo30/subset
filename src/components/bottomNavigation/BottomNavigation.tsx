@@ -1,5 +1,4 @@
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Map from "@mui/icons-material/Map";
 import { Fab, Typography } from "@mui/material";
 import BottomNavigation from "@mui/material/BottomNavigation";
@@ -76,12 +75,12 @@ export const SimpleBottomNavigation = () => {
             value="other"
             icon={<LocationOnIcon />}
           /> */}
-          <BottomNavigationAction
+          {/* <BottomNavigationAction
             label="주점 지도"
             // value={`${PathUrl.Other.slice(1)}`}
             value={`${PathUrl.Bar.slice(1)}`}
             icon={<LocationOnIcon />}
-          />
+          /> */}
         </BottomNavigation>
       </Box>
 

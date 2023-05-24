@@ -1,7 +1,7 @@
 import CloseSharpIcon from "@mui/icons-material/CloseSharp";
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { bar_pins, pins } from "../../constant/pins";
+import { bar_pins, bar_pins_day1, pins } from "../../constant/pins";
 import MyContext from "../../contexts/MyContext";
 import TopAppBars from "../topAppBar/TopAppBar";
 
@@ -32,7 +32,7 @@ const Handle = styled.div`
 const BottomSheetHeader: React.FC<BottomSheetHeaderProps> = ({ className }) => {
   const { setBottomSheetStatus, pinStatus } = useContext(MyContext);
 
-  const result = { ...pins, ...bar_pins };
+  const result = { ...pins, ...bar_pins, ...bar_pins_day1 };
 
   return (
     <Wrapper className={className}>

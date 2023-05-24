@@ -3,7 +3,7 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { useContext, useEffect, useRef, useState } from "react";
 import BottomSheet from "../../components/bottomSheet/BottomSheet";
 import { ImgCard } from "../../components/imgCard/ImgCard";
-import { pins } from "../../constant/pins";
+import { bar_pins, pins } from "../../constant/pins";
 import MyContext from "../../contexts/MyContext";
 import { db } from "../../firebase";
 import { sortByLike, sortByTime } from "../../utils/listSort/list-sort";
@@ -27,13 +27,15 @@ export const Map = () => {
   };
 
   useEffect(() => {
+    const result = { ...pins, ...bar_pins };
+
     const map = (mapRef.current = new naver.maps.Map("map", {
       //지도 추가, 좌표를 기점으로 주변 지도가 추가된다.
       center: new naver.maps.LatLng(37.5876055, 127.03138),
-      zoom: 16,
+      zoom: 18,
     }));
 
-    Object.entries(pins).forEach((item) => {
+    Object.entries(result).forEach((item) => {
       const marker = new window.naver.maps.Marker({
         position: new window.naver.maps.LatLng(item[1].lat, item[1].lng),
         map: mapRef.current,
@@ -46,11 +48,42 @@ export const Map = () => {
         },
       });
 
+      const infoWindow = new window.naver.maps.InfoWindow({
+        content: `
+                  <div style="min-width:150px;text-align:center;padding:10px;">
+                    <div>${item[1].name}</div>
+                    ${
+                      item[1].link
+                        ? `<a href=${item[1].link} target="_blank">👉 주점정보 바로가기</a>`
+                        : ""
+                    }
+                  </div>`,
+      });
+
       window.naver.maps.Event.addListener(marker, "click", (e) => {
+        infoWindow.open(map, marker);
         setBottomSheetStatus(true);
         setPinStatus(item[0]);
+        // map.panTo(
+        //   new naver.maps.LatLng(item[1].lat - 0.005, item[1].lng - 0.0001)
+        // );
+        const baseZoom = 18;
+        const currentZoom = map.getZoom();
+
+        // 줌 레벨에 따른 스케일 인자 계산
+        const scale = Math.pow(2, baseZoom - currentZoom);
+
+        const baseLatChange = 0.000825;
+        const baseLngChange = 0.00000425;
+
+        // 줌 레벨에 따라 변경값 조정
+        const scaledLatChange = baseLatChange * scale;
+        const scaledLngChange = baseLngChange * scale;
         map.panTo(
-          new naver.maps.LatLng(item[1].lat - 0.005, item[1].lng - 0.0001)
+          new naver.maps.LatLng(
+            item[1].lat - scaledLatChange,
+            item[1].lng - scaledLngChange
+          )
         );
       });
     });
@@ -96,6 +129,17 @@ export const Map = () => {
       <S.InfoContainer>
         <div>🏃‍♂️ 현재 근황 수 {eventCount}</div>
       </S.InfoContainer>
+      <S.InfoBarContainer>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <S.ImgIcon src={`${process.env.PUBLIC_URL}/Hot.png`} /> 주점
+        </div>
+      </S.InfoBarContainer>
       <div
         id="map"
         ref={mapRef}

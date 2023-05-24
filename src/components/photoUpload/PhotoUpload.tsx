@@ -15,7 +15,7 @@ import {
 import Lottie from "lottie-react";
 import { ChangeEvent, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { bar_pins, pins } from "../../constant/pins";
+import { bar_pins, bar_pins_day1, pins } from "../../constant/pins";
 import MyContext from "../../contexts/MyContext";
 import { app, db } from "../../firebase";
 import LoadingLottie from "../../lotties/loading.json";
@@ -73,7 +73,7 @@ export const PhotoUpload = () => {
     }
 
     const storage = getStorage(app);
-    const storageRef = ref(storage, `images/${file.name}`);
+    const storageRef = ref(storage, `images/${file.name}${id}${password}`);
 
     if (!fileData) {
       alert("사진을 다시 업로드해주세요");
@@ -93,14 +93,14 @@ export const PhotoUpload = () => {
       async () => {
         const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
 
-        await setDoc(doc(db, "images", file.name), {
+        await setDoc(doc(db, "images", file.name + id + password), {
           url: downloadURL,
-          name: file.name,
+          name: file.name + id + password,
         });
 
         const payload = {
           url: downloadURL,
-          name: file.name,
+          name: file.name + id + password,
           userId: id,
           password: password,
           text: text,
@@ -121,7 +121,7 @@ export const PhotoUpload = () => {
     // }, 100);
   };
 
-  const result = { ...pins, ...bar_pins };
+  const result = { ...pins, ...bar_pins, ...bar_pins_day1 };
 
   return (
     <>
